@@ -1198,6 +1198,8 @@ Our app now looks like:
 
 #-END_EXAMPLE
 
-Now add, commit, merge the changes to master, push master to githup,
+Uh, need to fix the tests...
+  
+But then, add, commit, merge the changes to master, push master to githup,
 and delete the branch.
 
