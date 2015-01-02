@@ -186,7 +186,7 @@ Save the file and refresh the browser.  Experiment with different size
 heading tags.
 
 Html supports tables. _explain why we're talking about tables_
-Try adding this table to our sample html:
+Try adding this table to our sample html within the body:
 
 ```HTML
 <table>
