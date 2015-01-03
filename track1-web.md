@@ -541,12 +541,12 @@ to what's in our "README.md" file.
 Now we're going to start changing the templated code to make it our
 web app.  We're going to follow a certain workflow:
 
-1) branch the code
-2) write some code
-3) try the code
-4) repeat 2-3 until we're happy with the changes
-5) merge the branch into master
-6) push the changes to github
+1. branch the code
+2. write some code
+3. try the code
+4. repeat 2-3 until we're happy with the changes
+5. merge the branch into master
+6. push the changes to github
 
 This methodology allows us to isolate changes in their own branch.  If
 we change our minds or discover we've made a mistake, it's easy to
