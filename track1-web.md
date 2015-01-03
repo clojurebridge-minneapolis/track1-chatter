@@ -110,7 +110,7 @@ traceroute to github.com (192.30.252.128), 30 hops max, 60 byte packets
 28  * * *
 29  * * *
 30  * * *
-~/temp/CB $ 
+~/temp/CB $
 
 </pre>
 </div>
@@ -551,4 +551,230 @@ web app.  We're going to follow a certain workflow:
 This methodology allows us to isolate changes in their own branch.  If
 we change our minds or discover we've made a mistake, it's easy to
 back up to an earlier version using git.
+
+### Readme
+
+Let's start with something small and fix the readme.
+
+#### Branch the code
+
+Branching tells git that we want to start working on some changes and
+we're going to give the whole set a name.
+
+<div class= "console"><pre>
+~/temp/CB/chatter $ git status
+On branch master
+Your branch is up-to-date with 'origin/master'.
+nothing to commit, working directory clean
+~/temp/CB/chatter $ git branch fix-readme
+~/temp/CB/chatter $ git checkout fix-readme
+Switched to branch 'fix-readme'
+~/temp/CB/chatter $ git status
+On branch fix-readme
+nothing to commit, working directory clean
+</pre>
+</div>
+
+I was on master, I created a branch named "fix-readme" with the
+command, "git branch fix-readme".  Then I checked out the branch.
+
+It's important to check out the branch.  Git won't do it automatically
+and you can find yourself making commits into the root branch.  This
+usually isn't fatal but it's often very messy to clean up if things go
+wrong.
+
+To checkout, "git checkout fix-readme".  Now git status reports that
+I'm on the proper branch.
+
+#### Changing README.md
+
+Open the README.md file and replace the two FIXME's with reasonable
+text.  Save the file.
+
+Now, if you ask git for the status, it will show that README.md has
+changed.
+
+
+<div class= "console"><pre>
+~/temp/CB/chatter $ git status
+On branch fix-readme
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+	modified:   README.md
+
+no changes added to commit (use "git add" and/or "git commit -a")
+</pre>
+</div>
+
+We can ask git to show us exacty what changed.
+
+<div class= "console"><pre>
+~/temp/CB/chatter $ git diff
+diff --git a/README.md b/README.md
+index 9493433..718893f 100644
+--- a/README.md
++++ b/README.md
+@@ -1,6 +1,6 @@
+ # chatter
+
+-FIXME
++This is a web app that will display posted messages.
+
+ ## Prerequisites
+
+@@ -16,4 +16,4 @@ To start a web server for the application, run:
+
+ ## License
+
+-Copyright © 2014 FIXME
++Copyright © 2014 crkoehnen@gmail.com
+</pre>
+</div>
+
+"git diff" is telling us that the README.md file change.  I remove the
+line that said "FIXME" and added a line saying, "This is a web app
+that will display posted messages."  I also changed the FIXME in the
+copyright to my email address.
+
+Since we changed the description in the README.md, we might as well
+change the description in project.clj.  Save that file too.  Now the
+git status should be:
+
+<div class= "console"><pre>
+~/temp/CB/chatter $ git status
+On branch fix-readme
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+	modified:   README.md
+	modified:   project.clj
+
+no changes added to commit (use "git add" and/or "git commit -a")
+</pre>
+</div>
+
+#### Adding and Commmting the changes
+
+Let's add and commit the changes.
+
+<div class= "console"><pre>
+~/temp/CB/chatter $ git add README.md project.clj
+~/temp/CB/chatter $ git commit README.md project.clj -m "fixing README.md description"
+[fix-readme 57aff88] fixing README.md description
+ 2 files changed, 3 insertions(+), 3 deletions(-)
+</pre>
+</div>
+
+Now git status reports no uncommitted changes but we're still on the
+fix-me branch.
+
+<div class= "console"><pre>
+~/temp/CB/chatter $ git status
+On branch fix-readme
+nothing to commit, working directory clean
+</pre>
+</div>
+
+Let's the check the log.
+
+<div class= "console"><pre>
+~/temp/CB/chatter $ git log
+commit 57aff889c81698394faf8568b63f14130d32599a
+Author: crkoehnen <crkoehnen@gmail.com>
+Date:   Sun Dec 28 17:33:41 2014 -0600
+
+    fixing README.md description
+
+commit 44a560f1653770afac01aea2c9279a7af46a46eb
+Author: crkoehnen <crkoehnen@gmail.com>
+Date:   Sun Dec 28 16:43:37 2014 -0600
+
+    initial commit
+~/temp/CB/chatter $
+</pre>
+</div>
+
+Two commits, just what we expect.
+
+#### Merging the changes
+
+Let's merge our changes into the master branch.  First let's checkout
+master and check its log.
+
+<div class= "console"><pre>
+~/temp/CB/chatter $ git checkout master
+Switched to branch 'master'
+Your branch is up-to-date with 'origin/master'.
+~/temp/CB/chatter $ git log
+commit 44a560f1653770afac01aea2c9279a7af46a46eb
+Author: crkoehnen <crkoehnen@gmail.com>
+Date:   Sun Dec 28 16:43:37 2014 -0600
+
+    initial commit
+</pre>
+</div>
+
+Note that master is lagging behind.  It doesn't have the commit with
+the README changes.  We can fix that by merging.
+
+<div class= "console"><pre>
+~/temp/CB/chatter $ git merge fix-readme
+Updating 44a560f..57aff88
+Fast-forward
+ README.md   | 4 ++--
+ project.clj | 2 +-
+ 2 files changed, 3 insertions(+), 3 deletions(-)
+</pre>
+</div>
+
+The merge brought in the changes.  If we check the log, we'll see two
+commits now.
+
+<div class= "console"><pre>
+~/temp/CB/chatter $ git log
+commit 57aff889c81698394faf8568b63f14130d32599a
+Author: crkoehnen <crkoehnen@gmail.com>
+Date:   Sun Dec 28 17:33:41 2014 -0600
+
+    fixing README.md description
+
+commit 44a560f1653770afac01aea2c9279a7af46a46eb
+Author: crkoehnen <crkoehnen@gmail.com>
+Date:   Sun Dec 28 16:43:37 2014 -0600
+
+    initial commit
+</pre>
+</div>
+
+#### Deleting the fix-readme branch
+
+Now that we've pulled the changes from the fix-readme branch into
+master, we no longer need fix-readme.
+
+"git branch -d fix-readme" will delete it.
+
+#### Pushing to github
+
+The final step will be to push our changes to github.
+
+
+<div class= "console"><pre>
+~/temp/CB/chatter $ git push origin master
+Username for 'https://github.com': crkoehnen
+Password for 'https://crkoehnen@github.com':
+Counting objects: 4, done.
+Delta compression using up to 4 threads.
+Compressing objects: 100% (4/4), done.
+Writing objects: 100% (4/4), 572 bytes | 0 bytes/s, done.
+Total 4 (delta 2), reused 0 (delta 0)
+To https://github.com/crkoehnen/chatter.git
+   44a560f..57aff88  master -> master
+</pre>
+</div>
+
+Now go back to the repository page in github and refresh the page.
+You should see the text and the commit count change.
 
