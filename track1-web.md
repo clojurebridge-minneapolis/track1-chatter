@@ -382,3 +382,157 @@ how to handle http requests.
 Let's stop the server by going back to the terminal and typing
 "control-C" twice.
 
+### git
+
+
+We haven't made any changes yet, so this is a good time to put the
+code under version control.  Version control allows developers to keep
+track of their changes over time.  It makes it easier to experiment
+and coordinate work with others.
+
+Inside the chatter directory, enter the command, "git init"
+
+<div class= "console"><pre>
+~/temp/CB/chatter $ git init
+Initialized empty Git repository in /home/crk/temp/CB/chatter/.git/
+</pre>
+</div>
+
+
+Now git is keeping an eye our directory.  Try asking git the status of
+our directory.
+
+
+<div class= "console"><pre>
+~/temp/CB/chatter $ git status
+On branch master
+
+Initial commit
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+	.gitignore
+	README.md
+	project.clj
+	src/
+	test/
+
+nothing added to commit but untracked files present (use "git add" to track)
+</pre>
+</div>
+
+
+We're on the master branch.  The master branch is the main place where
+our code will be.  It says "Initial commit" because we're just
+initializing git.  Git doesn't know anything about the files in our
+project but it's spotted the README.md, project.clj files and the src
+and test directories.  It also spotted a file called ".gitignore".
+Files beginning with a dot are normally hidden unless you specifically
+ask to see them.  .gitignore is a special file, it tells git what kind
+of files we what it to not track.  These will mostly be compiled code,
+test reports, and log files.
+
+Git follows a two-step process.  First you add the changes; they
+become staged.  Then you commit all of the staged changes.  Let's add
+everything.
+
+"git add ."  The "." tells git the current directory and below.
+
+Now when we ask git for the status:
+
+
+<div class= "console"><pre>
+~/temp/CB/chatter $ git status
+On branch master
+
+Initial commit
+
+Changes to be committed:
+  (use "git rm --cached <file>..." to unstage)
+
+	new file:   .gitignore
+	new file:   README.md
+	new file:   project.clj
+	new file:   src/chatter/core/handler.clj
+	new file:   test/chatter/core/handler_test.clj
+</pre>
+</div>
+
+All of our stuff is ready to be commited.  That requires a commit
+message.
+
+
+<div class= "console"><pre>
+~/temp/CB/chatter $ git commit . -m "initial commit"
+[master (root-commit) 44a560f] initial commit
+ 5 files changed, 66 insertions(+)
+ create mode 100644 .gitignore
+ create mode 100644 README.md
+ create mode 100644 project.clj
+ create mode 100644 src/chatter/core/handler.clj
+ create mode 100644 test/chatter/core/handler_test.clj
+
+</pre>
+</div>
+
+Now when we ask git for the status,
+
+
+<div class= "console"><pre>
+~/temp/CB/chatter $ git status
+On branch master
+nothing to commit, working directory clean
+</pre>
+</div>
+
+Ok, there haven't been any changes since our last commit, so there's
+nothing to see.  Let's check the log.
+
+<div class= "console"><pre>
+~/temp/CB/chatter $ git log
+commit 44a560f1653770afac01aea2c9279a7af46a46eb
+Author: crkoehnen <crkoehnen@gmail.com>
+Date:   Sun Dec 28 16:43:37 2014 -0600
+
+    initial commit
+</pre>
+</div>
+
+There's been one commit, it was by me, and the comment was "initial
+commit."
+
+By keeping track of changes, git makes it easy to go back to an
+earlier save point.  It's a safety net.  By itself, it won't do much
+if our hard drive suddenly dies.  But git allows you to have
+repositories on other computers.  If your computer dies, your code
+lives on.  Github is a company hosting source code, free if you don't
+mind that other people can see your code.  As a safety measure, we're
+going to put our code on Github.
+
+Log into [https://github.com](https://github.com) and click, "create
+repository".  Name it "chatter".  That will open a page for your new
+repository.  We want to push an existing repository, so (be sure to
+use the url that Github gives you instead of mine!) :
+
+<div class= "console"><pre>
+~/temp/CB/chatter $ git remote add origin https://github.com/crkoehnen/chatter.git
+~/temp/CB/chatter $ git push -u origin master
+Username for 'https://github.com': crkoehnen
+Password for 'https://crkoehnen@github.com':
+Counting objects: 13, done.
+Delta compression using up to 4 threads.
+Compressing objects: 100% (7/7), done.
+Writing objects: 100% (13/13), 1.54 KiB | 0 bytes/s, done.
+Total 13 (delta 0), reused 0 (delta 0)
+To https://github.com/crkoehnen/chatter.git
+ * [new branch]      master -> master
+Branch master set up to track remote branch master from origin.
+
+</pre>
+</div>
+
+Click on the "chatter" link and you'll go to the main page for the
+repository.  Note there is a single commit and the text is identical
+to what's in our "README.md" file.
+
