@@ -339,9 +339,34 @@ There are four parts to the expression:
 4) "Hello World"; the result that gets sent back to the requesting
    browser.
 
-The third and final expression begins "(def app ..."  "def" is how you
-declare a variable in clojure.  The name of the variable is "app" and
-it's being assigned the result of
+After the GET is
+
+```clojure
+(route/not-found "Not Found")
+```
+
+This means that, when the server gets any other request, it should
+return "Not Found."
+
+Right click on the page in the browser and select, "Inspect Element
+With Firebug."  _insert screenshot_The "html" tab shows what the html
+document looks like. The default is an empty head and a body with the
+string "Hello World".  This is actually different from what we see
+when we view the source.  The browser requested html but got only got
+a string back and it fleshes out a legal page.
+
+Click on the "Net" tab and refresh the page.  You'll see the request
+was actually a GET request and returned a status code of 200.  That
+indicates the request was successful.
+
+Try changing the address to
+"http://localhost:3000/non-existant-page".  Now you should see the GET
+request is in red and has a status of 404, which indicates that the
+server couldn't find the page.
+
+Back in the handler.clj file, the third and final expression begins
+"(def app ..."  "def" is how you declare a variable in clojure.  The
+name of the variable is "app" and it's being assigned the result of
 
 ```clojure
 (wrap-defaults app-routes site-defaults)
@@ -353,3 +378,7 @@ are the default routes imported into the namespace from ring library.
 and the defaults.  When we start the server, it's going to look for
 the routes associated with the "app" variable and use those to decide
 how to handle http requests.
+
+Let's stop the server by going back to the terminal and typing
+"control-C" twice.
+
