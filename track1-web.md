@@ -326,7 +326,7 @@ definitions.  There are two.
 The first is
 ```clojure
 (GET "/" [] "Hello World")
-```.
+```
 
 There are four parts to the expression:
 
