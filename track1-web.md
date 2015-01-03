@@ -225,3 +225,80 @@ program listening for requests that generate the html.  As people make
 requests and post messages, it will generate html that reflects the
 posts.
 
+### Creating a clojure project
+
+We're going to start by asking lein to stub out a web application for
+us.
+
+<div class= "console"><pre>
+  ~/temp/CB: lein new compojure chatter
+</pre>
+</div>
+
+Lein is a tool for managing clojure projects.  We've asked to create a
+new compojure project called chatter and there should now be a
+directory also called chatter.
+
+Cd into the directory and start the server with the command:
+
+<div class= "console"><pre>
+  ~/temp/CB: lein ring server
+</pre>
+</div>
+
+
+Lein will download a bunch of stuff off the internet the first time,
+but then it should cause your default browser to open to a page
+saying, "Hello World".
+
+Notice the address bar; "localhost" is an alias for your computer.
+3000 is the port number where your server is listening for requests.
+If you take another look at the terminal, you'll see the message,
+"Started server on port 3000"
+
+Right click on the page and view the page source.  You'll see that's
+not even an html document, it's just the string "Hello World".
+
+Let's stop the server by going to the terminal and typing "control-c"
+twice.
+
+Now let's take a closer look at the chatter directory.  The whole
+project tree looks like:
+
+
+<div class= "console"><pre>
+
+chatter
+├── project.clj
+├── README.md
+├── resources
+│   └── public
+├── src
+│   └── chatter
+│       └── core
+│           └── handler.clj
+└── test
+    └── chatter
+        └── core
+            └── handler_test.clj
+
+8 directories, 4 files
+
+</pre>
+</div>
+
+
+project.clj is a clojure file describing the what our project does and
+how other programs does it build on.
+
+README.md is a markdown file documenting how our project works.
+
+resources is a folder where we would store static html, CSS, and
+images.
+
+src is where our source code will live.
+
+test is where our tests will live.  We're going to set an awful
+example and ignore testing for this tutorial.
+
+
