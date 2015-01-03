@@ -301,4 +301,55 @@ src is where our source code will live.
 test is where our tests will live.  We're going to set an awful
 example and ignore testing for this tutorial.
 
+### A closer look at the src directory
 
+
+Let's open the files "src/chatter/core/handler.clj"
+
+The "clj" extension tells us that this is a clojure file.  Clojure
+programs are made up of expressions.  Expressions are either a single
+name, number, or a list of expressions beginning with a paren.
+
+The first expression, "(ns ..." is the namespace declaration.  It's a
+way of importing libraries and other programs in a controlled way.  We
+won't be covering it in much detail.  The first subexpression,
+"chatter.core.handler" tells clojure what we want to call the name
+space being defined in this file.  The next expression, beginning with
+"(:require..." is importing ring and compojure libraries.  Those are
+the low-level libraries for building web apps.
+
+"(defroutes app-routes..." is next.  defroutes is specific to clojure
+web apps.  It's creating a set of routes and giving them the name
+"app-routes".  The expressions after symbol "app-routes" are the route
+definitions.  There are two.
+
+The first is
+```clojure
+(GET "/" [] "Hello World")
+```.
+
+There are four parts to the expression:
+
+1) "GET"; this is which type of http request we want to handle.  GET's
+   are requests for information or data.
+2) "/"; this is the name of the web page.  "/" means the top
+   level.
+3) "[]"; this is the parameters list.  When you do a search or fill
+   out a form, the parameters narrow the result.
+4) "Hello World"; the result that gets sent back to the requesting
+   browser.
+
+The third and final expression begins "(def app ..."  "def" is how you
+declare a variable in clojure.  The name of the variable is "app" and
+it's being assigned the result of
+
+```clojure
+(wrap-defaults app-routes site-defaults)
+```
+
+"app-routes" is what we're calling our set of routes, "site-defaults"
+are the default routes imported into the namespace from ring library.
+"wrap-defaults" is also imported from ring and it combines our routes
+and the defaults.  When we start the server, it's going to look for
+the routes associated with the "app" variable and use those to decide
+how to handle http requests.
