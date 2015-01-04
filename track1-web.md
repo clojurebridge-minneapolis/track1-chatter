@@ -988,9 +988,9 @@ Now our code looks like:
             [hiccup.form :as form]
             [ring.util.anti-forgery :as anti-forgery]))
 
-(def messages [{:name "chris" :message "hello, world"}
-               {:name "george" :message "read my lips"}
-               {:name "tom" :message "time makes more converts than reason"}])
+(def messages [{:name "blue" :message "hello, world"}
+               {:name "red" :message "read my lips"}
+               {:name "green" :message "time makes more converts than reason"}])
 
 (defn generate-message-view
   "this generates the html for displaying messags"
