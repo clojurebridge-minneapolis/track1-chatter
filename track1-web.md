@@ -778,3 +778,121 @@ To https://github.com/crkoehnen/chatter.git
 Now go back to the repository page in github and refresh the page.
 You should see the text and the commit count change.
 
+### hiccup
+
+Now let's change the app's main page from "Hello, World" to something
+a little more chatty.
+
+First, let's create and checkout a new branch, "view-messages."
+
+We need to write code that will generate html so we're going to use a
+library called "hiccup".  Adding a new library requires two steps:
+
+1) Add the library to the dependency section of the project.clj file.
+   This tell lein that your program needs another program.
+
+   Adding hiccup makes ours look like:
+
+<div class= "console"><pre>
+  :dependencies [[org.clojure/clojure "1.6.0"]
+                 [compojure "1.3.1"]
+                 [ring/ring-defaults "0.1.2"]
+                 [hiccup "1.0.5"]]
+</pre>
+</div>
+
+2) Import the library into the namespace you need by adding the import
+   to the "ns" declaration.  We're going to be using it in the
+   handler.clj.  Our ns declaration will look like:
+
+<div class= "console"><pre>
+(ns chatter.core.handler
+  (:require [compojure.core :refer :all]
+            [compojure.route :as route]
+            [ring.middleware.defaults :refer [wrap-defaults site-defaults]]
+            [hiccup.page :as page]))
+</pre>
+</div>
+
+Let's use hiccup to generate the html by changing our defroutes:
+
+
+<div class= "console"><pre>
+(defroutes app-routes
+  (GET "/" []
+       (page/html5
+        [:head
+         [:title "chatter"]]
+        [:body
+         [:h1 "Our Chat App"]]))
+  (route/not-found "Not Found"))
+</pre>
+</div>
+
+If you start the server using "lein ring server", you'll see that
+"http://localhost:3000" now proudly displays "Our Chat App".  And if
+you'll view source, you'll see that now it's proper html complete with
+head, title, and body.
+
+Hiccup function, "page/html5" generates an html page.  It expects
+clojure vectors with symbols representing corresponding html tags.
+Hiccup will automatically add the closing tag when it reaches the end
+of the vector.  If the vector contains other vectors, hiccup digs into
+those too.
+
+Compare the hiccup to html in view-source to the html we wrote by hand
+earlier.
+
+_introduce clojure vectors and keywords_
+
+A problem with our new app-routes is that it's doing two different
+things.  It's main role is to take the incomming request and decide
+what to do.  Now it's doing that but it's also generating a full html
+page.  As we add more and more pages, this will become too complicated
+to manage.  We'll get ahead of the game by splitting out the task of
+generating the html into a helper function.
+
+_introduce defn_
+
+Our new code should look like:
+
+<div class= "console"><pre>
+(defn generate-message-view
+  "this generates the html for displaying messags"
+  []
+  (page/html5
+   [:head
+    [:title "chatter"]]
+   [:body
+    [:h1 "Our Chat App"]]))
+
+(defroutes app-routes
+  (GET "/" [] (generate-message-view))
+  (route/not-found "Not Found"))
+</pre>
+</div>
+
+Let's fire up the server and make sure it still works.  From the
+outside, we shouldn't see a change.  The page should still display
+"Our Chat App" and the html should be identical.
+Now let's double check our git status:
+
+<div class= "console"><pre>
+
+~/temp/CB/chatter $ git status
+On branch view-messages
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+	modified:   project.clj
+	modified:   src/chatter/core/handler.clj
+
+no changes added to commit (use "git add" and/or "git commit -a")
+</pre>
+</div>
+
+That looks right so let's add, commit, merge the changes back to
+master, then push to github.  Then delete the view-messages branch.
+You should see the commit numbers go up on github.
+
