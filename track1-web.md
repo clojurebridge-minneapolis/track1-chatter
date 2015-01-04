@@ -39,8 +39,7 @@ git version 2.1.4
 ### Clojure, the Big Picture
 
 <img
-src="http://griffsgraphs.files.wordpress.com/2012/07/programming-languages_label.png">programming
-languages</img>
+src="http://griffsgraphs.files.wordpress.com/2012/07/programming-languages_label.png"/>
 
 There are lots of programming languages and clojure is just one of
 them.  Clojure is great because:
@@ -793,31 +792,29 @@ library called "hiccup".  Adding a new library requires two steps:
 
    Adding hiccup makes ours look like:
 
-<div class= "console"><pre>
+```clojure
   :dependencies [[org.clojure/clojure "1.6.0"]
                  [compojure "1.3.1"]
                  [ring/ring-defaults "0.1.2"]
                  [hiccup "1.0.5"]]
-</pre>
-</div>
+```
 
 2) Import the library into the namespace you need by adding the import
    to the "ns" declaration.  We're going to be using it in the
    handler.clj.  Our ns declaration will look like:
 
-<div class= "console"><pre>
+```clojure
 (ns chatter.core.handler
   (:require [compojure.core :refer :all]
             [compojure.route :as route]
             [ring.middleware.defaults :refer [wrap-defaults site-defaults]]
             [hiccup.page :as page]))
-</pre>
-</div>
+```
 
 Let's use hiccup to generate the html by changing our defroutes:
 
 
-<div class= "console"><pre>
+```clojure
 (defroutes app-routes
   (GET "/" []
        (page/html5
@@ -826,8 +823,7 @@ Let's use hiccup to generate the html by changing our defroutes:
         [:body
          [:h1 "Our Chat App"]]))
   (route/not-found "Not Found"))
-</pre>
-</div>
+```
 
 If you start the server using "lein ring server", you'll see that
 "http://localhost:3000" now proudly displays "Our Chat App".  And if
@@ -856,7 +852,7 @@ _introduce defn_
 
 Our new code should look like:
 
-<div class= "console"><pre>
+```clojure
 (defn generate-message-view
   "this generates the html for displaying messags"
   []
@@ -869,8 +865,7 @@ Our new code should look like:
 (defroutes app-routes
   (GET "/" [] (generate-message-view))
   (route/not-found "Not Found"))
-</pre>
-</div>
+```
 
 Let's fire up the server and make sure it still works.  From the
 outside, we shouldn't see a change.  The page should still display
@@ -878,7 +873,6 @@ outside, we shouldn't see a change.  The page should still display
 Now let's double check our git status:
 
 <div class= "console"><pre>
-
 ~/temp/CB/chatter $ git status
 On branch view-messages
 Changes not staged for commit:
