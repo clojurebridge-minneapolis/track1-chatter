@@ -945,7 +945,6 @@ they're html.  They're not so it blows up.
 
 We can finesse the issue by converting our maps to strings.
 
-
 ```clojure
 (defn generate-message-view
   "this generates the html for displaying messags"
@@ -1099,3 +1098,79 @@ Our app now looks like:
 
 Add, commit, merge the changes to master, push master to githup, and delete the branch.
 
+### Bootstrap
+
+The app is working but is ugly.  We can improve it by using CSS and a
+package of software called Twitter Bootstrap.
+
+Create and checkout a new branch.
+
+In the head section of our html, we're going to invoke bootstrap:
+
+```clojure
+   [:head
+    [:title "chatter"]
+    (page/include-css "//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css")
+    (page/include-js  "//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js")]
+```
+
+Start the server again and you should see the fonts change.  You'll also see the table get smashed together.
+
+Now let's change the table element to:
+
+":table#messages.table"
+
+This tells hiccup that we want the table to have an id of "messages" and a class of "table."
+CSS works by looking for combinations of classes and structure and change the appearance
+when an element matches a pattern.  Bootstrap uses a set of predefined CSS to look for a common
+set of classes.  On of them is table.  Save, then refresh the browser.  It should look better.
+Examine the html that's now generated.  You should see and id and class field inside the table element.
+
+Let's make the table entries stripped by adding an additional class.  Change the table
+element to, ":table#messages.table.table-striped
+
+What do you think would happen if you changed table-striped to table-bordered?
+
+Html elements can have multiple classes and CSS uses this to create more complex
+effects.  Try adding table-hover to the table element.
+":table#messages.table.table-bordered.table-hover"
+
+Now when you move the mouse of a row, the entire row becomes highlighted.  Dynamic effects in the browser are implemented
+using a language called Javascript.  We won't talk about Javascript except to say that it exists and the javascript part of
+Bootstrap was what we imported into the page with the include-js call.
+
+Let's create our own css file to center the heading.  Create a file "chatter.css" in resources/public.  Inside,
+
+
+```css
+h1 {
+    text-align: center;
+}
+```
+
+Css works using pattern matching.  In this case, we're saying that if the element is an "h1" element, center the text.  Save
+the file and import the file after importing bootstrap.
+
+```clojure
+   [:head
+    [:title "chatter"]
+    (page/include-css "//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css")
+    (page/include-js  "//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js")
+    (page/include-css "/chatter.css")]
+```
+
+Refresh the page.  We want to see the h1 tag centered.  It won't though.  Open firebug and watch the traffic
+as you refresh the page.  We're getting a 404 when it's trying to download the css.
+
+The problem is in our defroutes.  We tell what to do when a browser requests a GET or a POST but anything else is falling through
+to our route/not-found call.  We need to tell defroutes where to find our resources.  Change the defroutes to:
+
+```clojure
+(defroutes app-routes
+  (GET "/" [] (generate-message-view))
+  (POST "/" {params :params} (do
+                               (update-messages! (get params "name") (get params "message"))
+                               (generate-message-view)))
+  (route/resources "/")
+  (route/not-found "Not Found"))
+```
