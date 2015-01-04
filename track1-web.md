@@ -896,3 +896,206 @@ That looks right so let's add, commit, merge the changes back to
 master, then push to github.  Then delete the view-messages branch.
 You should see the commit numbers go up on github.
 
+### Adding messages
+
+We still aren't displaying messages, neither do we have a way of
+adding them.  Now we'll make that happen.
+
+Create and check out a branch to work in.
+
+Let's fix the display first.  We'll represent the messages as a vector
+of maps.  Each map will have a :name and :message key.  Let's call the
+vector simply messages and hard code some samples to get started.
+
+__Explain clojure maps__
+
+```clojure
+(def messages [{:name "blue" :message "hello, world"}
+               {:name "red" :message "read my lips"}
+               {:name "green" :message "time makes more converts than reason"}])
+```
+
+Next we'll modify the html to display the messages.
+
+```clojure
+(defn generate-message-view
+  "this generates the html for displaying messags"
+  []
+  (page/html5
+   [:head
+    [:title "chatter"]]
+   [:body
+    [:h1 "Our Chat App"]
+    [:p messages]]))
+```
+
+This blows up spectacularly.  The message is
+"java.lang.illegalArgumentException"
+"{:name "chris", :message "hello, world"} is not a valid element
+name."
+
+Then there's a stack trace.  That gives an idea what the program was
+doing when it hit the problem.  Ignore all the files that aren't ones
+you wrote for the project.  In my case, the first file of interest is
+handler.clj, line 14, the generate-message-view function.  A couple of
+helpful clues; elements are what fragments of html are called, and
+hiccup is responsible for generating html from clojure symbols.  The
+problem is that we've got a map with symbols in it and hiccup thinks
+they're html.  They're not so it blows up.
+
+We can finesse the issue by converting our maps to strings.
+
+
+```clojure
+(defn generate-message-view
+  "this generates the html for displaying messags"
+  []
+  (page/html5
+   [:head
+    [:title "chatter"]]
+   [:body
+    [:h1 "Our Chat App"]
+    [:p (str messages)]]))
+```
+
+That works but is ugly.  Let's take the messages and put them in a
+table using html's table, tr, and td elements.
+
+Now our generate-message-view looks likes:
+
+_explain clojure map and fn_
+
+```clojure
+(defn generate-message-view
+  "this generates the html for displaying messags"
+  []
+  (page/html5
+   [:head
+    [:title "chatter"]]
+   [:body
+    [:h1 "Our Chat App"]
+    [:p
+     [:table
+      (map (fn [m] [:tr [:td (:name m)] [:td (:message m)]]) messages)]]]))
+```
+
+We still don't have a way of adding messages.  This requires html
+forms and adding importing the form functions from hiccup.
+
+_explain html forms_
+
+Now our code looks like:
+
+```clojure
+(ns chatter.core.handler
+  (:require [compojure.core :refer :all]
+            [compojure.route :as route]
+            [ring.middleware.defaults :refer [wrap-defaults site-defaults]]
+            [hiccup.page :as page]
+            [hiccup.form :as form]
+            [ring.util.anti-forgery :as anti-forgery]))
+
+(def messages [{:name "chris" :message "hello, world"}
+               {:name "george" :message "read my lips"}
+               {:name "tom" :message "time makes more converts than reason"}])
+
+(defn generate-message-view
+  "this generates the html for displaying messags"
+  []
+  (page/html5
+   [:head
+    [:title "chatter"]]
+   [:body
+    [:h1 "Our Chat App"]
+    [:p
+     (form/form-to
+      [:post "/"]
+      (anti-forgery/anti-forgery-field )
+      "Name: " (form/text-field "name")
+      "Message: " (form/text-field "msg")
+      (form/submit-button "Submit"))]
+    [:p
+     [:table
+      (map (fn [m] [:tr [:td (:name m)] [:td (:message m)]]) messages)]]]))
+
+(defroutes app-routes
+  (GET "/" [] (generate-message-view))
+  (POST "/" {params :params} (generate-message-view))
+  (route/not-found "Not Found"))
+
+(def app app-routes)
+```
+
+But when we run it, we don't actually see our posts populating
+anything.  The problem now is that we're extracting the params during
+the post but aren't actually doing anything with them.
+
+_explain atoms, swap!, and do_
+
+_<note; much borkage.  the anti-forgery middleware is now default.  I'm
+missing something and it's not, maybe the token needs adding to the
+session or something.  anyway, to get that working, cut the
+wrap-defaults stuff.  That broke params.  Adding wrap-params works but
+now my params are strings instead of keywords./>_
+
+Now the app is taking our new messages but it's adding new messages to
+the end.  That's going to be hard to read.  We can fix that by
+changing from a vector to a list.  We can also remove our stubbed out
+data.
+
+_explain lists_
+
+And just to clean things up, let's put updating the message list into
+a helper function to get the logic out of the routes.
+
+Our app now looks like:
+
+
+```clojure
+(ns chatter.core.handler
+  (:require [compojure.core :refer :all]
+            [compojure.route :as route]
+            [ring.middleware.defaults :refer [wrap-defaults site-defaults]]
+            [ring.middleware.params :refer [wrap-params]]
+            [hiccup.page :as page]
+            [hiccup.form :as form]
+            [ring.util.anti-forgery :as anti-forgery]))
+
+(def messages (atom '()))
+
+(defn generate-message-view
+  "this generates the html for displaying messags"
+  []
+  (page/html5
+   [:head
+    [:title "chatter"]]
+   [:body
+    [:h1 "Our Chat App"]
+    [:p
+     (form/form-to
+      [:post "/"]
+      (anti-forgery/anti-forgery-field )
+      "Name: " (form/text-field "name")
+      "Message: " (form/text-field "message")
+      (form/submit-button "Submit"))]
+    [:p
+     [:table
+      (map (fn [m] [:tr [:td (:name m)] [:td (:message m)]]) @messages)]]]))
+
+(defn update-messages!
+  "this will update the message list"
+  [name message]
+  (swap! messages conj  {:name name :message message}))
+
+(defroutes app-routes
+  (GET "/" [] (generate-message-view))
+  (POST "/" {params :params} (do
+                               (update-messages! (get params "name") (get params "message"))
+                               (generate-message-view)))
+  (route/not-found "Not Found"))
+
+(def app (wrap-params app-routes))
+```
+
+Add, commit, merge the changes to master, push master to githup, and delete the branch.
+
