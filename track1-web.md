@@ -907,7 +907,7 @@ Let's fix the display first.  We'll represent the messages as a vector
 of maps.  Each map will have a :name and :message key.  Let's call the
 vector simply messages and hard code some samples to get started.
 
-__Explain clojure maps__
+_explain clojure maps_
 
 ```clojure
 (def messages [{:name "blue" :message "hello, world"}
