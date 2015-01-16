@@ -188,8 +188,10 @@ nil
 Saying hello to the World is a good thing but it would be useful to
 say hello to other things too.  By adding an argument, we can say
 hello to other things.  This time, we'll need to build up a string
-since we won't be able to return a constant string.  And since we'll
-update the name and doc-string? to reflect the new functionality.
+since we won't be able to return a constant string.  The function
+"str" will take an arbitrary number of arguments and convert them into
+a string.  And since we'll update the name and doc-string? to reflect
+the new functionality.
 
 ```clojure
 (defn hello-thing
@@ -220,7 +222,6 @@ redundancy by combining them.  We'll just call this version hello.
 ```
 
 ```
-
 user> (hello)
 "Hello, World."
 user> (hello 1001)
