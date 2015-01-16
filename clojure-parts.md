@@ -4,25 +4,23 @@
 def is a way of defining variables.  The format is:
 
 ```clojure
-(def symbol doc-string? init?)
+(def name doc-string? init?)
 ```
 
-1) The symbol ```def``` comes at the beginning of the expression.
-2) symbol is the name you want to give the variable.
-3) doc-string? is an optional description on what the variable is and how it is
+1. ```def``` - introduces the def expression.
+2. ```name``` - the name you want to give the variable.
+3. ```doc-string?``` -  an optional description on what the variable is and how it is
 meant to be used.
-4) init? is an optional value the variable will be set to.  If unset, the value is unbound.
+4. ```init?``` - an optional value the variable will be set to.  If unset, the value is unbound.
 
-Clojure is a dynamic language; the variable has a value but does not
-itself have a type.  The value has a type.
+A value is an expression that cannot be evaluated any further and a
+type is a collection of values.  Clojure is a dynamic language; the
+variable has a value but does not itself have a type.  The value has a
+type.
 
 Variables must be def'd before they can be used.  As a convenience, it is legal to
 def a variable, then def the variable to a different value, even a value of a completely
 different type, but this is considered bad style.
-
-After it has been def'd, a variable is visible throughout the file.
-It's also possible to have access to the variable from other files but we have to
-bring it into that namespace or use the variables full namespace name.
 
 ## vectors
 
@@ -129,9 +127,111 @@ of the original as possible.
 
 ## keywords
 
+Keywords are symbolic identifiers that evaluate to themselves.
+Keywords begin with a colon.
+
++ :x
++ :st-paul
++ :favorite-color
+
+are all keywords.
+
 ## defn
 
-## maps
+Functions are the heart and soul of a clojure program.  They take
+arguments and return a value.  We've been using functions but defn
+gives us a way of creating our own and giving it a name.
+
+The basic structure of ```defn``` is:
+
+```clojure
+(defn name
+  doc-string?
+  params-vector
+  expression)
+```
+
+1. ```defn``` - introduces the defn expression.
+2. ```name``` - the name you want to give the function.
+3. ```doc-string?``` - an optional description of the function.
+4. ```params-vector``` - a vector of symbols naming the functions arguments.
+5. ```expression``` - the body of the function.
+
+A simple function would,
+
+```clojure
+(defn hello-world
+  "ye olde 'Hello, World'"
+  []
+  "Hello, World")
+```
+
+This creates a function called "hello-world", which takes no arguments and returns the string "Hello, World".
+
+```
+user> (hello-world)
+"Hello, World"
+```
+
+The doc-string? is "ye olde 'Hello, World'".  We can see the doc-string?, when there is one, by calling the function "doc"
+on the function we're curios about.
+
+```
+user> (doc hello-world)
+-------------------------
+user/hello-world
+([])
+  ye olde 'Hello, World'
+nil
+```
+
+Saying hello to the World is a good thing but it would be useful to
+say hello to other things too.  By adding an argument, we can say
+hello to other things.  This time, we'll need to build up a string
+since we won't be able to return a constant string.  And since we'll
+update the name and doc-string? to reflect the new functionality.
+
+```clojure
+(defn hello-thing
+  "Takes something and returns `Hello, <thing>'"
+  [thing]
+  (str "Hello, " thing))
+```
+
+```
+user> (hello-thing 13)
+"Hello, 13"
+user> (hello-thing "world")
+"Hello, world"
+user> (hello-thing (+ 10 20 30))
+"Hello, 60"
+```
+
+That works but now we have two functions, one exclusively for saying
+hello to the world and the other for everything else, and there's
+actually a fair amount of overlap between the two.  We can reduce the
+redundancy by combining them.  We'll just call this version hello.
+
+```clojure
+(defn hello
+  "returns 'Hello, <thing>' when passed thing, otherwise returns 'Hello, World'"
+  ([] "Hello, World.")
+  ([thing] (str "Hello, " thing)))
+```
+
+```
+
+user> (hello)
+"Hello, World."
+user> (hello 1001)
+"Hello, 1001"
+user> (doc hello)
+-------------------------
+user/hello
+([] [thing])
+  returns 'Hello, <thing>' when passed thing, otherwise returns 'Hello, World'
+nil
+```
 
 ## maps
 
