@@ -432,7 +432,63 @@ user> @solar-system
 {:mercury {:color :grey, :position 1}, :uranus {:color :blue, :position 7}, :mars {:color :red, :position 4}, :neptune {:color :blue, :position 8}, :jupiter {:color :orange, :position 5}, :earth {:color :blue, :position 3}, :venus {:color :yellow, :position 2}, :saturn {:color :yellow, :position 6}}
 ```
 
+After invoking swap, the solar-system is now pluto-free.
+
+Most languages make it easier to do something simpler.  The reason
+clojure works like this is that clojure is designed to make it easier
+to write programs that do multiple things at the same time.  By using
+immutable data structures, then changing the variables from one value
+to another in ```swap!```, clojure can ensure that all of the parts of
+the program see the data in a consistent state.
 
 ## lists
 
+We've been using vectors.  Vectors have a property that makes them a
+good choice for many uses; you can access an indices in a vector in
+constant time.  That means that if you want to access the first
+element or the 1000th, either is a cheap fast operation.  Our program
+doesn't really do that though; we generally loop over all of the
+elements.  And now we're doing something else; we add a new element to
+the vector of messages evertime a user posts a new message.  Vectors
+are a little awkward for us because when you ```conj``` a new element
+onto a vector, it goes at the end.  For us, that means that each new
+message is going on the bottom.  For our application, adding the
+newest to the top would make it easier to read.
 
+There's another data structure that allows us to do that. It's called
+a list.  Like vector, a list is a collection and is sequential so we
+can use conj.  But since a list is not associative, we aren't able to
+access an index directly.  We would have to loop down the list
+counting until we reached a particular place.  That's not a concern
+for us in the way we're using messages.
+
+Lists are represented using parenthesis.  Because parens also signify
+a function call, lists are prefixed with a single opening quote to
+distinguish them function calls.
+
+```clojure
+(+ 2 3)
+```
+is a function call, adding 2 and 3.
+
+```clojure
+'(+ 2 3)
+```
+is a list with the elements; the symbol "+" followed by the numbers 2
+and 3.
+
+The empty list is:
+
+```clojure
+'()
+```
+
+And conj works for both vectors and lists but puts the new element on
+different ends:
+
+```clojure
+user> (conj [2 3 4] 100)
+[2 3 4 100]
+user> (conj '(1 2 3) 100)
+(100 1 2 3)
+```
