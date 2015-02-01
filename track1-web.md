@@ -25,16 +25,31 @@ Everything should be set up the night before during our install-fest.
 Please ensure you have everything working _before_ you show up for
 ClojureBridge on Saturday.
 
-You can verify that you have everything working by trying this out in
-your terminal:
+First we're going to verify that everything is set up correctly.
+We'll do this by entering some commands in the terminal.
+
+When we demonstrate terminal commands, we'll show a snippet from our
+terminal.  Our prompt is the dollar sign, everything after the dollar
+sign is the command we typed.  The result of the command is printed on
+the following lines.  Sometimes we'll have a sequence of commands in
+the same snippet, look for the dollar signs!  The terminal you're
+using will probably have different prompts but the commands should
+work the same.
+
+To check that lein and java are installed correctly:
 
 <div class= "console"><pre>
-~/temp/CB $ lein -version
-Leiningen 2.5.0 on Java 1.7.0_65 OpenJDK 64-Bit Server VM
-~/temp/CB $ git --version
+$: lein -version
+Leiningen 2.5.1 on Java 1.8.0_40-internal OpenJDK 64-Bit Server VM
+</div>
+
+<div class= "console"><pre>
+$: git --version
 git version 2.1.4
 </pre>
 </div>
+
+<div class= "console"><pre>
 
 ### Clojure, the Big Picture
 
@@ -77,17 +92,17 @@ On my machine, working from home:
 
 <div class= "console"><pre>
 
-~/temp/CB $ traceroute github.com
-traceroute to github.com (192.30.252.128), 30 hops max, 60 byte packets
- 1  192.168.1.1 (192.168.1.1)  17.063 ms  17.049 ms  17.031 ms
- 2  96.120.49.33 (96.120.49.33)  24.241 ms  25.139 ms  28.541 ms
- 3  te-0-2-0-6-sur01.webster.mn.minn.comcast.net (68.85.167.145)  29.825 ms  29.820 ms  29.803 ms
- 4  te-0-7-0-12-ar01.crosstown.mn.minn.comcast.net (69.139.219.129)  34.388 ms  34.371 ms  34.353 ms
- 5  pos-0-0-0-0-ar01.roseville.mn.minn.comcast.net (68.87.174.194)  32.900 ms  34.284 ms *
- 6  he-1-12-0-0-cr01.350ecermak.il.ibone.comcast.net (68.86.94.77)  40.186 ms  26.773 ms  27.484 ms
- 7  be-10206-cr01.newyork.ny.ibone.comcast.net (68.86.86.225)  46.717 ms  60.557 ms  62.632 ms
- 8  be-10002-cr01.ashburn.va.ibone.comcast.net (68.86.86.233)  68.517 ms  66.340 ms  68.452 ms
- 9  he-0-11-0-0-pe07.ashburn.va.ibone.comcast.net (68.86.83.74)  71.955 ms  71.912 ms  75.097 ms
+$: traceroute github.com
+traceroute to github.com (192.30.252.130), 30 hops max, 60 byte packets
+ 1  192.168.1.1 (192.168.1.1)  5.913 ms  5.908 ms  6.000 ms
+ 2  * 96.120.49.33 (96.120.49.33)  30.033 ms  30.066 ms
+ 3  te-0-3-0-1-sur02.webster.mn.minn.comcast.net (68.85.167.149)  30.553 ms  32.776 ms  32.785 ms
+ 4  te-0-7-0-12-ar01.roseville.mn.minn.comcast.net (69.139.219.134)  32.778 ms  36.059 ms te-0-7-0-13-ar01.roseville.mn.minn.comcast.net (68.87.174.185)  35.686 ms
+ 5  he-1-13-0-0-cr01.350ecermak.il.ibone.comcast.net (68.86.94.81)  42.354 ms *  43.213 ms
+ 6  be-10206-cr01.newyork.ny.ibone.comcast.net (68.86.86.225)  63.574 ms  59.894 ms  62.441 ms
+ 7  pos-2-5-0-0-cr01.dallas.tx.ibone.comcast.net (68.86.85.25)  64.643 ms  64.659 ms  64.653 ms
+ 8  he-3-14-0-0-cr01.dallas.tx.ibone.comcast.net (68.86.85.1)  67.039 ms  67.079 ms  67.056 ms
+ 9  he-0-10-0-0-pe07.ashburn.va.ibone.comcast.net (68.86.83.66)  63.013 ms  67.045 ms  88.273 ms
 10  * * *
 11  * * *
 12  * * *
@@ -109,7 +124,6 @@ traceroute to github.com (192.30.252.128), 30 hops max, 60 byte packets
 28  * * *
 29  * * *
 30  * * *
-~/temp/CB $
 
 </pre>
 </div>
@@ -120,10 +134,12 @@ traceroute to github.com (192.30.252.128), 30 hops max, 60 byte packets
 + 3-30) the requests are bouncing around comcast.
 
 When you enter [https://github.com](httpss://github.com) in the
-address bar, your browser makes GET request to the github server.  The
-server sends back an html page.  What you see is how the browser is
-programmed to display the html but if you want to see the html itself,
-right click on the page and select "view page source."
+address bar, your browser makes GET request to the github server.
+There are several types of requests, but GET is the one for simply
+asking the server to send back some information.  The server sends
+back an html page.  What you see is how the browser is programmed to
+display the html but if you want to see the html itself, right click
+on the page and select "view page source."
 
 ### HTML Proper
 
@@ -184,8 +200,9 @@ the body looks like:
 Save the file and refresh the browser.  Experiment with different size
 heading tags.
 
-Html supports tables. _explain why we're talking about tables_
-Try adding this table to our sample html within the body:
+Html supports tables which we're going to use later to display
+structured data.  Try adding this table to our sample html within the
+body:
 
 ```HTML
 <table>
