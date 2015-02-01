@@ -50,6 +50,12 @@ git version 2.1.4
 </div>
 
 <div class= "console"><pre>
+$: heroku --version
+heroku-toolbelt/3.25.0 (x86_64-linux-gnu) ruby/2.1.5
+You have no installed plugins.
+</pre>
+</div>
+
 
 ### Clojure, the Big Picture
 
