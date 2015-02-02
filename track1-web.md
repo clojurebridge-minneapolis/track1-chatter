@@ -276,16 +276,16 @@ saying, "Hello World".
 Notice the address bar; "localhost" is an alias for your computer.
 3000 is the port number where your server is listening for requests.
 If you take another look at the terminal, you'll see the message,
-"Started server on port 3000"
+"Started server on port 3000".
 
-Right click on the page and view the page source.  You'll see that's
-not even an html document, it's just the string "Hello World".
+Right click on the page and "View Page Source".  You'll see that's
+not even an html document, it's just the String(*) "Hello World".
 
 Let's stop the server by going to the terminal and typing "control-c"
 twice.
 
-Now let's take a closer look at the chatter directory.  The whole
-project tree looks like:
+Now let's take a closer look at what's in the chatter directory.  It
+looks like:
 
 
 <div class= "console"><pre>
@@ -311,7 +311,7 @@ chatter
 
 
 project.clj is a clojure file describing the what our project does and
-how other programs does it build on.
+what other programs it needs to run.
 
 README.md is a markdown file documenting how our project works.
 
@@ -326,24 +326,23 @@ example and ignore testing for this tutorial.
 ### A closer look at the src directory
 
 
-Let's open the files "src/chatter/core/handler.clj"
+Let's open the files "src/chatter/core/handler.clj".
 
-The "clj" extension tells us that this is a clojure file.  Clojure
-programs are made up of expressions.  Expressions are either a single
-name, number, or a list of expressions beginning with a paren.
+Ending the file's name with ".clj" tells us (and your editor)  that
+this is a clojure file.  Clojure programs are made up of expressions.
+Expressions are either a single name, number, string, or a list of
+expressions beginning with a paren (or parenthesis).
 
-The first expression, "(ns ..." is the namespace declaration.  It's a
-way of importing libraries and other programs in a controlled way.  We
-won't be covering it in much detail.  The first subexpression,
-"chatter.core.handler" tells clojure what we want to call the name
-space being defined in this file.  The next expression, beginning with
-"(:require..." is importing ring and compojure libraries.  Those are
-the low-level libraries for building web apps.
+The first expression, "(ns "chatter.core.handler"...)" tells clojure
+what we want to call the namespace being defined in this file.  The
+subexpression beginning with "(:require..." is importing ring and
+compojure libraries.  Those are the low-level clojure libraries for
+building web apps.
 
-"(defroutes app-routes..." is next.  defroutes is specific to clojure
-web apps.  It's creating a set of routes and giving them the name
-"app-routes".  The expressions after symbol "app-routes" are the route
-definitions.  There are two.
+The second expression is "(defroutes app-routes...".  defroutes is
+specific to clojure web apps.  It's creating a set of routes and
+giving them the name "app-routes".  The expressions after symbol
+"app-routes" are the route definitions.  There are two.
 
 The first is
 ```clojure
@@ -352,13 +351,13 @@ The first is
 
 There are four parts to the expression:
 
-1) "GET"; this is which type of http request we want to handle.  GET's
+1. "GET"- this is which type of http request we want to handle.  GET's
    are requests for information or data.
-2) "/"; this is the name of the web page.  "/" means the top
+2. "/"- this is the name of the web page.  "/" means the top
    level.
-3) "[]"; this is the parameters list.  When you do a search or fill
+3. "[]"- this is an empty parameter vector.  When you do a search or fill
    out a form, the parameters narrow the result.
-4) "Hello World"; the result that gets sent back to the requesting
+4. "Hello World"- the result that gets sent back to the requesting
    browser.
 
 After the GET is
@@ -373,9 +372,9 @@ return "Not Found."
 Right click on the page in the browser and select, "Inspect Element
 With Firebug."  _insert screenshot_The "html" tab shows what the html
 document looks like. The default is an empty head and a body with the
-string "Hello World".  This is actually different from what we see
-when we view the source.  The browser requested html but got only got
-a string back and it fleshes out a legal page.
+string "Hello World".  This is different from what we saw when we
+"View Page Source".  The browser requested html but got only got a
+string back and it fleshes out a legal page.
 
 Click on the "Net" tab and refresh the page.  You'll see the request
 was actually a GET request and returned a status code of 200.  That
@@ -384,7 +383,11 @@ indicates the request was successful.
 Try changing the address to
 "http://localhost:3000/non-existant-page".  Now you should see the GET
 request is in red and has a status of 404, which indicates that the
-server couldn't find the page.
+server couldn't find the page.  This was handled by the line,
+
+```clojure
+(route/not-found "Not Found")
+```
 
 Back in the handler.clj file, the third and final expression begins
 "(def app ..."  "def" is how you declare a variable in clojure.  The
@@ -521,21 +524,22 @@ Date:   Sun Dec 28 16:43:37 2014 -0600
 </pre>
 </div>
 
-There's been one commit, it was by me, and the comment was "initial
-commit."
+There's been one commit, the commit hash (which uniquely identifies
+every commit), the author's name, the date, and the commit comment.
 
 By keeping track of changes, git makes it easy to go back to an
-earlier save point.  It's a safety net.  By itself, it won't do much
-if our hard drive suddenly dies.  But git allows you to have
-repositories on other computers.  If your computer dies, your code
-lives on.  Github is a company hosting source code, free if you don't
-mind that other people can see your code.  As a safety measure, we're
-going to put our code on Github.
+earlier point.  It's a safety net.  By itself, it won't do much if our
+hard drive suddenly dies.  But git allows you to have repositories on
+other computers.  If your computer dies, your code lives on.  Github
+is a company hosting source code, free if you don't mind that other
+people can see your code.  As a safety measure, we're going to put our
+code on Github.
 
 Log into [https://github.com](https://github.com) and click, "create
-repository".  Name it "chatter".  That will open a page for your new
-repository.  We want to push an existing repository, so (be sure to
-use the url that Github gives you instead of mine!) :
+repository" (the "+" sign on the top menu).  Name it "chatter".  That
+will open a page for your new repository.  We want to push an existing
+repository, so (be sure to use the url that Github gives you instead
+of mine!) :
 
 <div class= "console"><pre>
 ~/temp/CB/chatter $ git remote add origin https://github.com/crkoehnen/chatter.git
@@ -554,9 +558,9 @@ Branch master set up to track remote branch master from origin.
 </pre>
 </div>
 
-Click on the "chatter" link and you'll go to the main page for the
-repository.  Note there is a single commit and the text is identical
-to what's in our "README.md" file.
+Back on github, click on the "chatter" link and you'll go to the main
+page for the repository.  Note there is a single commit and the text
+is identical to what's in our "README.md" file.
 
 ### Workflow
 
@@ -581,7 +585,7 @@ Let's start with something small and fix the readme.
 #### Branch the code
 
 Branching tells git that we want to start working on some changes and
-we're going to give the whole set a name.
+we're going to give them a name.
 
 <div class= "console"><pre>
 ~/temp/CB/chatter $ git status
@@ -601,7 +605,7 @@ I was on master, I created a branch named "fix-readme" with the
 command, "git branch fix-readme".  Then I checked out the branch.
 
 It's important to check out the branch.  Git won't do it automatically
-and you can find yourself making commits into the root branch.  This
+and you can find yourself making commits into the master branch.  This
 usually isn't fatal but it's often very messy to clean up if things go
 wrong.
 
@@ -610,8 +614,7 @@ I'm on the proper branch.
 
 #### Changing README.md
 
-Open the README.md file and replace the two FIXME's with reasonable
-text.  Save the file.
+Open the README.md file and replace the two FIXME's with.  Save the file.
 
 Now, if you ask git for the status, it will show that README.md has
 changed.
@@ -658,11 +661,11 @@ index 9493433..718893f 100644
 "git diff" is telling us that the README.md file change.  I remove the
 line that said "FIXME" and added a line saying, "This is a web app
 that will display posted messages."  I also changed the FIXME in the
-copyright to my email address.
+copyright to my email address.  You should see the changes you made.
 
 Since we changed the description in the README.md, we might as well
-change the description in project.clj.  Save that file too.  Now the
-git status should be:
+change the description in "project.clj" file.  Save that file too.
+Now the git status should be:
 
 <div class= "console"><pre>
 ~/temp/CB/chatter $ git status
@@ -719,7 +722,8 @@ Date:   Sun Dec 28 16:43:37 2014 -0600
 </pre>
 </div>
 
-Two commits, just what we expect.
+Two commits, the last commit from the branch we branched from and our
+new commit.
 
 #### Merging the changes
 
@@ -740,7 +744,8 @@ Date:   Sun Dec 28 16:43:37 2014 -0600
 </div>
 
 Note that master is lagging behind.  It doesn't have the commit with
-the README changes.  We can fix that by merging.
+the README changes.  We can fix that by merging our fix-me branch into
+the master branch.
 
 <div class= "console"><pre>
 ~/temp/CB/chatter $ git merge fix-readme
@@ -770,6 +775,9 @@ Date:   Sun Dec 28 16:43:37 2014 -0600
     initial commit
 </pre>
 </div>
+
+That's all the git we'll need for this tutorial.  To learn more about
+git, try this _tutorial_.
 
 #### Deleting the fix-readme branch
 
@@ -805,12 +813,12 @@ You should see the text and the commit count change.
 Now let's change the app's main page from "Hello, World" to something
 a little more chatty.
 
-First, let's create and checkout a new branch, "view-messages."
+First, let's create and checkout a new branch called, "view-messages."
 
 We need to write code that will generate html so we're going to use a
 library called "hiccup".  Adding a new library requires two steps:
 
-1) Add the library to the dependency section of the project.clj file.
+1) Add the library to the dependency section of the "project.clj" file.
    This tell lein that your program needs another program.
 
    Adding hiccup makes ours look like:
@@ -850,14 +858,15 @@ Let's use hiccup to generate the html by changing our defroutes:
 
 If you start the server using "lein ring server", you'll see that
 "http://localhost:3000" now proudly displays "Our Chat App".  And if
-you'll view source, you'll see that now it's proper html complete with
+"View Page Source", you'll see that now it's proper html complete with
 head, title, and body.
 
 Hiccup function, "page/html5" generates an html page.  It expects
 clojure vectors with symbols representing corresponding html tags.
 Hiccup will automatically add the closing tag when it reaches the end
-of the vector.  If the vector contains other vectors, hiccup digs into
-those too.
+of the vector.
+
+_include screenshot_
 
 Compare the hiccup to html in view-source to the html we wrote by hand
 earlier.
@@ -865,8 +874,8 @@ earlier.
 _introduce clojure vectors and keywords_
 
 A problem with our new app-routes is that it's doing two different
-things.  It's main role is to take the incomming request and decide
-what to do.  Now it's doing that but it's also generating a full html
+things.  Its main role is to take the incomming request and decide
+what to do.  Now it's doing that, but it's also generating a full html
 page.  As we add more and more pages, this will become too complicated
 to manage.  We'll get ahead of the game by splitting out the task of
 generating the html into a helper function.
@@ -915,16 +924,29 @@ You should see the commit numbers go up on github.
 
 ### Adding messages
 
-We still aren't displaying messages, neither do we have a way of
+We still aren't displaying messages, nor do we have a way of
 adding them.  Now we'll make that happen.
 
-Create and check out a branch to work in.
+Create and check out a branch to work on.
 
-Let's fix the display first.  We'll represent the messages as a vector
-of maps.  Each map will have a :name and :message key.  Let's call the
-vector simply messages and hard code some samples to get started.
+Let's change the app to display messages.  We'll represent the
+messages as a vector of maps.  Each map will have a :name and :message
+key and the corresponding value (in quotes).  For example:
+
+```clojure
+{:name "blue" :message "blue's first post"}
+```
+
+will represent the blue's first post.  This is a map with two keys.
+:name is "blue", because blue posted it, :message is content of the
+post and its value is, "blue's first post".
+
+Let's call the vector simply "messages" and hard code(*) some samples
+to get started.  Add a messages variable to "handler.clj".
 
 _explain clojure maps_
+
+After the ns expresion, add:
 
 ```clojure
 (def messages [{:name "blue" :message "hello, world"}
@@ -946,19 +968,23 @@ Next we'll modify the html to display the messages.
     [:p messages]]))
 ```
 
+Save "handler.clj" then go back to the browser and refresh the page.
+
 This blows up spectacularly.  The message is
 "java.lang.illegalArgumentException"
 "{:name "chris", :message "hello, world"} is not a valid element
 name."
 
-Then there's a stack trace.  That gives an idea what the program was
+Then there's a stack trace(*), which  gives an idea what the program was
 doing when it hit the problem.  Ignore all the files that aren't ones
 you wrote for the project.  In my case, the first file of interest is
-handler.clj, line 14, the generate-message-view function.  A couple of
-helpful clues; elements are what fragments of html are called, and
-hiccup is responsible for generating html from clojure symbols.  The
-problem is that we've got a map with symbols in it and hiccup thinks
-they're html.  They're not so it blows up.
+"handler.clj", line 14, the generate-message-view function.
+
+In the exception message on the top, "... is not a valid element
+name", elements are what fragments of html are called.  Hiccup is
+responsible for generating html from clojure symbols.  The problem is
+that we've got a map with symbols in it and hiccup thinks they're
+html.  They're not so it blows up.
 
 We can finesse the issue by converting our maps to strings.
 
@@ -972,10 +998,13 @@ We can finesse the issue by converting our maps to strings.
    [:body
     [:h1 "Our Chat App"]
     [:p (str messages)]]))
+
 ```
 
-That works but is ugly.  Let's take the messages and put them in a
-table using html's table, tr, and td elements.
+Save "handler.clj", then refresh the browser.
+
+This fixes the exception but is ugly.  Let's take the messages and put
+them in a table using html's table, tr, and td elements.
 
 Now our generate-message-view looks likes:
 
