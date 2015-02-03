@@ -1085,13 +1085,25 @@ now my params are strings instead of keywords./>_
 
 Now the app is taking our new messages but it's adding new messages to
 the end.  That's going to be hard to read.  We can fix that by
-changing from a vector to a list.  We can also remove our stubbed out
-data.
+changing from a vector to a list.
+
+
+```clojure
+(def messages (atom '()))
+```
 
 _explain lists_
 
-And just to clean things up, let's put updating the message list into
-a helper function to get the logic out of the routes.
+We can also remove our stubbed out data.  And just to clean things up,
+let's put updating the message list into a helper function,
+"update-messages!", to get the logic out of the routes.
+
+```clojure
+(defn update-messages!
+  "this will update the message list"
+  [name message]
+  (swap! messages conj  {:name name :message message}))
+```
 
 Our app now looks like:
 
@@ -1146,7 +1158,7 @@ Add, commit, merge the changes to master, push master to githup, and delete the 
 
 ### Bootstrap
 
-The app is working but is ugly.  We can improve it by using CSS and a
+The app is working but is ugly.  We can improve it by using CSS and JavaScript from a
 package of software called Twitter Bootstrap.
 
 Create and checkout a new branch.
@@ -1166,26 +1178,43 @@ Now let's change the table element to:
 
 ":table#messages.table"
 
+```clojure
+    [:table#messages.table
+     (map (fn [m] [:tr [:td (:name m)] [:td (:message m)]]) @messages)]
+```
+
 This tells hiccup that we want the table to have an id of "messages" and a class of "table."
-CSS works by looking for combinations of classes and structure and change the appearance
+CSS works by looking for combinations of classes and structure and changing the appearance
 when an element matches a pattern.  Bootstrap uses a set of predefined CSS to look for a common
-set of classes.  On of them is table.  Save, then refresh the browser.  It should look better.
+set of classes.  One of them is table.  Save, then refresh the browser.  It should look better.
 Examine the html that's now generated.  You should see and id and class field inside the table element.
 
 Let's make the table entries stripped by adding an additional class.  Change the table
-element to, ":table#messages.table.table-striped
+element to, ":table#messages.table.table-striped"
 
-What do you think would happen if you changed table-striped to table-bordered?
+```clojure
+    [:table#messages.table.table-striped
+     (map (fn [m] [:tr [:td (:name m)] [:td (:message m)]]) @messages)]
+```
+
+
+What do you think would happen if you changed table-striped to table-bordered?  Try it!
+
+
+```clojure
+    [:table#messages.table.table-hover
+     (map (fn [m] [:tr [:td (:name m)] [:td (:message m)]]) @messages)]
+```
 
 Html elements can have multiple classes and CSS uses this to create more complex
 effects.  Try adding table-hover to the table element.
 ":table#messages.table.table-bordered.table-hover"
 
-Now when you move the mouse of a row, the entire row becomes highlighted.  Dynamic effects in the browser are implemented
+Now when you move the mouse over a row, the entire row becomes highlighted.  Dynamic effects in the browser are implemented
 using a language called Javascript.  We won't talk about Javascript except to say that it exists and the javascript part of
 Bootstrap was what we imported into the page with the include-js call.
 
-Let's create our own css file to center the heading.  Create a file "chatter.css" in resources/public.  Inside,
+Let's create our own css file to center the heading.  Create a file "chatter.css" in resources/public.  Inside, paste:
 
 
 ```css
@@ -1195,7 +1224,7 @@ h1 {
 ```
 
 Css works using pattern matching.  In this case, we're saying that if the element is an "h1" element, center the text.  Save
-the file and import the file after importing bootstrap.
+the file and add another "page/include-css" expression to "handler.clj" to pull in "chatter.css".
 
 ```clojure
    [:head
@@ -1208,8 +1237,10 @@ the file and import the file after importing bootstrap.
 Refresh the page.  We want to see the h1 tag centered.  It won't though.  Open firebug and watch the traffic
 as you refresh the page.  We're getting a 404 when it's trying to download the css.
 
-The problem is in our defroutes.  We tell what to do when a browser requests a GET or a POST but anything else is falling through
-to our route/not-found call.  We need to tell defroutes where to find our resources.  Change the defroutes to:
+The problem is in our defroutes.  We have a route handling browser GET
+or POST requests, but anything else is falling through to our
+route/not-found call.  We need to tell defroutes where to find our
+resources.  Change the defroutes to:
 
 ```clojure
 (defroutes app-routes
@@ -1222,20 +1253,24 @@ to our route/not-found call.  We need to tell defroutes where to find our resour
 ```
 ### Heroku
 
-Up until now, we've been running the server on the same computer as the
-browser and accessing it using "localhost".  This works great while writing
-the program but eventually we'll want to put it on the internet for others
-to see and use.  We're going to use a company called heroku for hosting.  We'll
-use git to send them our program and they'll put it on the internet.  The
-advantage of using a company like heroku is that they'll handle the work
-of actually maintaining a server.  One of the disadvantages is that heroku
-can be expensive, but for a little program like ours it's free.
+Up until now, we've been running the server on our computer,
+"localhost"(*).  This works great while writing or developing the
+program because it makes testing changes fast and easy, but eventually
+we'll want to put it on the internet for others to see and use.
+
+To put it on the internet, we're going to use a company called heroku
+for hosting(*).  They're going to run our program on a machine visible
+to anybody on the internet.  We'll use git to send them our program
+The advantage of using a company like heroku is that they'll handle
+the work of actually maintaining a server.  One of the disadvantages
+is that heroku can be expensive, but for a little program like ours
+it's free.
 
 First we need to make a couple of changes to our app so it plays nicely
 with heroku.
 
-In handler.clj, we'll add a couple of functions to help us tell when heroku
-starts and stops our program.
+In "handler.clj", we'll add a couple of functions to print log
+messages when heroku starts and stops the program.
 
 
 ```clojure
@@ -1248,7 +1283,7 @@ starts and stops our program.
 ```
 
 Then we need to add a main function.  This is what heroku will actually
-invoke to start our program.
+invoke(*) to start our program.
 
 ```clojure
 (defn -main [& [port]]
@@ -1256,10 +1291,10 @@ invoke to start our program.
     (jetty/run-jetty #'app {:port port :join? false})))
 ```
 
-Finally, we need to change our project.clj so it knows how to prepare our
+Finally, we need to change our "project.clj" so it knows how to prepare our
 application for heroku.
 
-Our new project.clj should look like:
+Our new "project.clj" should look like:
 
 ```clojure
 (defproject chatter "0.1.0-SNAPSHOT"
@@ -1290,7 +1325,7 @@ Our new project.clj should look like:
   :uberjar-name "chatter-standalone.jar")
 ```
 
-Our new handler.clj ns should look like:
+The ns of "handler.clj" should look like:
 
 ```clojure
 (ns chatter.core.handler
