@@ -290,7 +290,7 @@ Notice the address bar.
 If you take another look at the terminal, you'll see the message,
 "Started server on port 3000".
 
-Right click on the page and "View Page Source".  You'll see that's
+Right click on the page and ```View Page Source```.  You'll see that's
 not even an html document, it's just the String(*) "Hello World".
 
 Let's stop the server by going to the terminal and typing "control-c".
@@ -428,7 +428,7 @@ and coordinate work with others.
 Inside the chatter directory, enter the command, "git init"
 
 <div class= "console"><pre>
-~/temp/CB/chatter $ git init
+$ /chatter $ git init
 Initialized empty Git repository in /home/crk/temp/CB/chatter/.git/
 </pre>
 </div>
@@ -439,7 +439,7 @@ our directory.
 
 
 <div class= "console"><pre>
-~/temp/CB/chatter $ git status
+$ /chatter $ git status
 On branch master
 
 Initial commit
@@ -478,7 +478,7 @@ Now when we ask git for the status:
 
 
 <div class= "console"><pre>
-~/temp/CB/chatter $ git status
+$ /chatter $ git status
 On branch master
 
 Initial commit
@@ -499,7 +499,7 @@ message.
 
 
 <div class= "console"><pre>
-~/temp/CB/chatter $ git commit . -m "initial commit"
+$ /chatter $ git commit . -m "initial commit"
 [master (root-commit) 44a560f] initial commit
  5 files changed, 66 insertions(+)
  create mode 100644 .gitignore
@@ -515,7 +515,7 @@ Now when we ask git for the status,
 
 
 <div class= "console"><pre>
-~/temp/CB/chatter $ git status
+$ /chatter $ git status
 On branch master
 nothing to commit, working directory clean
 </pre>
@@ -525,7 +525,7 @@ Ok, there haven't been any changes since our last commit, so there's
 nothing to see.  Let's check the log.
 
 <div class= "console"><pre>
-~/temp/CB/chatter $ git log
+$ /chatter $ git log
 commit 44a560f1653770afac01aea2c9279a7af46a46eb
 Author: crkoehnen <crkoehnen@gmail.com>
 Date:   Sun Dec 28 16:43:37 2014 -0600
@@ -552,8 +552,8 @@ repository, so (be sure to use the url that Github gives you instead
 of mine!) :
 
 <div class= "console"><pre>
-~/temp/CB/chatter $ git remote add origin https://github.com/crkoehnen/chatter.git
-~/temp/CB/chatter $ git push -u origin master
+$ /chatter $ git remote add origin https://github.com/crkoehnen/chatter.git
+$ /chatter $ git push -u origin master
 Username for 'https://github.com': crkoehnen
 Password for 'https://crkoehnen@github.com':
 Counting objects: 13, done.
@@ -598,14 +598,14 @@ Branching tells git that we want to start working on some changes and
 we're going to give them a name.
 
 <div class= "console"><pre>
-~/temp/CB/chatter $ git status
+$ /chatter $ git status
 On branch master
 Your branch is up-to-date with 'origin/master'.
 nothing to commit, working directory clean
-~/temp/CB/chatter $ git branch fix-readme
-~/temp/CB/chatter $ git checkout fix-readme
+$ /chatter $ git branch fix-readme
+$ /chatter $ git checkout fix-readme
 Switched to branch 'fix-readme'
-~/temp/CB/chatter $ git status
+$ /chatter $ git status
 On branch fix-readme
 nothing to commit, working directory clean
 </pre>
@@ -631,7 +631,7 @@ changed.
 
 
 <div class= "console"><pre>
-~/temp/CB/chatter $ git status
+$ /chatter $ git status
 On branch fix-readme
 Changes not staged for commit:
   (use "git add <file>..." to update what will be committed)
@@ -646,7 +646,7 @@ no changes added to commit (use "git add" and/or "git commit -a")
 We can ask git to show us exacty what changed.
 
 <div class= "console"><pre>
-~/temp/CB/chatter $ git diff
+$ /chatter $ git diff
 diff --git a/README.md b/README.md
 index 9493433..718893f 100644
 --- a/README.md
@@ -678,7 +678,7 @@ change the description in "project.clj" file.  Save that file too.
 Now the git status should be:
 
 <div class= "console"><pre>
-~/temp/CB/chatter $ git status
+$ /chatter $ git status
 On branch fix-readme
 Changes not staged for commit:
   (use "git add <file>..." to update what will be committed)
@@ -696,8 +696,8 @@ no changes added to commit (use "git add" and/or "git commit -a")
 Let's add and commit the changes.
 
 <div class= "console"><pre>
-~/temp/CB/chatter $ git add README.md project.clj
-~/temp/CB/chatter $ git commit README.md project.clj -m "fixing README.md description"
+$ /chatter $ git add README.md project.clj
+$ /chatter $ git commit README.md project.clj -m "fixing README.md description"
 [fix-readme 57aff88] fixing README.md description
  2 files changed, 3 insertions(+), 3 deletions(-)
 </pre>
@@ -707,7 +707,7 @@ Now git status reports no uncommitted changes but we're still on the
 fix-me branch.
 
 <div class= "console"><pre>
-~/temp/CB/chatter $ git status
+$ /chatter $ git status
 On branch fix-readme
 nothing to commit, working directory clean
 </pre>
@@ -716,7 +716,7 @@ nothing to commit, working directory clean
 Let's the check the log.
 
 <div class= "console"><pre>
-~/temp/CB/chatter $ git log
+$ /chatter $ git log
 commit 57aff889c81698394faf8568b63f14130d32599a
 Author: crkoehnen <crkoehnen@gmail.com>
 Date:   Sun Dec 28 17:33:41 2014 -0600
@@ -728,7 +728,7 @@ Author: crkoehnen <crkoehnen@gmail.com>
 Date:   Sun Dec 28 16:43:37 2014 -0600
 
     initial commit
-~/temp/CB/chatter $
+$ /chatter $
 </pre>
 </div>
 
@@ -741,10 +741,10 @@ Let's merge our changes into the master branch.  First let's checkout
 master and check its log.
 
 <div class= "console"><pre>
-~/temp/CB/chatter $ git checkout master
+$ /chatter $ git checkout master
 Switched to branch 'master'
 Your branch is up-to-date with 'origin/master'.
-~/temp/CB/chatter $ git log
+$ /chatter $ git log
 commit 44a560f1653770afac01aea2c9279a7af46a46eb
 Author: crkoehnen <crkoehnen@gmail.com>
 Date:   Sun Dec 28 16:43:37 2014 -0600
@@ -758,7 +758,7 @@ the README changes.  We can fix that by merging our fix-me branch into
 the master branch.
 
 <div class= "console"><pre>
-~/temp/CB/chatter $ git merge fix-readme
+$ /chatter $ git merge fix-readme
 Updating 44a560f..57aff88
 Fast-forward
  README.md   | 4 ++--
@@ -771,7 +771,7 @@ The merge brought in the changes.  If we check the log, we'll see two
 commits now.
 
 <div class= "console"><pre>
-~/temp/CB/chatter $ git log
+$ /chatter $ git log
 commit 57aff889c81698394faf8568b63f14130d32599a
 Author: crkoehnen <crkoehnen@gmail.com>
 Date:   Sun Dec 28 17:33:41 2014 -0600
@@ -802,7 +802,7 @@ The final step will be to push our changes to github.
 
 
 <div class= "console"><pre>
-~/temp/CB/chatter $ git push origin master
+$ /chatter $ git push origin master
 Username for 'https://github.com': crkoehnen
 Password for 'https://crkoehnen@github.com':
 Counting objects: 4, done.
@@ -915,7 +915,7 @@ outside, we shouldn't see a change.  The page should still display
 Now let's double check our git status:
 
 <div class= "console"><pre>
-~/temp/CB/chatter $ git status
+$ /chatter $ git status
 On branch view-messages
 Changes not staged for commit:
   (use "git add <file>..." to update what will be committed)
@@ -1375,7 +1375,7 @@ Try the traceroute command again against the address heroku assigned your app:
 
 
 <div class= "console"><pre>
-~/temp/CB/chatter $ traceroute obscure-brushlands-9918.herokuapp.com
+$ /chatter $ traceroute obscure-brushlands-9918.herokuapp.com
 traceroute to obscure-brushlands-9918.herokuapp.com (50.16.239.160), 30 hops max, 60 byte packets
  1  192.168.1.1 (192.168.1.1)  15.820 ms  15.797 ms  15.773 ms
  2  96.120.49.33 (96.120.49.33)  23.895 ms  25.196 ms  25.192 ms
@@ -1407,7 +1407,6 @@ traceroute to obscure-brushlands-9918.herokuapp.com (50.16.239.160), 30 hops max
 28  * * *
 29  * * *
 30  * * *
-~/temp/CB/chatter $
 </pre>
 </div>
 
