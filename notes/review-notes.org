@@ -1,0 +1,96 @@
+* antoinette
+** heroku needs updating
+*
+*** set up
+*
+*** download
+*
+*** "your version of git has serious vulnerabilities"
+*
+** create directories (?)
+*
+** windows
+*** git bash 
+*
+*** windows cmd for lein
+*
+** make cd into project directory more explicit
+*
+** formatting of GET explanation
+*
+** "inspect with firebug" - didn't turn off server??
+*
+** installfest, firefox + firebug?
+*
+** wrap-defaults - describe in order of appearance
+*
+** and stay stopped!! (server stopping again?)
+*
+** maybe warn people about git/windows/crlf
+*
+** github instructions
+*
+** "click on the link" - confusing
+*
+** checkout explanations weird after doing them.
+*
+** "reasonable text"??
+*
+*** and project description
+*
+*** show examples?
+*
+** less noise by merge steps
+*
+*** just list the command
+*
+** show deleting git branch in the same format
+*
+** need to explain forms
+* millie
+** directories (+1)
+** period after "Started server on port 3000"
+** glossary
+** millie had to "control-c" once
+** core!! core gone 
+** encourage googling
+** lookup what exactly namespaces
+** figure out a better way of describing rest verbs
+** later use proper param vector in POST
+** turn server back on 
+** install-fest - choose between chrome or firefox + firebug
+** rework string vs. html in browser - word "legal"
+** better definition of "route"
+** what's a branch?
+** "git add ." should be console
+** what's a branch??
+** split git commands
+** show results of branch commands, and show current branch
+** kill first person section, remove redundant sections with integrated boxes
+** grey for git delete, then add "git branch" step
+** grey box for creating and checking out "view-messages"
+** why do we need to generate html?
+** change "1)" to "1." - hiccup
+** grey box "lein ring server"
+** need "symbols"
+** revamp"defn" part; 
+** fix server start and stop; leave running and have multiple terminals
+** add ".swp" to gitignore
+** change :name to :author
+** jargon list
+** message still says "chris"
+** add something for strings, first time we use them.
+** fix anti-forgery
+** POST (wtf??)
+** breakdown post diff
+** make an atom, then convert to list
+** explain atom and swap
+** BROKEN!!
+** take a second look at css/js sections
+** duplication with "pattern matching"
+** add a teaser after bootstrap, before heroku
+** think about pinging local box
+** is "invoke" jargon
+** explicitly merge bootstrap
+** explicitly branch for heroku
+** where to add the helper methods and main
