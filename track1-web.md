@@ -343,7 +343,7 @@ this is a clojure file.  Clojure programs are made up of expressions.
 
 > Expressions are either a single name, number, string, or a list of expressions beginning with a paren (or parenthesis).
 
-The first expression, 
+The first expression,
 
 ```clojure
 (ns "chatter.core.handler"...)
@@ -366,7 +366,7 @@ The second expression is
 ```
 
 defroutes is specific to clojure web apps.  It's creating a set of
-routes and giving them the name "app-routes".  The expressions after
+routes and giving them the name ```app-routes```.  The expressions after
 symbol "app-routes" are the route definitions.  There are two.
 
 The first is
@@ -377,13 +377,13 @@ The first is
 
 There are four parts to the expression:
 
-1. "GET"- this is which type of http request we want to handle.  GET's
+1. ```GET```- this is which type of http request we want to handle.  GET's
    are requests for information or data.
-2. "/"- this is the name of the web page.  "/" means the top
+2. ```"/"```- this is the name of the web page.  ```/``` means the top
    level.
-3. "[]"- this is an empty parameter vector.  When you do a search or fill
+3. ```"[]"```- this is an empty parameter vector.  When you do a search or fill
    out a form, the parameters narrow the result.
-4. "Hello World"- the result that gets sent back to the requesting
+4. ```"Hello World"```- the result that gets sent back to the requesting
    browser.
 
 After the GET is
@@ -395,18 +395,22 @@ After the GET is
 This means that, when the server gets any other request, it should
 return "Not Found."
 
-Right click on the page in the browser and select, "Inspect Element
-With Firebug."  _insert screenshot_The "html" tab shows what the html
+Right click on the page in the browser and select, ```Inspect Element
+With Firebug.```
+
+_insert screenshot_
+
+The "html" tab shows what the html
 document looks like. The default is an empty head and a body with the
 string "Hello World".  This is different from what we saw when we
-"View Page Source".  The browser requested html but got only got a
+```View Page Source```.  The browser requested html but got only got a
 string back and it fleshes out a legal page.
 
 Click on the "Net" tab and refresh the page.  You'll see the request
 was actually a GET request and returned a status code of 200.  That
 indicates the request was successful.
 
-Try changing the address to
+In your browswer address bar, try changing the url to:
 "http://localhost:3000/non-existant-page".  Now you should see the GET
 request is in red and has a status of 404, which indicates that the
 server couldn't find the page.  This was handled by the line,
@@ -415,19 +419,24 @@ server couldn't find the page.  This was handled by the line,
 (route/not-found "Not Found")
 ```
 
-Back in the handler.clj file, the third and final expression begins
-"(def app ..."  "def" is how you declare a variable in clojure.  The
-name of the variable is "app" and it's being assigned the result of
+Back in the ```handler.clj``` file, the third and final expression begins
+
+```clojure
+(def app ...
+```
+
+```def``` is how you declare a variable in clojure.  The
+name of the variable is ```app``` and it's being assigned the result of
 
 ```clojure
 (wrap-defaults app-routes site-defaults)
 ```
 
-"app-routes" is what we're calling our set of routes, "site-defaults"
+```app-routes``` is what we're calling our set of routes, ```site-defaults```
 are the default routes imported into the namespace from ring library.
-"wrap-defaults" is also imported from ring and it combines our routes
+```wrap-defaults``` is also imported from ring and it combines our routes
 and the defaults.  When we start the server, it's going to look for
-the routes associated with the "app" variable and use those to decide
+the routes associated with the ```app``` variable and use those to decide
 how to handle http requests.
 
 Let's stop the server by going back to the terminal and typing
@@ -441,7 +450,7 @@ code under version control.  Version control allows developers to keep
 track of their changes over time.  It makes it easier to experiment
 and coordinate work with others.
 
-Inside the chatter directory, enter the command, "git init"
+Inside the chatter directory, enter the command, ```git init```
 
 <div class= "console"><pre>
 $ git init
@@ -477,10 +486,10 @@ nothing added to commit but untracked files present (use "git add" to track)
 We're on the master branch.  The master branch is the main place where
 our code will be.  It says "Initial commit" because we're just
 initializing git.  Git doesn't know anything about the files in our
-project but it's spotted the README.md, project.clj files and the src
-and test directories.  It also spotted a file called ".gitignore".
+project but it's spotted the ```README.md```, ```project.clj``` files and the src
+and test directories.  It also spotted a file called ```.gitignore```.
 Files beginning with a dot are normally hidden unless you specifically
-ask to see them.  .gitignore is a special file, it tells git what kind
+ask to see them.  ```.gitignore ``` is a special file, it tells git what kind
 of files we what it to not track.  These will mostly be compiled code,
 test reports, and log files.
 
@@ -488,13 +497,18 @@ Git follows a two-step process.  First you add the changes; they
 become staged.  Then you commit all of the staged changes.  Let's add
 everything.
 
-"git add ."  The "." tells git the current directory and below.
+<div class= "console"><pre>
+$: git add .
+</pre>
+</div>
+
+The "." tells git the current directory and below.
 
 Now when we ask git for the status:
 
 
 <div class= "console"><pre>
-$ /chatter $ git status
+$: git status
 On branch master
 
 Initial commit
@@ -515,7 +529,7 @@ message.
 
 
 <div class= "console"><pre>
-$ /chatter $ git commit . -m "initial commit"
+$: git commit . -m "initial commit"
 [master (root-commit) 44a560f] initial commit
  5 files changed, 66 insertions(+)
  create mode 100644 .gitignore
@@ -531,7 +545,7 @@ Now when we ask git for the status,
 
 
 <div class= "console"><pre>
-$ /chatter $ git status
+$: git status
 On branch master
 nothing to commit, working directory clean
 </pre>
@@ -541,7 +555,7 @@ Ok, there haven't been any changes since our last commit, so there's
 nothing to see.  Let's check the log.
 
 <div class= "console"><pre>
-$ /chatter $ git log
+$: git log
 commit 44a560f1653770afac01aea2c9279a7af46a46eb
 Author: crkoehnen <crkoehnen@gmail.com>
 Date:   Sun Dec 28 16:43:37 2014 -0600
@@ -568,8 +582,8 @@ repository, so (be sure to use the url that Github gives you instead
 of mine!) :
 
 <div class= "console"><pre>
-$ /chatter $ git remote add origin https://github.com/crkoehnen/chatter.git
-$ /chatter $ git push -u origin master
+$: git remote add origin https://github.com/crkoehnen/chatter.git
+$: git push -u origin master
 Username for 'https://github.com': crkoehnen
 Password for 'https://crkoehnen@github.com':
 Counting objects: 13, done.
