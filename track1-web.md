@@ -46,15 +46,13 @@ Leiningen 2.5.1 on Java 1.8.0_40-internal OpenJDK 64-Bit Server VM
 <div class= "console"><pre>
 $: git --version
 git version 2.1.4
-</pre>
-</div>
+</pre></div>
 
 <div class= "console"><pre>
 $: heroku --version
 heroku-toolbelt/3.25.0 (x86_64-linux-gnu) ruby/2.1.5
 You have no installed plugins.
-</pre>
-</div>
+</pre></div>
 
 
 ### Clojure, the Big Picture
@@ -93,8 +91,8 @@ is connected to to forward the request.
 
 On linux or the mac, traceroute will show you the number of hops it
 took to get to github.  (On windows, the command is called tracert.)
-On my machine, working from home:
 
+On my machine, working from home:
 
 <div class= "console"><pre>
 
@@ -131,8 +129,7 @@ traceroute to github.com (192.30.252.130), 30 hops max, 60 byte packets
 29  * * *
 30  * * *
 
-</pre>
-</div>
+</pre></div>
 
 
 + 1) is my computer
@@ -150,10 +147,12 @@ on the page and select "view page source."
 ### HTML Proper
 
 
-HTML stands for "HyperText Markup Language" Hypertext meant that
-documents could have embedded within them links to other pages or
-images.  The structure of the document was encoded using a markup
-language mainly consisting of opening and closing "tags" or elements.
+> HTML stands for "HyperText Markup Language"
+
+Hypertext means that documents could have embedded within them links
+to other pages or images.  The structure of the document was encoded
+using a markup language mainly consisting of opening and closing
+"tags" or elements.
 
 Save the following as sample.html:
 
@@ -254,39 +253,46 @@ us.
 
 <div class= "console"><pre>
   ~/temp/CB: lein new compojure chatter
-</pre>
-</div>
+</pre></div>
 
-Lein is a tool for managing clojure projects.  We've asked to create a
-new compojure project called chatter and there should now be a
-directory also called chatter.
+> Lein is a tool for managing clojure projects.
 
-Cd into the directory and start the server with the command:
+We've asked to create a new compojure project called chatter and there
+should now be a directory also called chatter.
+
+Move into the project directory:
 
 <div class= "console"><pre>
-  ~/temp/CB: lein ring server
-</pre>
-</div>
+  $: cd chatter
+</pre></div>
+
+Start the server with the command:
+
+<div class= "console"><pre>
+  $: lein ring server
+</pre></div>
 
 
 Lein will download a bunch of stuff off the internet the first time,
 but then it should cause your default browser to open to a page
 saying, "Hello World".
 
-Notice the address bar; "localhost" is an alias for your computer.
+Notice the address bar.
+
+> "localhost" is an alias for your computer.
+
 3000 is the port number where your server is listening for requests.
+
 If you take another look at the terminal, you'll see the message,
 "Started server on port 3000".
 
 Right click on the page and "View Page Source".  You'll see that's
 not even an html document, it's just the String(*) "Hello World".
 
-Let's stop the server by going to the terminal and typing "control-c"
-twice.
+Let's stop the server by going to the terminal and typing "control-c".
 
-Now let's take a closer look at what's in the chatter directory.  It
+In Light Table, let's take a closer look at what's in the chatter directory.  It
 looks like:
-
 
 <div class= "console"><pre>
 
@@ -306,21 +312,20 @@ chatter
 
 8 directories, 4 files
 
-</pre>
-</div>
+</pre></div>
 
 
-project.clj is a clojure file describing the what our project does and
+```project.clj``` is a clojure file describing the what our project does and
 what other programs it needs to run.
 
-README.md is a markdown file documenting how our project works.
+```README.md``` is a markdown file documenting how our project works.
 
-resources is a folder where we would store static html, CSS, and
+```resources``` is a folder where we would store static html, CSS, and
 images.
 
-src is where our source code will live.
+```src``` is where our source code will live.
 
-test is where our tests will live.  We're going to set an awful
+```test``` is where our tests will live.  We're going to set an awful
 example and ignore testing for this tutorial.
 
 ### A closer look at the src directory
