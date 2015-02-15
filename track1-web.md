@@ -600,7 +600,7 @@ Branch master set up to track remote branch master from origin.
 
 Back on github, click on the "chatter" link and you'll go to the main
 page for the repository.  Note there is a single commit and the text
-is identical to what's in our "README.md" file.
+is identical to what's in our ```README.md``` file.
 
 ### Workflow
 
@@ -628,40 +628,40 @@ Branching tells git that we want to start working on some changes and
 we're going to give them a name.
 
 <div class= "console"><pre>
-$ /chatter $ git status
+$: git status
 On branch master
 Your branch is up-to-date with 'origin/master'.
 nothing to commit, working directory clean
-$ /chatter $ git branch fix-readme
-$ /chatter $ git checkout fix-readme
+$: git branch fix-readme
+$: git checkout fix-readme
 Switched to branch 'fix-readme'
-$ /chatter $ git status
+$: git status
 On branch fix-readme
 nothing to commit, working directory clean
 </pre>
 </div>
 
-I was on master, I created a branch named "fix-readme" with the
-command, "git branch fix-readme".  Then I checked out the branch.
+I was on master, I created a branch named ```fix-readme``` with the
+command, ```git branch fix-readme```.  Then I checked out the branch.
 
 It's important to check out the branch.  Git won't do it automatically
 and you can find yourself making commits into the master branch.  This
 usually isn't fatal but it's often very messy to clean up if things go
 wrong.
 
-To checkout, "git checkout fix-readme".  Now git status reports that
+To checkout, ```git checkout fix-readme```.  Now git status reports that
 I'm on the proper branch.
 
 #### Changing README.md
 
-Open the README.md file and replace the two FIXME's with.  Save the file.
+Open the ```README.md``` file and replace the two FIXME's with.  Save the file.
 
 Now, if you ask git for the status, it will show that README.md has
 changed.
 
 
 <div class= "console"><pre>
-$ /chatter $ git status
+$: git status
 On branch fix-readme
 Changes not staged for commit:
   (use "git add <file>..." to update what will be committed)
@@ -676,7 +676,7 @@ no changes added to commit (use "git add" and/or "git commit -a")
 We can ask git to show us exacty what changed.
 
 <div class= "console"><pre>
-$ /chatter $ git diff
+$: git diff
 diff --git a/README.md b/README.md
 index 9493433..718893f 100644
 --- a/README.md
@@ -698,13 +698,13 @@ index 9493433..718893f 100644
 </pre>
 </div>
 
-"git diff" is telling us that the README.md file change.  I remove the
+```git diff``` is telling us that the ```README.md``` file change.  I remove the
 line that said "FIXME" and added a line saying, "This is a web app
 that will display posted messages."  I also changed the FIXME in the
 copyright to my email address.  You should see the changes you made.
 
 Since we changed the description in the README.md, we might as well
-change the description in "project.clj" file.  Save that file too.
+change the description in ```project.clj``` file.  Save that file too.
 Now the git status should be:
 
 <div class= "console"><pre>
@@ -822,9 +822,12 @@ git, try this _tutorial_.
 #### Deleting the fix-readme branch
 
 Now that we've pulled the changes from the fix-readme branch into
-master, we no longer need fix-readme.
+master, we no longer need the ```fix-readme``` branch, so let's delete it.
 
-"git branch -d fix-readme" will delete it.
+<div class= "console"><pre>
+$: git branch -d fix-readme
+</pre>
+</div>
 
 #### Pushing to github
 
@@ -853,12 +856,12 @@ You should see the text and the commit count change.
 Now let's change the app's main page from "Hello, World" to something
 a little more chatty.
 
-First, let's create and checkout a new branch called, "view-messages."
+First, let's create and checkout a new branch called, ```view-messages```."
 
 We need to write code that will generate html so we're going to use a
 library called "hiccup".  Adding a new library requires two steps:
 
-1) Add the library to the dependency section of the "project.clj" file.
+1) Add the library to the dependency section of the ```project.clj``` file.
    This tell lein that your program needs another program.
 
    Adding hiccup makes ours look like:
@@ -871,8 +874,8 @@ library called "hiccup".  Adding a new library requires two steps:
 ```
 
 2) Import the library into the namespace you need by adding the import
-   to the "ns" declaration.  We're going to be using it in the
-   handler.clj.  Our ns declaration will look like:
+   to the ```ns``` declaration.  We're going to be using it in the
+   ```handler.clj```.  Our ns declaration will look like:
 
 ```clojure
 (ns chatter.core.handler
@@ -896,12 +899,18 @@ Let's use hiccup to generate the html by changing our defroutes:
   (route/not-found "Not Found"))
 ```
 
-If you start the server using "lein ring server", you'll see that
-"http://localhost:3000" now proudly displays "Our Chat App".  And if
-"View Page Source", you'll see that now it's proper html complete with
-head, title, and body.
+Start the server:
 
-Hiccup function, "page/html5" generates an html page.  It expects
+<div class= "console"><pre>
+$: lein ring server
+</pre>
+</div>
+
+You'll see that "http://localhost:3000" now proudly displays "Our Chat App".  And if
+```View Page Source```, you'll see that now it's proper html complete with
+```head```, ```title```, and ```body```.
+
+The hiccup function(*), ```page/html5``` generates an html page.  It expects
 clojure vectors with symbols representing corresponding html tags.
 Hiccup will automatically add the closing tag when it reaches the end
 of the vector.
@@ -911,16 +920,16 @@ _include screenshot_
 Compare the hiccup to html in view-source to the html we wrote by hand
 earlier.
 
-_introduce clojure vectors and keywords_
+> _introduce clojure vectors and keywords_
 
-A problem with our new app-routes is that it's doing two different
+A problem with our new ```app-routes``` is that it's doing two different
 things.  Its main role is to take the incomming request and decide
 what to do.  Now it's doing that, but it's also generating a full html
 page.  As we add more and more pages, this will become too complicated
 to manage.  We'll get ahead of the game by splitting out the task of
 generating the html into a helper function.
 
-_introduce defn_
+> _introduce defn_
 
 Our new code should look like:
 
@@ -945,7 +954,7 @@ outside, we shouldn't see a change.  The page should still display
 Now let's double check our git status:
 
 <div class= "console"><pre>
-$ /chatter $ git status
+$: git status
 On branch view-messages
 Changes not staged for commit:
   (use "git add <file>..." to update what will be committed)
@@ -959,7 +968,7 @@ no changes added to commit (use "git add" and/or "git commit -a")
 </div>
 
 That looks right so let's add, commit, merge the changes back to
-master, then push to github.  Then delete the view-messages branch.
+master, then push to github.  Then delete the ```view-messages``` branch.
 You should see the commit numbers go up on github.
 
 ### Adding messages
@@ -970,28 +979,28 @@ adding them.  Now we'll make that happen.
 Create and check out a branch to work on.
 
 Let's change the app to display messages.  We'll represent the
-messages as a vector of maps.  Each map will have a :name and :message
-key and the corresponding value (in quotes).  For example:
+messages as a vector of maps.  Each map will have a ```:name``` and ```:message```
+key and the corresponding value, in quotes.  For example:
 
 ```clojure
 {:name "blue" :message "blue's first post"}
 ```
 
 will represent the blue's first post.  This is a map with two keys.
-:name is "blue", because blue posted it, :message is content of the
+```:name``` is "blue", because blue posted it, ```:message``` is content of the
 post and its value is, "blue's first post".
 
-Let's call the vector simply "messages" and hard code(*) some samples
-to get started.  Add a messages variable to "handler.clj".
+Let's call the vector simply ```messages``` and hard code(*) some samples
+to get started.  Add a messages variable to ```handler.clj```.
 
-_explain clojure maps_
+> _explain clojure maps_
 
 After the ns expresion, add:
 
 ```clojure
 (def messages [{:name "blue" :message "hello, world"}
-               {:name "red" :message "read my lips"}
-               {:name "green" :message "time makes more converts than reason"}])
+               {:name "red" :message "red is my favorite color"}
+               {:name "green" :message "green makes it go faster"}])
 ```
 
 Next we'll modify the html to display the messages.
@@ -1008,17 +1017,19 @@ Next we'll modify the html to display the messages.
     [:p messages]]))
 ```
 
-Save "handler.clj" then go back to the browser and refresh the page.
+Save ```handler.clj``` then go back to the browser and refresh the page.
 
 This blows up spectacularly.  The message is
 "java.lang.illegalArgumentException"
 "{:name "chris", :message "hello, world"} is not a valid element
 name."
 
+_insert screenshot_
+
 Then there's a stack trace(*), which  gives an idea what the program was
 doing when it hit the problem.  Ignore all the files that aren't ones
 you wrote for the project.  In my case, the first file of interest is
-"handler.clj", line 14, the generate-message-view function.
+```handler.clj```, line 14, the ```generate-message-view``` function.
 
 In the exception message on the top, "... is not a valid element
 name", elements are what fragments of html are called.  Hiccup is
@@ -1041,14 +1052,14 @@ We can finesse the issue by converting our maps to strings.
 
 ```
 
-Save "handler.clj", then refresh the browser.
+Save ```handler.clj```, then refresh the browser.
 
 This fixes the exception but is ugly.  Let's take the messages and put
-them in a table using html's table, tr, and td elements.
+them in a table using html's table, ```tr```, and ```td``` elements.
 
-Now our generate-message-view looks likes:
+Now our ```generate-message-view``` looks likes:
 
-_explain clojure map and fn_
+> _explain clojure map and fn_
 
 ```clojure
 (defn generate-message-view
@@ -1067,7 +1078,7 @@ _explain clojure map and fn_
 We still don't have a way of adding messages.  This requires html
 forms and adding importing the form functions from hiccup.
 
-_explain html forms_
+> _explain html forms_
 
 Now our code looks like:
 
@@ -1115,7 +1126,7 @@ But when we run it, we don't actually see our posts populating
 anything.  The problem now is that we're extracting the params during
 the post but aren't actually doing anything with them.
 
-_explain atoms, swap!, and do_
+> _explain atoms, swap!, and do_
 
 _<note; much borkage.  the anti-forgery middleware is now default.  I'm
 missing something and it's not, maybe the token needs adding to the
@@ -1132,7 +1143,7 @@ changing from a vector to a list.
 (def messages (atom '()))
 ```
 
-_explain lists_
+> _explain lists_
 
 We can also remove our stubbed out data.  And just to clean things up,
 let's put updating the message list into a helper function,
@@ -1214,23 +1225,21 @@ In the head section of our html, we're going to invoke bootstrap:
 
 Start the server again and you should see the fonts change.  You'll also see the table get smashed together.
 
-Now let's change the table element to:
-
-":table#messages.table"
+Now let's change the table element from ```:table``` to ```:table#messages.table```.
 
 ```clojure
     [:table#messages.table
      (map (fn [m] [:tr [:td (:name m)] [:td (:message m)]]) @messages)]
 ```
 
-This tells hiccup that we want the table to have an id of "messages" and a class of "table."
+This tells hiccup that we want the table to have an id of ```messages``` and a class of ```table```.
 CSS works by looking for combinations of classes and structure and changing the appearance
 when an element matches a pattern.  Bootstrap uses a set of predefined CSS to look for a common
 set of classes.  One of them is table.  Save, then refresh the browser.  It should look better.
 Examine the html that's now generated.  You should see and id and class field inside the table element.
 
 Let's make the table entries stripped by adding an additional class.  Change the table
-element to, ":table#messages.table.table-striped"
+element to: ```:table#messages.table.table-striped```.
 
 ```clojure
     [:table#messages.table.table-striped
@@ -1238,7 +1247,10 @@ element to, ":table#messages.table.table-striped"
 ```
 
 
-What do you think would happen if you changed table-striped to table-bordered?  Try it!
+What do you think would happen if you changed ```table-striped``` to ```table-bordered```?  Try it and refresh your brower!
+
+Html elements can have multiple classes and CSS uses this to create more complex
+effects.  Try adding table-hover to the table element: ```:table#messages.table.table-bordered.table-hover```.
 
 
 ```clojure
@@ -1246,15 +1258,11 @@ What do you think would happen if you changed table-striped to table-bordered?  
      (map (fn [m] [:tr [:td (:name m)] [:td (:message m)]]) @messages)]
 ```
 
-Html elements can have multiple classes and CSS uses this to create more complex
-effects.  Try adding table-hover to the table element.
-":table#messages.table.table-bordered.table-hover"
-
 Now when you move the mouse over a row, the entire row becomes highlighted.  Dynamic effects in the browser are implemented
 using a language called Javascript.  We won't talk about Javascript except to say that it exists and the javascript part of
-Bootstrap was what we imported into the page with the include-js call.
+Bootstrap was what we imported into the page with the ```include-js``` call.
 
-Let's create our own css file to center the heading.  Create a file "chatter.css" in resources/public.  Inside, paste:
+Let's create our own css file to center the heading.  Create a file ```chatter.css``` in the ```resources/public``` directory.  Inside, paste:
 
 
 ```css
@@ -1263,8 +1271,8 @@ h1 {
 }
 ```
 
-Css works using pattern matching.  In this case, we're saying that if the element is an "h1" element, center the text.  Save
-the file and add another "page/include-css" expression to "handler.clj" to pull in "chatter.css".
+Css works using pattern matching.  In this case, we're saying that if the element is an ```h1``` element, center the text.  Save
+the file and add another ```page/include-css``` expression to ```handler.clj``` to pull in ```chatter.css```.
 
 ```clojure
    [:head
@@ -1277,9 +1285,9 @@ the file and add another "page/include-css" expression to "handler.clj" to pull 
 Refresh the page.  We want to see the h1 tag centered.  It won't though.  Open firebug and watch the traffic
 as you refresh the page.  We're getting a 404 when it's trying to download the css.
 
-The problem is in our defroutes.  We have a route handling browser GET
+The problem is in our ```defroutes```.  We have a route handling browser GET
 or POST requests, but anything else is falling through to our
-route/not-found call.  We need to tell defroutes where to find our
+```route/not-found``` call.  We need to tell ```defroutes``` where to find our
 resources.  Change the defroutes to:
 
 ```clojure
@@ -1309,7 +1317,7 @@ it's free.
 First we need to make a couple of changes to our app so it plays nicely
 with heroku.
 
-In "handler.clj", we'll add a couple of functions to print log
+In ```handler.clj```, we'll add a couple of functions to print log
 messages when heroku starts and stops the program.
 
 
@@ -1331,10 +1339,10 @@ invoke(*) to start our program.
     (jetty/run-jetty #'app {:port port :join? false})))
 ```
 
-Finally, we need to change our "project.clj" so it knows how to prepare our
+Finally, we need to change our ```project.clj``` so it knows how to prepare our
 application for heroku.
 
-Our new "project.clj" should look like:
+Our new ```project.clj``` should look like:
 
 ```clojure
 (defproject chatter "0.1.0-SNAPSHOT"
@@ -1365,7 +1373,7 @@ Our new "project.clj" should look like:
   :uberjar-name "chatter-standalone.jar")
 ```
 
-The ns of "handler.clj" should look like:
+The ```ns``` of ```handler.clj``` should look like:
 
 ```clojure
 (ns chatter.core.handler
