@@ -253,7 +253,7 @@ We're going to start by asking lein to stub out a web application for
 us.
 
 <div class= "console"><pre>
-  ~/temp/CB: lein new compojure chatter
+  $ : lein new compojure chatter
 </pre>
 </div>
 
@@ -336,25 +336,41 @@ example and ignore testing for this tutorial.
 ### A closer look at the src directory
 
 
-Let's open the files "src/chatter/core/handler.clj".
+Let's open the files ```src/chatter/core/handler.clj```.
 
 Ending the file's name with ".clj" tells us (and your editor)  that
 this is a clojure file.  Clojure programs are made up of expressions.
-Expressions are either a single name, number, string, or a list of
-expressions beginning with a paren (or parenthesis).
 
-The first expression, "(ns "chatter.core.handler"...)" tells clojure
-what we want to call the namespace being defined in this file.  The
-subexpression beginning with "(:require..." is importing ring and
-compojure libraries.  Those are the low-level clojure libraries for
-building web apps.
+> Expressions are either a single name, number, string, or a list of expressions beginning with a paren (or parenthesis).
 
-The second expression is "(defroutes app-routes...".  defroutes is
-specific to clojure web apps.  It's creating a set of routes and
-giving them the name "app-routes".  The expressions after symbol
-"app-routes" are the route definitions.  There are two.
+The first expression, 
+
+```clojure
+(ns "chatter.core.handler"...)
+```
+
+tells clojure what we want to call the namespace being defined in this
+file.  The subexpression beginning with
+
+```clojure
+(:require...
+```
+
+is importing ring and compojure libraries.  Those are the low-level
+clojure libraries for building web apps.
+
+The second expression is
+
+```clojure
+(defroutes app-routes...
+```
+
+defroutes is specific to clojure web apps.  It's creating a set of
+routes and giving them the name "app-routes".  The expressions after
+symbol "app-routes" are the route definitions.  There are two.
 
 The first is
+
 ```clojure
 (GET "/" [] "Hello World")
 ```
@@ -428,8 +444,8 @@ and coordinate work with others.
 Inside the chatter directory, enter the command, "git init"
 
 <div class= "console"><pre>
-$ /chatter $ git init
-Initialized empty Git repository in /home/crk/temp/CB/chatter/.git/
+$ git init
+Initialized empty Git repository in /home/crk/chatter/.git/
 </pre>
 </div>
 
