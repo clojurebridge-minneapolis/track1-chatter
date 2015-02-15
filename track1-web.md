@@ -129,7 +129,8 @@ traceroute to github.com (192.30.252.130), 30 hops max, 60 byte packets
 29  * * *
 30  * * *
 
-</pre></div>
+</pre>
+</div>
 
 
 + 1) is my computer
