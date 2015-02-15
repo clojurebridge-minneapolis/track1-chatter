@@ -254,7 +254,8 @@ us.
 
 <div class= "console"><pre>
   ~/temp/CB: lein new compojure chatter
-</pre></div>
+</pre>
+</div>
 
 > Lein is a tool for managing clojure projects.
 
@@ -265,13 +266,15 @@ Move into the project directory:
 
 <div class= "console"><pre>
   $: cd chatter
-</pre></div>
+</pre>
+</div>
 
 Start the server with the command:
 
 <div class= "console"><pre>
   $: lein ring server
-</pre></div>
+</pre>
+</div>
 
 
 Lein will download a bunch of stuff off the internet the first time,
@@ -313,7 +316,8 @@ chatter
 
 8 directories, 4 files
 
-</pre></div>
+</pre>
+</div>
 
 
 ```project.clj``` is a clojure file describing the what our project does and
