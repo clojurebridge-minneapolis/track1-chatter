@@ -650,12 +650,15 @@ nothing to commit, working directory clean
 </pre>
 </div>
 
+To create a branch, use the "git branch" command and give it the name
+for the new branch.
 
 <div class= "console"><pre>
 $: git branch fix-readme
 </pre>
 </div>
 
+Without the branch name, "git branch" lists what branches exist.
 
 <div class= "console"><pre>
 $: git branch
