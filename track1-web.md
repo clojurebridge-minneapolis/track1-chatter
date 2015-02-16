@@ -189,9 +189,8 @@ Inside the html document, we have a ```head``` and ```body```.
 
 The ```head``` contains the ```title```, "sample html page".  Notice
 the title doesn't actually show up when you open the page in the
-browser.  The title is used when you bookmark the page though.  Try
-bookmarking the page and confirm that the title is correct.
-
+browser.  The title is used in the tab name and when you bookmark the
+page.
 
 If we wanted to add a title on the page that's displayed, we need to
 add it to the body.  Let's use "Our html".  Html provides a number of
@@ -953,14 +952,14 @@ library called "hiccup".  Adding a new library requires two steps:
    ```handler.clj```.  Our ns declaration will look like:
 
 ```clojure
-(ns chatter.core.handler
+(ns chatter.handler
   (:require [compojure.core :refer :all]
             [compojure.route :as route]
             [ring.middleware.defaults :refer [wrap-defaults site-defaults]]
             [hiccup.page :as page]))
 ```
 
-Let's use hiccup to generate the html by changing our defroutes:
+Let's use hiccup to generate the html by changing ```app-routes``` ```defroutes```:
 
 
 ```clojure
@@ -995,7 +994,22 @@ _include screenshot_
 Compare the hiccup to html in view-source to the html we wrote by hand
 earlier.
 
-> _introduce Clojure vectors and keywords_
+> Vectors are a Clojure data structure used to contain sequences of
+> things, including other vectors.  Vectors are often written using
+> square brackets.  ```[1 2 3]``` is a vector containing the numbers
+> 1, 2, and 3.  Hiccup uses vectors of keywords to represent sections
+> of html.
+
+> Keywords are names that begin with a colon.  ```:title```, ```:x```,
+> and ```:favorite-color``` are all keywords.  Clojure often uses
+> keywords where other languages use strings.  If you were to use
+> Clojure to query a database, Clojure would probably use keywords to
+> represent the column names.  Hiccup uses keywords to represent the
+> names of html elements.  Where html uses ```<body>```, hiccup would
+> expect ```:body```.  Where html uses ```<title>```, hiccup uses
+> ```:title```.  Because the keywords are enclosed in a vector, the
+> closing of the html tag is unnecessary.  The closing of the
+> surrounding vector signals where the html section ends.
 
 A problem with our new ```app-routes``` is that it's doing two different
 things.  Its main role is to take the incomming request and decide
