@@ -57,6 +57,7 @@ You have no installed plugins.
 
 ### Clojure, the Big Picture
 
+Clojure is a modern lisp with a focus on functional programming.
 
 <img src="http://griffsgraphs.files.wordpress.com/2012/07/programming-languages_label.png"/>
 
