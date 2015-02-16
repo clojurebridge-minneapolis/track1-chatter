@@ -1073,10 +1073,10 @@ calls a hiccup function ```page/html5``` to generate html from a
 vector representing the ```head``` sections and a vector representing the
 ```body``` elements of the html.
 
-Let's fire up the server and make sure it still works.  From the
-outside, we shouldn't see a change.  The page should still display
-"Our Chat App" and the html should be identical.
-Now let's double check our git status:
+Save ```handler.clj``` and let's refresh the browser to make sure our
+page still works.  From the outside, we shouldn't see a change.  The
+page should still display "Our Chat App" and the html should be
+identical.  Now let's double check our git status:
 
 <div class= "console"><pre>
 $: git status
