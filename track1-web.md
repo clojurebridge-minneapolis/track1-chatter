@@ -36,6 +36,25 @@ the same snippet, look for the dollar signs!  The terminal you're
 using will probably have different prompts but the commands should
 work the same.
 
+<div class= "console"><pre>
+$: lein -version
+Leiningen 2.5.1 on Java 1.8.0_40-internal OpenJDK 64-Bit Server VM
+</pre>
+</div>
+
+<div class= "console"><pre>
+$: git --version
+git version 2.1.4
+</pre>
+</div>
+
+<div class= "console"><pre>
+$: heroku --version
+heroku-toolbelt/3.25.0 (x86_64-linux-gnu) ruby/2.1.5
+You have no installed plugins.
+</pre>
+</div>
+
 To check that lein and java are installed correctly:
 With the tools installed, we can begin working on our web app.
 
