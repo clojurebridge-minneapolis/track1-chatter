@@ -316,27 +316,23 @@ In Light Table, let's take a closer look at what's in the chatter directory.  It
 looks like:
 
 <div class= "console"><pre>
+
 .
-├── doc
-│   └── intro.md
-├── LICENSE
 ├── project.clj
 ├── README.md
 ├── resources
+│   └── public
 ├── src
-│   └── fiddle
-│       └── core.clj
+│   └── chatter
+│       └── handler.clj
 └── test
-    └── fiddle
-        └── core_test.clj
+    └── chatter
+        └── handler_test.clj
 
-6 directories, 6 files
+6 directories, 4 files
 </pre>
 </div>
 
-```doc``` is where the project's documentation will live.  lein
-stubbed out an ```intro.md``` with a link to an essay on writing good
-technical documentation.
 
 ```project.clj``` is a clojure file describing the what our project does and
 what other programs it needs to run.
@@ -483,7 +479,7 @@ our directory.
 
 
 <div class= "console"><pre>
-$ /chatter $ git status
+$: git status
 On branch master
 
 Initial commit
@@ -505,12 +501,12 @@ nothing added to commit but untracked files present (use "git add" to track)
 We're on the master branch.  The master branch is the main place where
 our code will be.  It says "Initial commit" because we're just
 initializing git.  Git doesn't know anything about the files in our
-project but it's spotted the ```README.md```, ```project.clj``` files and the src
-and test directories.  It also spotted a file called ```.gitignore```.
-Files beginning with a dot are normally hidden unless you specifically
-ask to see them.  ```.gitignore ``` is a special file, it tells git what kind
-of files we what it to not track.  These will mostly be compiled code,
-test reports, and log files.
+project but it has spotted the ```README.md```, ```project.clj```
+files and the src and test directories.  It also spotted a file called
+```.gitignore```.  Files beginning with a dot are normally hidden
+unless you specifically ask to see them.  ```.gitignore ``` is a
+special file, it tells git what kind of files we what it to not track.
+These will mostly be compiled code, test reports, and log files.
 
 Git follows a two-step process.  First you add the changes; they
 become staged.  Then you commit all of the staged changes.  Let's add
@@ -538,8 +534,8 @@ Changes to be committed:
 	new file:   .gitignore
 	new file:   README.md
 	new file:   project.clj
-	new file:   src/chatter/core/handler.clj
-	new file:   test/chatter/core/handler_test.clj
+	new file:   src/chatter/handler.clj
+	new file:   test/chatter/handler_test.clj
 </pre>
 </div>
 
@@ -651,25 +647,55 @@ $: git status
 On branch master
 Your branch is up-to-date with 'origin/master'.
 nothing to commit, working directory clean
+</pre>
+</div>
+
+
+<div class= "console"><pre>
 $: git branch fix-readme
+</pre>
+</div>
+
+
+<div class= "console"><pre>
+$: git branch
+  fix-readme
+* master
+</pre>
+</div>
+
+Notice there's now two branches, master and fix-readme.  Master has an
+astrix by it because we're still on master.  We need to switch to
+fix-readme.
+
+<div class= "console"><pre>
 $: git checkout fix-readme
 Switched to branch 'fix-readme'
+</pre>
+</div>
+
+
+<div class= "console"><pre>
+$: git branch
+* fix-readme
+  master
+</pre>
+</div>
+
+<div class= "console"><pre>
 $: git status
 On branch fix-readme
 nothing to commit, working directory clean
 </pre>
 </div>
 
-I was on master, I created a branch named ```fix-readme``` with the
-command, ```git branch fix-readme```.  Then I checked out the branch.
+
+Now we're on the fix-me branch.
 
 It's important to check out the branch.  Git won't do it automatically
 and you can find yourself making commits into the master branch.  This
 usually isn't fatal but it's often very messy to clean up if things go
 wrong.
-
-To checkout, ```git checkout fix-readme```.  Now git status reports that
-I'm on the proper branch.
 
 #### Changing README.md
 
