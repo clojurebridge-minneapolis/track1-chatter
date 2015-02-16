@@ -1,6 +1,6 @@
 ### Goal
 
-We're going to introduce clojure by creating and deploying a web app
+We're going to introduce Clojure by creating and deploying a web app
 where you and your friends can post messages to each other.
 
 _insert image of app_
@@ -8,7 +8,7 @@ _insert image of app_
 ### Meta-Goal
 
 * Understanding HTTP and the web.
-* Basic clojure syntax.
+* Basic Clojure syntax.
 * REPL for fun and profit.
 * Leiningen for project automation.
 * Git for version control.
@@ -57,10 +57,10 @@ You have no installed plugins.
 
 ### Clojure, the Big Picture
 
-<img
-src="http://griffsgraphs.files.wordpress.com/2012/07/programming-languages_label.png"/>
 
-There are lots of programming languages and clojure is just one of
+<img src="http://griffsgraphs.files.wordpress.com/2012/07/programming-languages_label.png"/>
+
+There are lots of programming languages and Clojure is just one of
 them.  Clojure is great because:
 
 + The core language is small and easy to learn.
@@ -247,7 +247,7 @@ program listening for requests that generate the html.  As people make
 requests and post messages, it will generate html that reflects the
 posts.
 
-### Creating a clojure project
+### Creating a Clojure project
 
 We're going to start by asking lein to stub out a web application for
 us.
@@ -257,7 +257,7 @@ us.
 </pre>
 </div>
 
-> Lein is a tool for managing clojure projects.
+> Lein is a tool for managing Clojure projects.
 
 We've asked to create a new compojure project called chatter and there
 should now be a directory also called chatter.
@@ -339,7 +339,7 @@ example and ignore testing for this tutorial.
 Let's open the files ```src/chatter/core/handler.clj```.
 
 Ending the file's name with ".clj" tells us (and your editor)  that
-this is a clojure file.  Clojure programs are made up of expressions.
+this is a Clojure file.  Clojure programs are made up of expressions.
 
 > Expressions are either a single name, number, string, or a list of expressions beginning with a paren (or parenthesis).
 
@@ -349,7 +349,7 @@ The first expression,
 (ns "chatter.core.handler"...)
 ```
 
-tells clojure what we want to call the namespace being defined in this
+tells Clojure what we want to call the namespace being defined in this
 file.  The subexpression beginning with
 
 ```clojure
@@ -357,7 +357,7 @@ file.  The subexpression beginning with
 ```
 
 is importing ring and compojure libraries.  Those are the low-level
-clojure libraries for building web apps.
+Clojure libraries for building web apps.
 
 The second expression is
 
@@ -365,7 +365,7 @@ The second expression is
 (defroutes app-routes...
 ```
 
-defroutes is specific to clojure web apps.  It's creating a set of
+defroutes is specific to Clojure web apps.  It's creating a set of
 routes and giving them the name ```app-routes```.  The expressions after
 symbol "app-routes" are the route definitions.  There are two.
 
@@ -911,7 +911,7 @@ You'll see that "http://localhost:3000" now proudly displays "Our Chat App".  An
 ```head```, ```title```, and ```body```.
 
 The hiccup function(*), ```page/html5``` generates an html page.  It expects
-clojure vectors with symbols representing corresponding html tags.
+Clojure vectors with symbols representing corresponding html tags.
 Hiccup will automatically add the closing tag when it reaches the end
 of the vector.
 
@@ -920,7 +920,7 @@ _include screenshot_
 Compare the hiccup to html in view-source to the html we wrote by hand
 earlier.
 
-> _introduce clojure vectors and keywords_
+> _introduce Clojure vectors and keywords_
 
 A problem with our new ```app-routes``` is that it's doing two different
 things.  Its main role is to take the incomming request and decide
@@ -993,7 +993,7 @@ post and its value is, "blue's first post".
 Let's call the vector simply ```messages``` and hard code(*) some samples
 to get started.  Add a messages variable to ```handler.clj```.
 
-> _explain clojure maps_
+> _explain Clojure maps_
 
 After the ns expresion, add:
 
@@ -1033,7 +1033,7 @@ you wrote for the project.  In my case, the first file of interest is
 
 In the exception message on the top, "... is not a valid element
 name", elements are what fragments of html are called.  Hiccup is
-responsible for generating html from clojure symbols.  The problem is
+responsible for generating html from Clojure symbols.  The problem is
 that we've got a map with symbols in it and hiccup thinks they're
 html.  They're not so it blows up.
 
@@ -1059,7 +1059,7 @@ them in a table using html's table, ```tr```, and ```td``` elements.
 
 Now our ```generate-message-view``` looks likes:
 
-> _explain clojure map and fn_
+> _explain Clojure map and fn_
 
 ```clojure
 (defn generate-message-view

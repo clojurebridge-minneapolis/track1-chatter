@@ -73,7 +73,7 @@ user> (blue 1)
 2
 ```
 
-Like many languages, clojure vectors are zero-indexed.  The first
+Like many languages, Clojure vectors are zero-indexed.  The first
 element is in the 0th place, so
 
 ```clojure
@@ -84,7 +84,7 @@ Actually returns the second element.
 Many languages allow you to change what's in an array.  Clojure does
 not because when programs become large enough, mutating arrays (or
 other things) makes it hard to write correct code that fully uses the
-power of the computer.  Instead, clojure has ways of making it look like
+power of the computer.  Instead, Clojure has ways of making it look like
 the array is modified, but what it's really doing it returning a new vector
 that reuses as much of the original information as it could.
 
@@ -138,7 +138,7 @@ are all keywords.
 
 ## defn
 
-Functions are the heart and soul of a clojure program.  They take
+Functions are the heart and soul of a Clojure program.  They take
 arguments and return a value.  We've been using functions but defn
 gives us a way of creating our own and giving it a name.
 
@@ -293,12 +293,12 @@ The reason assoc works with both vectors and maps is that they are
 both considered "associate" data structures.  Maps associate their
 keys with values, vectors associate their index with values.
 
-Maps are used everyhwere in clojure and are often used where other
+Maps are used everyhwere in Clojure and are often used where other
 languages would use classes.
 
 ## map, fn
 
-Map has another meaning in clojure, it's a way of walking over a
+Map has another meaning in Clojure, it's a way of walking over a
 collection, apply a function to each element in the collection, and
 returning a new collection of the results.
 
@@ -320,7 +320,7 @@ user> numbers
 
 Naming is hard and often when we want to map over a collection, the
 function we're applying is a one-off that we aren't going to reuse.
-In clojure, you can create an anonymous function using ```fn```
+In Clojure, you can create an anonymous function using ```fn```
 
 ```clojure
 (fn params-vector expression)
@@ -342,19 +342,19 @@ Everything we've done up until this point has been purely functional.
 We haven't been changing any data and our functions have simply taken
 inputs and returned values.
 
-In clojure, variables have values.  Instead of modifying the value,
+In Clojure, variables have values.  Instead of modifying the value,
 you point the variable to an entirely different value.  Clojure
 ensures that the change happens in a way that everything using the
 data sees it in a consistent state, which is important when writing
 programs that do more than one thing at a time.  But, to do this,
-clojure requires hints from you that a varable can be pointed to
+Clojure requires hints from you that a varable can be pointed to
 something else, and it needs to do the pointing in a safe way.
 
 There are a couple of different ways to do this but, in this tutorial,
 we're only going to use the mechanism called an "atom".
 
 Let's use a map to represent the solar system.  Normally, planets
-don't change and this matches perfectly clojure's view of the world.
+don't change and this matches perfectly Clojure's view of the world.
 But research astronomers change what we know all the time, so if we
 were writing the program for them, we might want the planets to
 change.  To do this, we'll put the map in an atom.
@@ -435,10 +435,10 @@ user> @solar-system
 After invoking swap, the solar-system is now pluto-free.
 
 Most languages make it easier to do something simpler.  The reason
-clojure works like this is that clojure is designed to make it easier
+Clojure works like this is that Clojure is designed to make it easier
 to write programs that do multiple things at the same time.  By using
 immutable data structures, then changing the variables from one value
-to another in ```swap!```, clojure can ensure that all of the parts of
+to another in ```swap!```, Clojure can ensure that all of the parts of
 the program see the data in a consistent state.
 
 ## lists
