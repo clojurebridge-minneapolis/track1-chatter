@@ -54,6 +54,7 @@ heroku-toolbelt/3.25.0 (x86_64-linux-gnu) ruby/2.1.5
 You have no installed plugins.
 </pre></div>
 
+With the tools installed, we can begin working on our web app.
 
 ### Clojure, the Big Picture
 
