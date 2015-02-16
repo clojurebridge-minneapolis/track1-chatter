@@ -88,12 +88,12 @@ Your browser is program that sends requests over "http".  Entering,
 tells your browser that you want to see that page.
 
 [https://github.com](https://github.com) is actually a human-readable
-alias for the numerical address of github's servers.  Since your
-computer isn't directly connected to github, it asks the computers it
+alias for the numerical address of GitHub's servers.  Since your
+computer isn't directly connected to GitHub, it asks the computers it
 is connected to to forward the request.
 
 On linux or the mac, ```traceroute``` will show you the number of hops it
-took to get to github.  (On windows, the command is called ```tracert```.)
+took to get to GitHub.  (On windows, the command is called ```tracert```.)
 
 On my machine, working from home:
 
@@ -141,7 +141,7 @@ traceroute to github.com (192.30.252.130), 30 hops max, 60 byte packets
 + 3-30) the requests are bouncing around comcast.
 
 When you enter [https://github.com](httpss://github.com) in the
-address bar, your browser makes GET request to the github server.
+address bar, your browser makes GET request to the GitHub server.
 There are several types of requests, but GET is the one for simply
 asking the server to send back some information.  The server sends
 back an html page.  What you see is how the browser is programmed to
@@ -585,15 +585,15 @@ every commit), the author's name, the date, and the commit comment.
 By keeping track of changes, git makes it easy to go back to an
 earlier point.  It's a safety net.  By itself, it won't do much if our
 hard drive suddenly dies.  But git allows you to have repositories on
-other computers.  If your computer dies, your code lives on.  Github
+other computers.  If your computer dies, your code lives on.  GitHub
 is a company hosting source code, free if you don't mind that other
 people can see your code.  As a safety measure, we're going to put our
-code on Github.
+code on GitHub.
 
 Log into [https://github.com](https://github.com) and click, "create
 repository" (the "+" sign on the top menu).  Name it "chatter".  That
 will open a page for your new repository.  We want to push an existing
-repository, so (be sure to use the url that Github gives you instead
+repository, so (be sure to use the url that GitHub gives you instead
 of mine!) :
 
 <div class= "console"><pre>
@@ -613,7 +613,7 @@ Branch master set up to track remote branch master from origin.
 </pre>
 </div>
 
-Back on github, click on the "chatter" link and you'll go to the main
+Back on GitHub, click on the "chatter" link and you'll go to the main
 page for the repository.  Note there is a single commit and the text
 is identical to what's in our ```README.md``` file.
 
@@ -629,7 +629,7 @@ web app.  We're going to follow a certain workflow:
 3. try the code
 4. repeat 2-3 until we're happy with the changes
 5. merge the branch into master
-6. push the changes to github
+6. push the changes to GitHub
 
 This methodology allows us to isolate changes in their own branch.  If
 we change our minds or discover we've made a mistake, it's easy to
@@ -777,6 +777,24 @@ Let's add and commit the changes.
 
 <div class= "console"><pre>
 $ /chatter $ git add README.md project.clj
+</pre>
+</div>
+
+
+<div class= "console"><pre>
+$: git status
+On branch fix-readme
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+	modified:   README.md
+	modified:   project.clj
+
+</pre>
+</div>
+
+
+<div class= "console"><pre>
 $ /chatter $ git commit README.md project.clj -m "fixing README.md description"
 [fix-readme 57aff88] fixing README.md description
  2 files changed, 3 insertions(+), 3 deletions(-)
@@ -824,6 +842,11 @@ master and check its log.
 $ /chatter $ git checkout master
 Switched to branch 'master'
 Your branch is up-to-date with 'origin/master'.
+</pre>
+</div>
+
+
+<div class= "console"><pre>
 $ /chatter $ git log
 commit 44a560f1653770afac01aea2c9279a7af46a46eb
 Author: crkoehnen <crkoehnen@gmail.com>
@@ -866,9 +889,6 @@ Date:   Sun Dec 28 16:43:37 2014 -0600
 </pre>
 </div>
 
-That's all the git we'll need for this tutorial.  To learn more about
-git, try this _tutorial_.
-
 #### Deleting the fix-readme branch
 
 Now that we've pulled the changes from the fix-readme branch into
@@ -879,9 +899,9 @@ $: git branch -d fix-readme
 </pre>
 </div>
 
-#### Pushing to github
+#### Pushing to GitHub
 
-The final step will be to push our changes to github.
+The final step will be to push our changes to GitHub.
 
 
 <div class= "console"><pre>
@@ -898,8 +918,13 @@ To https://github.com/crkoehnen/chatter.git
 </pre>
 </div>
 
-Now go back to the repository page in github and refresh the page.
+Now go back to the repository page in GitHub and refresh the page.
 You should see the text and the commit count change.
+
+That's all the git we'll need for this tutorial.  GitHub maintains a list of
+resources where you can learn more about git and GitHub.
+
+[Good Resources for Learning Git and GitHub](https://help.github.com/articles/good-resources-for-learning-git-and-github).
 
 ### hiccup
 
@@ -1018,8 +1043,8 @@ no changes added to commit (use "git add" and/or "git commit -a")
 </div>
 
 That looks right so let's add, commit, merge the changes back to
-master, then push to github.  Then delete the ```view-messages``` branch.
-You should see the commit numbers go up on github.
+master, then push to GitHub.  Then delete the ```view-messages``` branch.
+You should see the commit numbers go up on GitHub.
 
 ### Adding messages
 
