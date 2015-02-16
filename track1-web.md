@@ -439,8 +439,21 @@ Back in the ```handler.clj``` file, the third and final expression begins
 (def app ...
 ```
 
-```def``` is how you declare a variable in clojure.  The
-name of the variable is ```app``` and it's being assigned the result of
+> ```def``` is how you declare a variable in clojure.
+> The format is:
+>
+> ```clojure
+> (def name doc-string? init?)
+> ```
+>
+> 1. ```def``` - introduces the def expression.
+> 2. ```name``` - the name you want to give the variable.
+> 3. ```doc-string?``` -  an optional description on what the variable is and how it is
+> meant to be used.
+> 4. ```init?``` - an optional value the variable will be set to.  If unset, the value is unbound.
+
+The name of the variable is ```app``` and it's being assigned the
+result of
 
 ```clojure
 (wrap-defaults app-routes site-defaults)
@@ -616,7 +629,7 @@ Back on GitHub, click on the "chatter" link and you'll go to the main
 page for the repository.  Note there is a single commit and the text
 is identical to what's in our ```README.md``` file.
 
-<note: tagged section1>
+<note: tagged section2>
 
 ### Workflow
 
@@ -1096,6 +1109,8 @@ That looks right so let's add, commit, merge the changes back to
 master, then push to GitHub.  Then delete the ```view-messages``` branch.
 You should see the commit numbers go up on GitHub.
 
+<note: git tag, section 3>
+
 ### Adding messages
 
 We still aren't displaying messages, nor do we have a way of
@@ -1115,10 +1130,47 @@ will represent the blue's first post.  This is a map with two keys.
 ```:name``` is "blue", because blue posted it, ```:message``` is content of the
 post and its value is, "blue's first post".
 
+> Programs often need to associate keys with values and the usual data
+> structure for doing that are hash tables.  Clojure calls them maps and
+> they look like:
+>
+> ```clojure
+> (def cities
+> {
+>  "Tokyo" 37900000
+>  "Delhi" 26580000
+>  "Seoul" 26100000
+>  })
+> ```
+> ```cities``` is a hash table whose keys are strings (the names of
+> cities) and the values are the populations of each city.
+>
+> To access get a value from a map, pass the map and key into the
+> ```get``` function.
+>
+> ```clojure
+> (get cities "Tokyo")
+> ```
+> return 37900000.
+>
+> When the keys are keywords, you can also use the keyword as a
+> function that takes the map and returns the values.
+>
+> ```clojure
+> (:name {:name "blue" :message "blue's first post"})
+> ```
+> returns "blue".
+>
+> ```clojure
+> (:message {:name "blue" :message "blue's first post"})
+> ```
+> returns "blue's first post".
+>
+> Maps are everywhere in Clojure and are used for many things where
+> other languages might use objects.
+
 Let's call the vector simply ```messages``` and hard code(*) some samples
 to get started.  Add a messages variable to ```handler.clj```.
-
-> _explain Clojure maps_
 
 After the ns expresion, add:
 
