@@ -56,6 +56,9 @@ You have no installed plugins.
 
 With the tools installed, we can begin working on our web app.
 
+
+### Requirements
+
 ### Clojure, the Big Picture
 
 Clojure is a modern lisp with a focus on functional programming.
