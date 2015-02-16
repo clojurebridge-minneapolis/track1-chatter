@@ -617,6 +617,8 @@ Back on github, click on the "chatter" link and you'll go to the main
 page for the repository.  Note there is a single commit and the text
 is identical to what's in our ```README.md``` file.
 
+<note: tagged section1>
+
 ### Workflow
 
 Now we're going to start changing the templated code to make it our
@@ -742,7 +744,7 @@ index 9493433..718893f 100644
  ## License
 
 -Copyright © 2014 FIXME
-+Copyright © 2014 crkoehnen@gmail.com
++Copyright © 2014 clojurebridgemn.org
 </pre>
 </div>
 
