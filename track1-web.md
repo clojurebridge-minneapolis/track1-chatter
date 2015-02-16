@@ -41,7 +41,7 @@ To check that lein and java are installed correctly:
 <div class= "console"><pre>
 $: lein -version
 Leiningen 2.5.1 on Java 1.8.0_40-internal OpenJDK 64-Bit Server VM
-</div>
+</pre></div>
 
 <div class= "console"><pre>
 $: git --version
@@ -55,9 +55,6 @@ You have no installed plugins.
 </pre></div>
 
 With the tools installed, we can begin working on our web app.
-
-
-### Requirements
 
 ### Clojure, the Big Picture
 
