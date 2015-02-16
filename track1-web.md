@@ -55,7 +55,6 @@ You have no installed plugins.
 </pre>
 </div>
 
-To check that lein and java are installed correctly:
 With the tools installed, we can begin working on our web app.
 
 ### Clojure, the Big Picture
@@ -93,8 +92,8 @@ alias for the numerical address of github's servers.  Since your
 computer isn't directly connected to github, it asks the computers it
 is connected to to forward the request.
 
-On linux or the mac, traceroute will show you the number of hops it
-took to get to github.  (On windows, the command is called tracert.)
+On linux or the mac, ```traceroute``` will show you the number of hops it
+took to get to github.  (On windows, the command is called ```tracert```.)
 
 On my machine, working from home:
 
@@ -236,6 +235,12 @@ body:
 
 _insert screenshot_
 
+```table``` encloses the entire table.
+
+```tr``` wraps a table row.
+
+```td``` wraps table data, a cell within a row.
+
 When you save a refresh the page, you should see the list in the first
 paragraph.  You should also see that it looks pretty bad.  The html
 we've been using describes the structure of the document and leaves
@@ -250,6 +255,14 @@ to it.  For that, instead of having a file with html, we'll have a
 program listening for requests that generate the html.  As people make
 requests and post messages, it will generate html that reflects the
 posts.
+
+There's a lot more to html but this is (almost) just enough for our
+chat app.
+
+[w3schools.com](http://www.w3schools.com) is a great source for
+learning more about html.  I suggest starting with their
+[HTML Introduction](http://www.w3schools.com/html/html_intro.asp).
+
 
 ### Creating a Clojure project
 
