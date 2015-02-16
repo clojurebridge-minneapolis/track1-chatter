@@ -146,7 +146,7 @@ There are several types of requests, but GET is the one for simply
 asking the server to send back some information.  The server sends
 back an html page.  What you see is how the browser is programmed to
 display the html but if you want to see the html itself, right click
-on the page and select "view page source."
+on the page and select ```View Page Source```.
 
 ### HTML Proper
 
@@ -178,7 +178,7 @@ something like, _insert screenshot_
 
 Notice the address bar.  Instead of making an http request to a server
 over the internet, the browser just opened a local file and displayed
-it as html.  If you right click and "view page source", you should see
+it as html.  If you right click and ```View Page Source```, you should see
 something very similiar to the file you saved.
 
 The first line of the source, the DOCTYPE, simply announced that the
@@ -316,31 +316,33 @@ In Light Table, let's take a closer look at what's in the chatter directory.  It
 looks like:
 
 <div class= "console"><pre>
-
-chatter
+.
+├── doc
+│   └── intro.md
+├── LICENSE
 ├── project.clj
 ├── README.md
 ├── resources
-│   └── public
 ├── src
-│   └── chatter
-│       └── core
-│           └── handler.clj
+│   └── fiddle
+│       └── core.clj
 └── test
-    └── chatter
-        └── core
-            └── handler_test.clj
+    └── fiddle
+        └── core_test.clj
 
-8 directories, 4 files
-
+6 directories, 6 files
 </pre>
 </div>
 
+```doc``` is where the project's documentation will live.  lein
+stubbed out an ```intro.md``` with a link to an essay on writing good
+technical documentation.
 
 ```project.clj``` is a clojure file describing the what our project does and
 what other programs it needs to run.
 
-```README.md``` is a markdown file documenting how our project works.
+```README.md``` is a markdown file describing the program's
+prerequisites, how to run the program, and the license.
 
 ```resources``` is a folder where we would store static html, CSS, and
 images.
@@ -353,7 +355,7 @@ example and ignore testing for this tutorial.
 ### A closer look at the src directory
 
 
-Let's open the files ```src/chatter/core/handler.clj```.
+Let's open the files ```src/chatter/handler.clj```.
 
 Ending the file's name with ".clj" tells us (and your editor)  that
 this is a Clojure file.  Clojure programs are made up of expressions.
@@ -363,7 +365,7 @@ this is a Clojure file.  Clojure programs are made up of expressions.
 The first expression,
 
 ```clojure
-(ns "chatter.core.handler"...)
+(ns "chatter.handler"...)
 ```
 
 tells Clojure what we want to call the namespace being defined in this
@@ -417,11 +419,11 @@ With Firebug.```
 
 _insert screenshot_
 
-The "html" tab shows what the html
-document looks like. The default is an empty head and a body with the
-string "Hello World".  This is different from what we saw when we
-```View Page Source```.  The browser requested html but got only got a
-string back and it fleshes out a legal page.
+The "html" tab shows what the html document looks like. The default is
+an empty head and a body with the string "Hello World".  This is
+different from what we saw when we ```View Page Source```.  The
+browser requested html but got only got a string back and it fleshes
+out a legal page.
 
 Click on the "Net" tab and refresh the page.  You'll see the request
 was actually a GET request and returned a status code of 200.  That
@@ -456,8 +458,8 @@ and the defaults.  When we start the server, it's going to look for
 the routes associated with the ```app``` variable and use those to decide
 how to handle http requests.
 
-Let's stop the server by going back to the terminal and typing
-"control-C" twice.
+Let's stop the server by going back to the terminal and holding the
+control and letter c keys down at the same time, "control-C".
 
 ### git
 
