@@ -1033,7 +1033,7 @@ generating the html into a helper function.
 > 4. ```params-vector``` - a vector of symbols naming the functions arguments.
 > 5. ```expression``` - the body of the function.
 >
-> ```hello-world```, a traditional first function mgiht be programmed
+> ```hello-world```, a traditional first function, might be programmed
 > in Clojure like:
 >
 > ```clojure
@@ -1067,6 +1067,11 @@ Our new code should look like:
   (GET "/" [] (generate-message-view))
   (route/not-found "Not Found"))
 ```
+
+```generate-message-view``` is a function that takes no arguments.  It
+calls a hiccup function ```page/html5``` to generate html from a
+vector representing the ```head``` sections and a vector representing the
+```body``` elements of the html.
 
 Let's fire up the server and make sure it still works.  From the
 outside, we shouldn't see a change.  The page should still display
