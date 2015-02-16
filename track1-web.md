@@ -1018,7 +1018,38 @@ page.  As we add more and more pages, this will become too complicated
 to manage.  We'll get ahead of the game by splitting out the task of
 generating the html into a helper function.
 
-> _introduce defn_
+> Clojure defines a function using this syntax:
+>
+> ```clojure
+> (defn name
+>   doc-string?
+>   params-vector
+>   expression)
+> ```
+>
+> 1. ```defn``` - introduces the defn expression.
+> 2. ```name``` - the name you want to give the function.
+> 3. ```doc-string?``` - an optional description of the function.
+> 4. ```params-vector``` - a vector of symbols naming the functions arguments.
+> 5. ```expression``` - the body of the function.
+>
+> ```hello-world```, a traditional first function mgiht be programmed
+> in Clojure like:
+>
+> ```clojure
+> (defn hello-world
+>   "ye olde 'Hello, World'"
+>   []
+>   "Hello, World")
+> ```
+>
+> ```hello-world```  takes no arguments and returns the string "Hello, World".
+>
+> ```
+> user> (hello-world)
+> "Hello, World"
+> ```
+
 
 Our new code should look like:
 
