@@ -1410,7 +1410,6 @@ Now our code looks like:
   (:require [compojure.core :refer :all]
             [compojure.route :as route]
             [ring.middleware.defaults :refer [wrap-defaults site-defaults]]
-            [ring.middleware.params :refer [wrap-params]]
             [hiccup.page :as page]
             [hiccup.form :as form]))
 
