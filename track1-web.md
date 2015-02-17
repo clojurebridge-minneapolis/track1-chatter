@@ -1435,12 +1435,6 @@ Now our code looks like:
      [:table
       (map (fn [m] [:tr [:td (:name m)] [:td (:message m)]]) messages)]]]))
 
-
-(defn update-messages!
-  "this will update the message list"
-  [name message]
-  (swap! messages conj  {:name name :message message}))
-
 (defroutes app-routes
   (GET "/" [] (generate-message-view))
   (POST "/" [] (generate-message-view))
