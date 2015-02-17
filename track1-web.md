@@ -1454,15 +1454,149 @@ page where a user could submit a new message.
 
 We see the form now but submitting it does nothing.  The problem now
 is that we're extracting the params during the post but aren't
-actually doing anything with them.
+actually doing anything with them.  To fix this, we have to extract
+the parameters from the form, build a message, and store the message
+in our messages vector.  Actually, this might be the hardest part of
+our app.
 
-> _explain atoms, swap!, and do_
+First we need to import a library to extract the information sent by
+the form.  Add this to the ```:require``` section,
 
-_<note; much borkage.  the anti-forgery middleware is now default.  I'm
-missing something and it's not, maybe the token needs adding to the
-session or something.  anyway, to get that working, cut the
-wrap-defaults stuff.  That broke params.  Adding wrap-params works but
-now my params are strings instead of keywords./>_
+```[ring.middleware.params :refer [wrap-params]]```
+
+Next change the ```app``` definition from:
+
+```clojure
+(def app app-routes)
+```
+
+to:
+
+```clojure
+(def app (wrap-params app-route))
+```
+
+This enables us to have access to the information sent back in our ```form```.
+
+We want to be able to add new messages to our ```messages``` vector.
+Clojure was designed from the ground up to make it easier to write
+concurrent programs, programs that do more than one thing at a time.
+It does that by having having data structures that do not change.
+Variables can be changed to point to something else, but Clojure
+requires that doing so happen using particular functions so it can
+ensure the program stays in a safe state.  We're going to use the
+```atom``` mechanism to allow us to update our ```messages```.
+
+
+> An ```atom``` is like a box that protects information from being changed in
+> an unsafe way.  You simply pass the information into the ```atom```.
+
+Instead of having the ```messages`` variable point to our vector of messages, we're
+going to have it point to the ```atom``` protecting the vector.
+
+Instead of:
+
+```clojure
+(def messages [{:name "blue" :message "blue's first post"}
+               {:name "red" :message "red is my favorite color"}
+               {:name "green" :message "green makes it go faster"}])
+```
+
+We'll use:
+
+```clojure
+(def messages (atom [{:name "blue" :message "blue's first post"}
+               {:name "red" :message "red is my favorite color"}
+               {:name "green" :message "green makes it go faster"}]))
+```
+
+Now ```messages``` is pointing to the ```atom``` protecting our vector
+of hashes.
+
+Because ```messages``` is pointing to the ```atom```, we can't simply
+```map``` over it.  Now we have to tell Clojure that we need to
+```map``` over the contents of the atom.  This allows Clojure to
+ensure the messages are always read in a consistent state, even though
+something could be modifiying them.
+
+> Reading what's stored in an ```atom``` is called "dereferencing" and
+> is represented by the ```@``` character.
+
+We need to change our ```map```  from:
+
+```clojure
+(map (fn [m] [:tr [:td (:name m)] [:td (:message m)]]) messages)
+```
+
+to:
+
+```clojure
+(map (fn [m] [:tr [:td (:name m)] [:td (:message m)]]) @messages)
+```
+
+If you save ```handler.clj``` and refresh the browser, the hard coded examples
+should display as before.  We still won't see any new messages.  We've still need
+to extract the information from the form and modify ```messages```.
+
+
+> To modify an ```atom```, Clojure provides ```swap!```.
+>
+> ```clojure
+> (swap! atom update-function arguments...)
+> ```
+>
+> ```atom``` - the atom to be updated.
+>
+> ```update-function``` - the function that is applied to the value
+> protected by the atom.  It returns a new value which will replace the
+> original.
+>
+> ```arguments...``` - zero or more arguments to be passed into the
+> ```update-function```.
+
+In our case, we're going to use the function ```conj``` to update the
+vector.  ```conj``` takes a collection and an element and returns a
+new collection like the original but with the new element added.
+
+We'll also put it in a helper function to make it easier to maintain.
+
+```clojure
+(defn update-messages!
+  "this will update the message list"
+  [name message]
+  (swap! messages conj  {:name name :message message}))
+```
+
+Now we have to modify our ```app-routes```.  We have to make two
+changes; it needs to extract the form information when somebody
+```POST```s a new message, and it needs to add the new message to our
+```messages``` before returning the page to the user.  Both of these
+changes need to happen in the ```POST``` route.
+
+The new ```app-routes``` looks like,
+
+```clojure
+(defroutes app-routes
+  (GET "/" [] (generate-message-view))
+  (POST "/" {params :params} (do
+                               (update-messages! (get params "name") (get params "msg"))
+                               (generate-message-view)))
+  (route/not-found "Not Found"))
+```
+
+We extract the form information with ```{params :params}```, then we
+call our ```update-messages!``` function with the "name" and "msg"
+parameters.  Finally we generate the page for the user.
+
+If you save ```handler.clj```, we should be able to use the form to
+add messages to the page.
+
+Since we can add messages through the form, we can remove our hard-coded messages.  Change
+the messages to an empty vector.
+
+```clojure
+(def messages (atom []))
+```
 
 Now the app is taking our new messages but it's adding new messages to
 the end.  That's going to be hard to read.  We can fix that by
@@ -1473,31 +1607,21 @@ changing from a vector to a list.
 (def messages (atom '()))
 ```
 
-> _explain lists_
-
-We can also remove our stubbed out data.  And just to clean things up,
-let's put updating the message list into a helper function,
-"update-messages!", to get the logic out of the routes.
-
-```clojure
-(defn update-messages!
-  "this will update the message list"
-  [name message]
-  (swap! messages conj  {:name name :message message}))
-```
+> Like vectors, lists are sequential collections.  Vectors are better for accessing random
+> elements fast (which we aren't doing).  Lists are better at adding an element to the front,
+> which we want to do.  Since they are both collections, ```conj``` works with either.
 
 Our app now looks like:
 
 
 ```clojure
-(ns chatter.core.handler
+(ns chatter.handler
   (:require [compojure.core :refer :all]
             [compojure.route :as route]
             [ring.middleware.defaults :refer [wrap-defaults site-defaults]]
             [ring.middleware.params :refer [wrap-params]]
             [hiccup.page :as page]
-            [hiccup.form :as form]
-            [ring.util.anti-forgery :as anti-forgery]))
+            [hiccup.form :as form]))
 
 (def messages (atom '()))
 
@@ -1512,9 +1636,8 @@ Our app now looks like:
     [:p
      (form/form-to
       [:post "/"]
-      (anti-forgery/anti-forgery-field )
       "Name: " (form/text-field "name")
-      "Message: " (form/text-field "message")
+      "Message: " (form/text-field "msg")
       (form/submit-button "Submit"))]
     [:p
      [:table
@@ -1528,7 +1651,7 @@ Our app now looks like:
 (defroutes app-routes
   (GET "/" [] (generate-message-view))
   (POST "/" {params :params} (do
-                               (update-messages! (get params "name") (get params "message"))
+                               (update-messages! (get params "name") (get params "msg"))
                                (generate-message-view)))
   (route/not-found "Not Found"))
 
