@@ -1232,12 +1232,54 @@ This fixes the exception but is ugly.
 
 ![ugly hack](images/ugly.jpg "converting messages to a string")
 
-Let's take the messages and put them in a table using html's table,
-```tr```, and ```td``` elements.
+Let's take the messages and put them in a table using html's ```table```,
+```tr```, and ```td``` elements.  We're going to write a function that takes
+a message and creates an html row.  Then, inside a ```table```, we're going
+that function to all of our messages.
+
+
+> Clojure uses ```defn``` to create a function, but those functions are named.
+> Sometimes the function is something specialized that can't really be used elsewhere.
+> For those cases, Clojure has a way of creating an anonymous function.
+>
+> ```clojure
+> (fn params-vector expression)
+> ```
+
+Our function is going to take a message, we'll call it "m" within the function,
+and extract both the ```:name``` and ```:message``, wrapping them in ```:td``` to make
+table cells and putting them both within a ```:tr``` to make the row.  Since the keys to
+the message hash  are keywords, we can use them as functions to get the values.  In Clojure,
+the function looks like:
+
+```clojure
+(fn [m] [:tr [:td (:name m)] [:td (:message m)]])
+```
+
+> Making a new collection by applying a function to all of the elements of a collection
+> is such a common thing to do that Clojure has that functionality predefined.  It's a
+> function called ```map```, which can be confusing when you're talking about "mapping"
+> (the function) over a collection of maps (hash tables).  Which we are.
+>
+> The syntax is:
+>
+> ```clojure
+> (map fn coll)
+> ```
+>
+> ```map``` - signifies that we're going to be invoking the map function.
+>
+> ```fn``` - the function we're going to apply to every element.
+>
+> ```coll``` - the collection containing the elements.
+
+Mapping our anonymous function across our vector of messages looks like:
+
+```clojure
+(map (fn [m] [:tr [:td (:name m)] [:td (:message m)]]) messages)
+```
 
 Now our ```generate-message-view``` looks likes:
-
-> _explain Clojure map and fn_
 
 ```clojure
 (defn generate-message-view
