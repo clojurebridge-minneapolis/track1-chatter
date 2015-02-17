@@ -1300,15 +1300,54 @@ now display in the page.
 
 ![hard coded messages](images/hardcoded.jpg "hard coded messages")
 
-We still don't have a way of adding messages.  This requires html
-forms and adding importing the form functions from hiccup.
+<note: section4>
 
-> _explain html forms_
+### Forms
+
+We still don't have a way of adding messages.  This requires html
+forms and adding importing the form functions from hiccup.  The form allows the
+user to send messages in the parameters of an html ```POST```.  We will need to
+extract the message and add it to our collection of messages.  This will be the most
+complicated set of changes in our app.
+
+
+> In html, a ```form``` is used to send input from the browser
+> to the server.  The ```form``` element contains a pair of
+> attributes.
+>
+> ```action``` - which specifies the route that should handle the input.
+> ```method``` - which specifies the type of request.
+
+Up until now, we've only used ```GET```.  To send messages, we'll need
+to add a ```POST```.
+
+> ```forms``` contain text and ```input``` elements.  The ```input```
+> elements define the type content the ```form``` will send to the
+> server.  ```input``` elements have a number of attributes:
+>
+> ```id``` - a way of identifing the input
+>
+> ```name``` - the name of the inpu
+>
+> ```type``` - the kind of input
+>
+> ```value``` - the default value for the input
+
+We're going to use hiccup to generate html that looks like,
+
+```html
+<form action="/" method="POST">
+  Name: <input id="name" name="name" type="text">
+  Message: <input id="msg" name="msg" type="text">
+  <input type="submit" value="Submit">
+</form>
+```
+
 
 Now our code looks like:
 
 ```clojure
-(ns chatter.core.handler
+(ns chatter.handler
   (:require [compojure.core :refer :all]
             [compojure.route :as route]
             [ring.middleware.defaults :refer [wrap-defaults site-defaults]]
