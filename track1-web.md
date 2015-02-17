@@ -1316,6 +1316,7 @@ complicated set of changes in our app.
 > attributes.
 >
 > ```action``` - which specifies the route that should handle the input.
+>
 > ```method``` - which specifies the type of request.
 
 Up until now, we've only used ```GET```.  To send messages, we'll need
@@ -1343,6 +1344,64 @@ We're going to use hiccup to generate html that looks like,
 </form>
 ```
 
+First we need to import some libraries into our ```handler.clj``` file.  Add:
+
+```clojure
+[hiccup.form :as form]
+```
+
+to the ```:require``` section of the ```ns``` declaration.  It should now look like:
+
+```clojure
+(ns chatter.handler
+  (:require [compojure.core :refer :all]
+            [compojure.route :as route]
+            [ring.middleware.defaults :refer [wrap-defaults site-defaults]]
+            [hiccup.page :as page]
+            [hiccup.form :as form]))
+```
+
+Now that we have imported the hiccup form function, we can use it to generate the html form.
+
+```clojure
+(form/form-to
+ [:post "/"]
+ "Name: " (form/text-field "name")
+ "Message: " (form/text-field "msg")
+ (form/submit-button "Submit"))
+```
+
+```form/form-to``` is a hiccup function for generating the form
+
+```[:post "/"]``` - is a vector with the keyword ```:post``` and the string "/".  This tells hiccup that it make the
+method a ```POST``` and the action will be the "/" route.
+
+"Name:" - a string that will be the text displayed before the input field.
+
+```form/text-field``` - is a hiccup function for generating an input field of type "text".  We're passing in the string "name".
+
+"Message:" - a string that will be the text displayed before the input field.
+
+```form/submit-button``` - a hiccup for for generating the submit button.
+
+We want to generate the form button below the title but above the list of messages in the ```generate-message-view``` function.
+
+Finally, we're going to change our definition of the app
+
+from:
+
+```clojure
+(def app
+  (wrap-defaults app-routes site-defaults))
+```
+
+to:
+
+```clojure
+(def app app-routes)
+```
+
+This is a simplification for the tutorial.
 
 Now our code looks like:
 
@@ -1351,9 +1410,9 @@ Now our code looks like:
   (:require [compojure.core :refer :all]
             [compojure.route :as route]
             [ring.middleware.defaults :refer [wrap-defaults site-defaults]]
+            [ring.middleware.params :refer [wrap-params]]
             [hiccup.page :as page]
-            [hiccup.form :as form]
-            [ring.util.anti-forgery :as anti-forgery]))
+            [hiccup.form :as form]))
 
 (def messages [{:name "blue" :message "blue's first post"}
                {:name "red" :message "red is my favorite color"}
@@ -1370,7 +1429,6 @@ Now our code looks like:
     [:p
      (form/form-to
       [:post "/"]
-      (anti-forgery/anti-forgery-field )
       "Name: " (form/text-field "name")
       "Message: " (form/text-field "msg")
       (form/submit-button "Submit"))]
@@ -1378,17 +1436,32 @@ Now our code looks like:
      [:table
       (map (fn [m] [:tr [:td (:name m)] [:td (:message m)]]) messages)]]]))
 
+
+(defn update-messages!
+  "this will update the message list"
+  [name message]
+  (swap! messages conj  {:name name :message message}))
+
 (defroutes app-routes
   (GET "/" [] (generate-message-view))
-  (POST "/" {params :params} (generate-message-view))
+  (POST "/" [] (generate-message-view))
   (route/not-found "Not Found"))
 
 (def app app-routes)
 ```
 
-But when we run it, we don't actually see our posts populating
-anything.  The problem now is that we're extracting the params during
-the post but aren't actually doing anything with them.
+Save ```handler.clj``` and refresh the browser.  We should now have a form on the
+page where a user could submit a new message.
+
+![unwired form](images/unwired-form.jpg "unwired form")
+
+<note: section5>
+
+### Wiring the form
+
+We see the form now but submitting it does nothing.  The problem now
+is that we're extracting the params during the post but aren't
+actually doing anything with them.
 
 > _explain atoms, swap!, and do_
 
