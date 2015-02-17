@@ -1200,16 +1200,16 @@ This blows up spectacularly.
 
 ![blowups happen, illegal argument exception](images/illegal-argument-exception.jpg "Illegal Argument Exception")
 
-Then there's a stack trace(*), which  gives an idea what the program was
+This is a stack trace, which  gives an idea what the program was
 doing when it hit the problem.  Ignore all the files that aren't ones
 you wrote for the project.  In my case, the first file of interest is
 ```handler.clj```, line 14, the ```generate-message-view``` function.
 
-In the exception message on the top, "... is not a valid element
-name", elements are what fragments of html are called.  Hiccup is
-responsible for generating html from Clojure symbols.  The problem is
-that we've got a map with symbols in it and hiccup thinks they're
-html.  They're not so it blows up.
+The exception message on the top, "... is not a valid element name",
+is a clue to what's wrong.  Elements are what fragments of html are
+called.  Hiccup is responsible for generating html from Clojure
+symbols.  The problem is that we've got a map with symbols in it and
+hiccup thinks they're html.  They're not so it blows up.
 
 We can finesse the issue by converting our maps to strings.
 
@@ -1228,8 +1228,12 @@ We can finesse the issue by converting our maps to strings.
 
 Save ```handler.clj```, then refresh the browser.
 
-This fixes the exception but is ugly.  Let's take the messages and put
-them in a table using html's table, ```tr```, and ```td``` elements.
+This fixes the exception but is ugly.
+
+![ugly hack](images/ugly.jpg "converting messages to a string")
+
+Let's take the messages and put them in a table using html's table,
+```tr```, and ```td``` elements.
 
 Now our ```generate-message-view``` looks likes:
 
