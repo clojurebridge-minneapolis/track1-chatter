@@ -1295,6 +1295,11 @@ Now our ```generate-message-view``` looks likes:
       (map (fn [m] [:tr [:td (:name m)] [:td (:message m)]]) messages)]]]))
 ```
 
+Save ```handler.clj``` then refresh the browser.  Our hard-coded messages should
+now display in the page.
+
+![hard coded messages](images/hardcoded.jpg "hard coded messages")
+
 We still don't have a way of adding messages.  This requires html
 forms and adding importing the form functions from hiccup.
 
