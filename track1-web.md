@@ -1196,12 +1196,9 @@ Next we'll modify the html to display the messages.
 
 Save ```handler.clj``` then go back to the browser and refresh the page.
 
-This blows up spectacularly.  The message is
-"java.lang.illegalArgumentException"
-"{:name "chris", :message "hello, world"} is not a valid element
-name."
+This blows up spectacularly.
 
-_insert screenshot_
+![blowups happen, illegal argument exception](images/illegal-argument-exception.jpg "Illegal Argument Exception")
 
 Then there's a stack trace(*), which  gives an idea what the program was
 doing when it hit the problem.  Ignore all the files that aren't ones
@@ -1268,9 +1265,9 @@ Now our code looks like:
             [hiccup.form :as form]
             [ring.util.anti-forgery :as anti-forgery]))
 
-(def messages [{:name "blue" :message "hello, world"}
-               {:name "red" :message "read my lips"}
-               {:name "green" :message "time makes more converts than reason"}])
+(def messages [{:name "blue" :message "blue's first post"}
+               {:name "red" :message "red is my favorite color"}
+               {:name "green" :message "green makes it go faster"}])
 
 (defn generate-message-view
   "this generates the html for displaying messags"
