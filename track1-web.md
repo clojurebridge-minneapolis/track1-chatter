@@ -770,7 +770,7 @@ change the description in ```project.clj``` file.  Save that file too.
 Now the git status should be:
 
 <div class= "console"><pre>
-$ /chatter $ git status
+$: git status
 On branch fix-readme
 Changes not staged for commit:
   (use "git add <file>..." to update what will be committed)
@@ -788,7 +788,7 @@ no changes added to commit (use "git add" and/or "git commit -a")
 Let's add and commit the changes.
 
 <div class= "console"><pre>
-$ /chatter $ git add README.md project.clj
+$: git add README.md project.clj
 </pre>
 </div>
 
@@ -807,7 +807,7 @@ Changes to be committed:
 
 
 <div class= "console"><pre>
-$ /chatter $ git commit README.md project.clj -m "fixing README.md description"
+$ git commit README.md project.clj -m "fixing README.md description"
 [fix-readme 57aff88] fixing README.md description
  2 files changed, 3 insertions(+), 3 deletions(-)
 </pre>
@@ -817,7 +817,7 @@ Now git status reports no uncommitted changes but we're still on the
 fix-me branch.
 
 <div class= "console"><pre>
-$ /chatter $ git status
+$: git status
 On branch fix-readme
 nothing to commit, working directory clean
 </pre>
@@ -826,7 +826,7 @@ nothing to commit, working directory clean
 Let's the check the log.
 
 <div class= "console"><pre>
-$ /chatter $ git log
+$: git log
 commit 57aff889c81698394faf8568b63f14130d32599a
 Author: crkoehnen <crkoehnen@gmail.com>
 Date:   Sun Dec 28 17:33:41 2014 -0600
@@ -838,7 +838,7 @@ Author: crkoehnen <crkoehnen@gmail.com>
 Date:   Sun Dec 28 16:43:37 2014 -0600
 
     initial commit
-$ /chatter $
+$: 
 </pre>
 </div>
 
@@ -851,7 +851,7 @@ Let's merge our changes into the master branch.  First let's checkout
 master and check its log.
 
 <div class= "console"><pre>
-$ /chatter $ git checkout master
+$: git checkout master
 Switched to branch 'master'
 Your branch is up-to-date with 'origin/master'.
 </pre>
@@ -859,7 +859,7 @@ Your branch is up-to-date with 'origin/master'.
 
 
 <div class= "console"><pre>
-$ /chatter $ git log
+$: git log
 commit 44a560f1653770afac01aea2c9279a7af46a46eb
 Author: crkoehnen <crkoehnen@gmail.com>
 Date:   Sun Dec 28 16:43:37 2014 -0600
@@ -873,7 +873,7 @@ the README changes.  We can fix that by merging our fix-me branch into
 the master branch.
 
 <div class= "console"><pre>
-$ /chatter $ git merge fix-readme
+$: git merge fix-readme
 Updating 44a560f..57aff88
 Fast-forward
  README.md   | 4 ++--
@@ -886,7 +886,7 @@ The merge brought in the changes.  If we check the log, we'll see two
 commits now.
 
 <div class= "console"><pre>
-$ /chatter $ git log
+$: git log
 commit 57aff889c81698394faf8568b63f14130d32599a
 Author: crkoehnen <crkoehnen@gmail.com>
 Date:   Sun Dec 28 17:33:41 2014 -0600
@@ -917,7 +917,7 @@ The final step will be to push our changes to GitHub.
 
 
 <div class= "console"><pre>
-$ /chatter $ git push origin master
+$: git push origin master
 Username for 'https://github.com': crkoehnen
 Password for 'https://crkoehnen@github.com':
 Counting objects: 4, done.
@@ -1866,7 +1866,7 @@ Try the traceroute command again against the address heroku assigned your app:
 
 
 <div class= "console"><pre>
-$ /chatter $ traceroute obscure-brushlands-9918.herokuapp.com
+$: traceroute obscure-brushlands-9918.herokuapp.com
 traceroute to obscure-brushlands-9918.herokuapp.com (50.16.239.160), 30 hops max, 60 byte packets
  1  192.168.1.1 (192.168.1.1)  15.820 ms  15.797 ms  15.773 ms
  2  96.120.49.33 (96.120.49.33)  23.895 ms  25.196 ms  25.192 ms
