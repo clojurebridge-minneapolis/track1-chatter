@@ -808,7 +808,7 @@ no changes added to commit (use "git add" and/or "git commit -a")
 </pre>
 </div>
 
-#### Adding and Commmting the changes
+#### Adding and Committing the changes
 
 Let's add and commit the changes.
 
@@ -863,7 +863,7 @@ Author: crkoehnen <crkoehnen@gmail.com>
 Date:   Sun Dec 28 16:43:37 2014 -0600
 
     initial commit
-$: 
+$:
 </pre>
 </div>
 
@@ -1093,7 +1093,7 @@ Our new code should look like:
 
 ```clojure
 (defn generate-message-view
-  "this generates the html for displaying messags"
+  "This generates the HTML for displaying messages"
   []
   (page/html5
    [:head
@@ -1194,29 +1194,35 @@ post and its value is, "blue's first post".
 > Maps are everywhere in Clojure and are used for many things where
 > other languages might use objects.
 
-Let's call the vector simply ```messages``` and hard code(*) some samples
-to get started.  Add a messages variable to ```handler.clj```.
+Let's call the vector simply ```chat-messages``` and hard code(*) some
+samples to get started.  Add a chat-messages variable to ```handler.clj```.
 
 After the ns expresion, add:
 
 ```clojure
-(def messages [{:name "blue" :message "hello, world"}
-               {:name "red" :message "red is my favorite color"}
-               {:name "green" :message "green makes it go faster"}])
+(def chat-messages [{:name "blue" :message "hello, world"}
+                    {:name "red" :message "red is my favorite color"}
+                    {:name "green" :message "green makes it go faster"}])
 ```
 
-Next we'll modify the html to display the messages.
+Next we'll modify the HTML to display the messages.  We will also add a
+parameter to the ```generate-message-view``` function so that we can give
+it the messages we want displayed.
 
 ```clojure
 (defn generate-message-view
-  "this generates the html for displaying messags"
-  []
+  "This generates the HTML for displaying messages"
+  [messages]
   (page/html5
    [:head
     [:title "chatter"]]
    [:body
     [:h1 "Our Chat App"]
     [:p messages]]))
+
+(defroutes app-routes
+  (GET "/" [] (generate-message-view chat-messages))
+  (route/not-found "Not Found"))
 ```
 
 Save ```handler.clj``` then go back to the browser and refresh the page.
@@ -1240,8 +1246,8 @@ We can finesse the issue by converting our maps to strings.
 
 ```clojure
 (defn generate-message-view
-  "this generates the html for displaying messags"
-  []
+  "This generates the HTML for displaying messages"
+  [messages]
   (page/html5
    [:head
     [:title "chatter"]]
@@ -1272,10 +1278,9 @@ that function to all of our messages.
 > ```
 
 Our function is going to take a message, we'll call it "m" within the function,
-and extract both the ```:name``` and ```:message``, wrapping them in ```:td``` to make
+and extract both the ```:name``` and ```:message```, wrapping them in ```:td``` to make
 table cells and putting them both within a ```:tr``` to make the row.  Since the keys to
-the message hash  are keywords, we can use them as functions to get the values.  In Clojure,
-the function looks like:
+the message hash  are keywords, we can use them as functions to get the values.  In Clojure, the function looks like:
 
 ```clojure
 (fn [m] [:tr [:td (:name m)] [:td (:message m)]])
@@ -1308,10 +1313,10 @@ Now our ```generate-message-view``` looks likes:
 
 ```clojure
 (defn generate-message-view
-  "this generates the html for displaying messags"
-  []
+  "This generates the HTML for displaying messages"
+  [messages]
   (page/html5
-   [:head
+     [:head
     [:title "chatter"]]
    [:body
     [:h1 "Our Chat App"]
@@ -1438,12 +1443,12 @@ Now our code looks like:
             [hiccup.page :as page]
             [hiccup.form :as form]))
 
-(def messages [{:name "blue" :message "blue's first post"}
-               {:name "red" :message "red is my favorite color"}
-               {:name "green" :message "green makes it go faster"}])
+(def chat-messages [{:name "blue" :message "blue's first post"}
+                    {:name "red" :message "red is my favorite color"}
+                    {:name "green" :message "green makes it go faster"}])
 
 (defn generate-message-view
-  "this generates the html for displaying messags"
+  "This generates the HTML for displaying messages"
   []
   (page/html5
    [:head
@@ -1461,8 +1466,8 @@ Now our code looks like:
       (map (fn [m] [:tr [:td (:name m)] [:td (:message m)]]) messages)]]]))
 
 (defroutes app-routes
-  (GET "/" [] (generate-message-view))
-  (POST "/" [] (generate-message-view))
+  (GET "/" [] (generate-message-view chat-messages))
+  (POST "/" [] (generate-message-view chat-messages))
   (route/not-found "Not Found"))
 
 (def app app-routes)
@@ -1516,54 +1521,79 @@ ensure the program stays in a safe state.  We're going to use the
 > An ```atom``` is like a box that protects information from being changed in
 > an unsafe way.  You simply pass the information into the ```atom```.
 
-Instead of having the ```messages`` variable point to our vector of messages, we're
-going to have it point to the ```atom``` protecting the vector.
+Instead of having the ```chat-messages``` variable point to our vector of messages,
+we're going to have it point to the ```atom``` protecting the vector.
 
 Instead of:
 
 ```clojure
-(def messages [{:name "blue" :message "blue's first post"}
-               {:name "red" :message "red is my favorite color"}
-               {:name "green" :message "green makes it go faster"}])
+(def chat-messages [{:name "blue" :message "blue's first post"}
+                    {:name "red" :message "red is my favorite color"}
+                    {:name "green" :message "green makes it go faster"}])
 ```
 
 We'll use:
 
 ```clojure
-(def messages (atom [{:name "blue" :message "blue's first post"}
-               {:name "red" :message "red is my favorite color"}
-               {:name "green" :message "green makes it go faster"}]))
+(def chat-messages
+     (atom [{:name "blue" :message "blue's first post"}
+            {:name "red" :message "red is my favorite color"}
+            {:name "green" :message "green makes it go faster"}]))
 ```
 
-Now ```messages``` is pointing to the ```atom``` protecting our vector
+Now ```chat-messages``` is pointing to the ```atom``` protecting our vector
 of hashes.
 
-Because ```messages``` is pointing to the ```atom```, we can't simply
-```map``` over it.  Now we have to tell Clojure that we need to
-```map``` over the contents of the atom.  This allows Clojure to
-ensure the messages are always read in a consistent state, even though
+Because ```chat-messages``` is pointing to the ```atom```, we can't simply
+```map``` over it in ```generate-message-view```.  Now we have to tell Clojure
+that we want to generate HTML for the content of the atom.  This allows Clojure
+to ensure the messages are always read in a consistent state, even though
 something could be modifiying them.
 
 > Reading what's stored in an ```atom``` is called "dereferencing" and
 > is represented by the ```@``` character.
 
-We need to change our ```map```  from:
+We will dereference the ```chat-messages``` atom just before it is passed to the
+```generate-message-view``` function.  We can do this by changing our routes from:
 
 ```clojure
-(map (fn [m] [:tr [:td (:name m)] [:td (:message m)]]) messages)
+(defroutes app-routes
+  (GET "/" [] (generate-message-view chat-messages))
+  (POST "/" [] (generate-message-view chat-messages))
+  (route/not-found "Not Found"))
 ```
 
 to:
 
 ```clojure
-(map (fn [m] [:tr [:td (:name m)] [:td (:message m)]]) @messages)
+(defroutes app-routes
+  (GET "/" [] (generate-message-view @chat-messages))
+  (POST "/" [] (generate-message-view @chat-messages))
+  (route/not-found "Not Found"))
 ```
 
 If you save ```handler.clj``` and refresh the browser, the hard coded examples
-should display as before.  We still won't see any new messages.  We've still need
-to extract the information from the form and modify ```messages```.
+should display as before.  We still won't see any new messages because we still
+need to extract the information from the form and modify ```chat-messages```.
 
+To add messages to ```chat-messages``` we will need to introduce two more
+functions: ```conj``` and ```swap!```.
 
+> #### conj
+> There are many ways to work with lists of values in Clojure.  One commonly
+> used function is ```conj```.  The name is short for "conjoin".  This function
+> will take a collection and one or more item(s) to add to the collection.  It
+> then returns a new collection without modifying the original collection.
+>
+> ```clojure
+> (conj [:one :two] :three)
+> => [:one :two :three]
+>
+> (conj [:one :two :three] :four :five)
+> => [:one :two :three :four :five]
+> ```
+
+> #### swap!
 > To modify an ```atom```, Clojure provides ```swap!```.
 >
 > ```clojure
@@ -1576,42 +1606,85 @@ to extract the information from the form and modify ```messages```.
 > protected by the atom.  It returns a new value which will replace the
 > original.
 >
-> ```arguments...``` - zero or more arguments to be passed into the
-> ```update-function```.
+> ```arguments...``` - zero or more arguments to be passed into the ```update-function```.
+>
+> The ```swap!``` function will:
+>  1. Dereference the atom
+>  2. Pass this dereferenced value to the ```update-function```
+>     along with any additional arguments<br/>
+>     You can think of it like this: ```(update-function @atom arguments...)```
+>  3. Safely replace the inner content of the atom with the
+>     value returned from the ```update-function```, and finally...
+>  4. Return the new content of the atom.
+>
+> ```clojure
+> (def a-number (atom 1))
+>
+> @a-number
+> => 1
+> (swap! a-number + 2)
+> => 3
+> @a-number
+> => 3
+> ```
 
-In our case, we're going to use the function ```conj``` to update the
-vector.  ```conj``` takes a collection and an element and returns a
-new collection like the original but with the new element added.
+In our case, we're going "swap" the content of ```chat-messages```
+by "conj'ing" a new message onto the vector of messages.
 
 We'll also put it in a helper function to make it easier to maintain.
 
 ```clojure
 (defn update-messages!
-  "this will update the message list"
-  [name message]
-  (swap! messages conj  {:name name :message message}))
+  "This will update a message list atom"
+  [messages name new-message]
+  (swap! messages conj {:name name :message new-message}))
 ```
 
 Now we have to modify our ```app-routes```.  We have to make two
 changes; it needs to extract the form information when somebody
 ```POST```s a new message, and it needs to add the new message to our
-```messages``` before returning the page to the user.  Both of these
-changes need to happen in the ```POST``` route.
+```chat-messages``` before returning the page to the user.  Both of
+these changes need to happen in the ```POST``` route.
 
 The new ```app-routes``` looks like,
 
 ```clojure
 (defroutes app-routes
   (GET "/" [] (generate-message-view))
-  (POST "/" {params :params} (do
-                               (update-messages! (get params "name") (get params "msg"))
-                               (generate-message-view)))
+  (POST "/" {params :params} (generate-message-view
+                               (update-messages! chat-messages
+                                 (get params "name") (get params "msg"))
+                               ))
   (route/not-found "Not Found"))
 ```
 
 We extract the form information with ```{params :params}```, then we
-call our ```update-messages!``` function with the "name" and "msg"
-parameters.  Finally we generate the page for the user.
+call our ```update-messages!``` function on the ```chat-messages```
+atom with the "name" and "msg" parameters.  Finally ```generate-message-view```
+turns the updated content of ```chat-messages```, returned from the
+```swap!``` in ```update-messages!```, into HTML to show the user.
+
+Another way of writing this, which may make the intent more clear, is to
+name some of the intermediate values using ```let```.
+
+```clojure
+(defroutes app-routes
+  (GET "/" [] (generate-message-view))
+  (POST "/" {params :params}
+    (let [name-param (get params "name")
+          msg-param (get params "msg")
+          new-messages (update-messages! chat-messages name-param msg-param)]
+      (generate-message-view new-messages)
+      ))
+  (route/not-found "Not Found"))
+```
+
+In this example, we temporarily provide names for three values.  The first two are
+the "name" and "msg" fields from the HTML form.  The third, ```new-messages```, is the
+freshly updated content of ```chat-messages``` returned from ```update-messages!```.
+Both ```name-param``` and ```msg-param``` can be used in the call to ```update-message!```
+because they come before it.  Finally we pass ```new-messages``` to ```generate-message-view```
+create the HTML.
 
 If you save ```handler.clj```, we should be able to use the form to
 add messages to the page.
@@ -1620,7 +1693,7 @@ Since we can add messages through the form, we can remove our hard-coded message
 the messages to an empty vector.
 
 ```clojure
-(def messages (atom []))
+(def chat-messages (atom []))
 ```
 
 Now the app is taking our new messages but it's adding new messages to
@@ -1629,7 +1702,7 @@ changing from a vector to a list.
 
 
 ```clojure
-(def messages (atom '()))
+(def chat-messages (atom '()))
 ```
 
 > Like vectors, lists are sequential collections.  Vectors are better for accessing random
@@ -1648,11 +1721,11 @@ Our app now looks like:
             [hiccup.page :as page]
             [hiccup.form :as form]))
 
-(def messages (atom '()))
+(def chat-messages (atom '()))
 
 (defn generate-message-view
-  "this generates the html for displaying messags"
-  []
+  "This generates the HTML for displaying messages"
+  [messages]
   (page/html5
    [:head
     [:title "chatter"]]
@@ -1666,18 +1739,21 @@ Our app now looks like:
       (form/submit-button "Submit"))]
     [:p
      [:table
-      (map (fn [m] [:tr [:td (:name m)] [:td (:message m)]]) @messages)]]]))
+      (map (fn [m] [:tr [:td (:name m)] [:td (:message m)]]) messages)]]]))
 
 (defn update-messages!
-  "this will update the message list"
-  [name message]
+  "This will update a message list atom"
+  [messages name message]
   (swap! messages conj  {:name name :message message}))
 
 (defroutes app-routes
   (GET "/" [] (generate-message-view))
-  (POST "/" {params :params} (do
-                               (update-messages! (get params "name") (get params "msg"))
-                               (generate-message-view)))
+  (POST "/" {params :params}
+    (let [name-param (get params "name")
+          msg-param (get params "msg")
+          new-messages (update-messages! chat-messages name-param msg-param)]
+      (generate-message-view new-messages)
+      ))
   (route/not-found "Not Found"))
 
 (def app (wrap-params app-routes))
@@ -1771,9 +1847,12 @@ resources.  Change the defroutes to:
 ```clojure
 (defroutes app-routes
   (GET "/" [] (generate-message-view))
-  (POST "/" {params :params} (do
-                               (update-messages! (get params "name") (get params "message"))
-                               (generate-message-view)))
+  (POST "/" {params :params}
+    (let [name-param (get params "name")
+          msg-param (get params "msg")
+          new-messages (update-messages! chat-messages name-param msg-param)]
+      (generate-message-view new-messages)
+      ))
   (route/resources "/")
   (route/not-found "Not Found"))
 ```
