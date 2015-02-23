@@ -1289,7 +1289,7 @@ the message hash  are keywords, we can use them as functions to get the values. 
 > Making a new collection by applying a function to all of the elements of a collection
 > is such a common thing to do that Clojure has that functionality predefined.  It's a
 > function called ```map```, which can be confusing when you're talking about "mapping"
-> (the function) over a collection of maps (hash tables).  Which we are.
+> (the function) over a collection of maps (hash tables), which we are.
 >
 > The syntax is:
 >
@@ -1580,10 +1580,10 @@ To add messages to ```chat-messages``` we will need to introduce two more
 functions: ```conj``` and ```swap!```.
 
 > #### conj
-> There are many ways to work with lists of values in Clojure.  One commonly
+> There are many ways to work with collections of values in Clojure.  One commonly
 > used function is ```conj```.  The name is short for "conjoin".  This function
-> will take a collection and one or more item(s) to add to the collection.  It
-> then returns a new collection without modifying the original collection.
+> takes a collection and one or more item(s) to add to the collection.  It then
+> returns a _new_ collection without modifying the original collection.
 >
 > ```clojure
 > (conj [:one :two] :three)
@@ -1657,15 +1657,21 @@ The new ```app-routes``` looks like,
                                ))
   (route/not-found "Not Found"))
 ```
-
-We extract the form information with ```{params :params}```, then we
-call our ```update-messages!``` function on the ```chat-messages```
-atom with the "name" and "msg" parameters.  Finally ```generate-message-view```
-turns the updated content of ```chat-messages```, returned from the
-```swap!``` in ```update-messages!```, into HTML to show the user.
+1. ```{params :params}``` is a shorthand notation that tells Clojure to extract
+   all of the data submitted from the HTML form and call that data ```params```.
+2. ```(get params "name")``` and ```(get params "msg"``` extract the values of
+   the "name" and "msg" fields from the form data.
+3. The ```update-messages!``` function is then called with the ```chat-messages``` atom
+   and the values of the "name" and "msg" fields from the form.
+4. After ```update-messages!``` has added the new message to the inner content of
+   ```chat-messages``` it returns the new, dereferenced, vector of messages held by
+   the atom.
+5. ```generate-message-view``` is called with the updated collection of messages and
+   builds the HTML response for the user.
 
 Another way of writing this, which may make the intent more clear, is to
-name some of the intermediate values using ```let```.
+name some of the intermediate values using ```let```.  This will allow us to
+temporarily provide names for the results of some of the expressions.
 
 ```clojure
 (defroutes app-routes
@@ -1679,12 +1685,38 @@ name some of the intermediate values using ```let```.
   (route/not-found "Not Found"))
 ```
 
-In this example, we temporarily provide names for three values.  The first two are
-the "name" and "msg" fields from the HTML form.  The third, ```new-messages```, is the
-freshly updated content of ```chat-messages``` returned from ```update-messages!```.
-Both ```name-param``` and ```msg-param``` can be used in the call to ```update-message!```
-because they come before it.  Finally we pass ```new-messages``` to ```generate-message-view```
-create the HTML.
+1.  Extract the "name" field from the form data in ```params``` and name it ```name-param```.
+2.  Extract the "msg" field from the form data in ```params``` and name it ```msg-param```.
+3.  Execute the ```update-messages!``` function for the chat-messages atom and the values of
+    the previously established ```name-param``` and ```msg-param``` names.
+4.  Assign the name ```new-messages``` to the result of ```update-messages!```.
+5.  Execute ```generate-message-view``` for the new collection of messages now called ```new-messages```.
+6.  Return the HTML produced by ```generate-message-view``` and forget about the names
+    ```name-param```, ```msg-param```, and ```new-messages```.
+
+> #### let
+> ```let``` expressions are used to temporarily associate names with the results of other
+> expressions, similar to how a function assigns names to it's arguments.  These named
+> values can also be re-used without the cost of re-evaluating the expression that
+> generated them.
+>
+> (let [name-one expression-one]
+>       name-two expression-two]
+>   (some-function name-one name-two))
+>
+> 1. ```name-one```: a name for the result of evaluating ```expression-one```.
+> 2. ```name-two```: a name for the result of evaluating ```expression-two```.
+> 3. Call ```some-function``` and pass it the values assigned to ```name-one```
+>    and ```name-two```.
+> 4. Return the result of the last expression within the ```let```, and
+>    forget about the names we had created.
+>
+> ```clojure
+> (let [two   2
+>       three (+ two 1)]
+>   (* two three))
+> => 6
+> ```
 
 If you save ```handler.clj```, we should be able to use the form to
 add messages to the page.
