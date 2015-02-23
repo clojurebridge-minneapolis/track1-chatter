@@ -1815,7 +1815,7 @@ Now let's change the table element from ```:table``` to ```:table#messages.table
 
 ```clojure
     [:table#messages.table
-     (map (fn [m] [:tr [:td (:name m)] [:td (:message m)]]) @messages)]
+     (map (fn [m] [:tr [:td (:name m)] [:td (:message m)]]) messages)]
 ```
 
 This tells hiccup that we want the table to have an id of ```messages``` and a class of ```table```.
@@ -1829,7 +1829,7 @@ element to: ```:table#messages.table.table-striped```.
 
 ```clojure
     [:table#messages.table.table-striped
-     (map (fn [m] [:tr [:td (:name m)] [:td (:message m)]]) @messages)]
+     (map (fn [m] [:tr [:td (:name m)] [:td (:message m)]]) messages)]
 ```
 
 
@@ -1841,7 +1841,7 @@ effects.  Try adding table-hover to the table element: ```:table#messages.table.
 
 ```clojure
     [:table#messages.table.table-hover
-     (map (fn [m] [:tr [:td (:name m)] [:td (:message m)]]) @messages)]
+     (map (fn [m] [:tr [:td (:name m)] [:td (:message m)]]) messages)]
 ```
 
 Now when you move the mouse over a row, the entire row becomes highlighted.  Dynamic effects in the browser are implemented
