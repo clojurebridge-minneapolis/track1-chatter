@@ -6,11 +6,11 @@
             [hiccup.page :as page]
             [hiccup.form :as form]))
 
-(def messages (atom '()))
+(def chat-messages (atom '()))
 
 (defn generate-message-view
-  "this generates the html for displaying messags"
-  []
+  "This generates the HTML for displaying messages"
+  [messages]
   (page/html5
    [:head
     [:title "chatter"]]
@@ -24,18 +24,21 @@
       (form/submit-button "Submit"))]
     [:p
      [:table
-      (map (fn [m] [:tr [:td (:name m)] [:td (:message m)]]) @messages)]]]))
+      (map (fn [m] [:tr [:td (:name m)] [:td (:message m)]]) messages)]]]))
 
 (defn update-messages!
-  "this will update the message list"
-  [name message]
-  (swap! messages conj  {:name name :message message}))
+  "This will update a message list atom"
+  [messages name new-message]
+  (swap! messages conj  {:name name :message new-message}))
 
 (defroutes app-routes
-  (GET "/" [] (generate-message-view))
-  (POST "/" {params :params} (do
-                               (update-messages! (get params "name") (get params "msg"))
-                               (generate-message-view)))
+  (GET "/" [] (generate-message-view @chat-messages))
+  (POST "/" {params :params}
+    (let [name-param (get params "name")
+          msg-param (get params "msg")
+          new-messages (update-messages! chat-messages name-param msg-param)]
+      (generate-message-view new-messages)
+      ))
   (route/not-found "Not Found"))
 
 (def app (wrap-params app-routes))

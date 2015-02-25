@@ -1449,7 +1449,7 @@ Now our code looks like:
 
 (defn generate-message-view
   "This generates the HTML for displaying messages"
-  []
+  [messages]
   (page/html5
    [:head
     [:title "chatter"]]
@@ -1650,7 +1650,7 @@ The new ```app-routes``` looks like,
 
 ```clojure
 (defroutes app-routes
-  (GET "/" [] (generate-message-view))
+  (GET "/" [] (generate-message-view @chat-messages))
   (POST "/" {params :params} (generate-message-view
                                (update-messages! chat-messages
                                  (get params "name") (get params "msg"))
@@ -1675,7 +1675,7 @@ temporarily provide names for the results of some of the expressions.
 
 ```clojure
 (defroutes app-routes
-  (GET "/" [] (generate-message-view))
+  (GET "/" [] (generate-message-view @chat-messages))
   (POST "/" {params :params}
     (let [name-param (get params "name")
           msg-param (get params "msg")
@@ -1779,7 +1779,7 @@ Our app now looks like:
   (swap! messages conj  {:name name :message message}))
 
 (defroutes app-routes
-  (GET "/" [] (generate-message-view))
+  (GET "/" [] (generate-message-view @chat-messages))
   (POST "/" {params :params}
     (let [name-param (get params "name")
           msg-param (get params "msg")
@@ -1878,7 +1878,7 @@ resources.  Change the defroutes to:
 
 ```clojure
 (defroutes app-routes
-  (GET "/" [] (generate-message-view))
+  (GET "/" [] (generate-message-view @chat-messages))
   (POST "/" {params :params}
     (let [name-param (get params "name")
           msg-param (get params "msg")
