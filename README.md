@@ -45,6 +45,7 @@ _insert image of app_
 * Leiningen 2.5+
 * Git 2.1+
 * Firefox with Firebug
+* The Heroku Toolbelt
 
 Everything should be set up the night before during our install-fest.
 Please ensure you have everything working _before_ you show up for
