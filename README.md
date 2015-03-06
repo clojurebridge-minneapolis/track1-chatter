@@ -988,54 +988,52 @@ Our new code should look like:
   (route/not-found "Not Found"))
 ```
 
-```generate-message-view``` is a function that takes no arguments.  It
-calls a hiccup function ```page/html5``` to generate html from a
-vector representing the ```head``` sections and a vector representing the
-```body``` elements of the html.
+`generate-message-view` is a function that takes no arguments.  It
+calls a hiccup function `page/html5` to generate html from a
+vector representing the `head` sections and a vector representing the
+`body` elements of the html.
 
-Save ```handler.clj``` and let's refresh the browser to make sure our
-page still works.  From the outside, we shouldn't see a change.  The
-page should still display "Our Chat App" and the html should be
-identical.  Now let's double check our git status:
+Save `handler.clj`, and let's refresh the browser to make sure our page
+still works.  From the outside, we shouldn't see a change.  The page
+should still display "Our Chat App" and the html should be identical.
+Now, let's double check our git status:
 
-<div class= "console"><pre>
-$: git status
-On branch view-messages
-Changes not staged for commit:
-  (use "git add <file>..." to update what will be committed)
-  (use "git checkout -- <file>..." to discard changes in working directory)
 
-	modified:   project.clj
-	modified:   src/chatter/core/handler.clj
+    $: git status
+    On branch view-messages
+    Changes not staged for commit:
+       (use "git add <file>..." to update what will be committed)
+       (use "git checkout -- <file>..." to discard changes in working directory)
 
-no changes added to commit (use "git add" and/or "git commit -a")
-</pre>
-</div>
+          modified:   project.clj
+          modified:   src/chatter/core/handler.clj
+
+    no changes added to commit (use "git add" and/or "git commit -a")
 
 That looks right so let's add, commit, merge the changes back to
-master, then push to GitHub.  Then delete the ```view-messages``` branch.
+master, and then push to GitHub.  Then, delete the `view-messages` branch.
 You should see the commit numbers go up on GitHub.
 
 <note: git tag, section 3>
 
-### Adding messages
+### Adding Messages
 
 We still aren't displaying messages, nor do we have a way of
-adding them.  Now we'll make that happen.
+adding them.  Now, we'll make that happen.
 
 Create and check out a branch to work on.
 
 Let's change the app to display messages.  We'll represent the
-messages as a vector of maps.  Each map will have a ```:name``` and ```:message```
+messages as a vector of maps.  Each map will have a `:name` and `:message`
 key and the corresponding value, in quotes.  For example:
 
 ```clojure
 {:name "blue" :message "blue's first post"}
 ```
 
-will represent the blue's first post.  This is a map with two keys.
-```:name``` is "blue", because blue posted it, ```:message``` is content of the
-post and its value is, "blue's first post".
+will represent blue's first post.  This is a map with two keys.  `:name`
+is "blue", because blue posted it, `:message` is the content of the post
+and its value is "blue's first post".
 
 > Programs often need to associate keys with values and the usual data
 > structure for doing that are hash tables.  Clojure calls them maps and
@@ -1043,22 +1041,20 @@ post and its value is, "blue's first post".
 >
 > ```clojure
 > (def cities
-> {
->  "Tokyo" 37900000
+> {"Tokyo" 37900000
 >  "Delhi" 26580000
->  "Seoul" 26100000
->  })
+>  "Seoul" 26100000})
 > ```
-> ```cities``` is a hash table whose keys are strings (the names of
+> `cities` is a hash table whose keys are strings (the names of
 > cities) and the values are the populations of each city.
 >
-> To access get a value from a map, pass the map and key into the
-> ```get``` function.
+> To get a value from a map, pass the map and key into the
+> `get` function.
 >
 > ```clojure
 > (get cities "Tokyo")
 > ```
-> return 37900000.
+> returns 37900000.
 >
 > When the keys are keywords, you can also use the keyword as a
 > function that takes the map and returns the values.
@@ -1076,8 +1072,8 @@ post and its value is, "blue's first post".
 > Maps are everywhere in Clojure and are used for many things where
 > other languages might use objects.
 
-Let's call the vector simply ```chat-messages``` and hard code(*) some
-samples to get started.  Add a chat-messages variable to ```handler.clj```.
+Let's call the vector simply `chat-messages` and hard code(*) some
+samples to get started.  Add a chat-messages variable to `handler.clj`.
 
 After the ns expresion, add:
 
@@ -1087,8 +1083,8 @@ After the ns expresion, add:
                     {:name "green" :message "green makes it go faster"}])
 ```
 
-Next we'll modify the HTML to display the messages.  We will also add a
-parameter to the ```generate-message-view``` function so that we can give
+Next, we'll modify the HTML to display the messages.  We will also add a
+parameter to the `generate-message-view` function so that we can give
 it the messages we want displayed.
 
 ```clojure
@@ -1107,22 +1103,22 @@ it the messages we want displayed.
   (route/not-found "Not Found"))
 ```
 
-Save ```handler.clj``` then go back to the browser and refresh the page.
+Save `handler.clj` then go back to the browser and refresh the page.
 
 This blows up spectacularly.
 
 ![blowups happen, illegal argument exception](images/illegal-argument-exception.jpg "Illegal Argument Exception")
 
-This is a stack trace, which  gives an idea what the program was
+This is a stack trace, which gives an idea what the program was
 doing when it hit the problem.  Ignore all the files that aren't ones
 you wrote for the project.  In my case, the first file of interest is
-```handler.clj```, line 14, the ```generate-message-view``` function.
+`handler.clj`, line 14, the `generate-message-view` function.
 
 The exception message on the top, "... is not a valid element name",
 is a clue to what's wrong.  Elements are what fragments of html are
 called.  Hiccup is responsible for generating html from Clojure
 symbols.  The problem is that we've got a map with symbols in it and
-hiccup thinks they're html.  They're not so it blows up.
+hiccup thinks they're html.  They're not, so it blows up.
 
 We can finesse the issue by converting our maps to strings.
 
@@ -1136,23 +1132,22 @@ We can finesse the issue by converting our maps to strings.
    [:body
     [:h1 "Our Chat App"]
     [:p (str messages)]]))
-
 ```
 
-Save ```handler.clj```, then refresh the browser.
+Save `handler.clj`, then refresh the browser.
 
 This fixes the exception but is ugly.
 
 ![ugly hack](images/ugly.jpg "converting messages to a string")
 
-Let's take the messages and put them in a table using html's ```table```,
-```tr```, and ```td``` elements.  We're going to write a function that takes
-a message and creates an html row.  Then, inside a ```table```, we're going
-that function to all of our messages.
+Let's take the messages and put them in a table using HTML's `table`,
+`tr`, and `td` elements.  We're going to write a function that takes a
+message and creates an HTML row.  Then, inside a `table`, we're going to
+apply that function to all of our messages.
 
 
-> Clojure uses ```defn``` to create a function, but those functions are named.
-> Sometimes the function is something specialized that can't really be used elsewhere.
+> Clojure uses `defn` to create a function, but those functions are named.
+> Sometimes, we want a specialized function that isn't reusable.
 > For those cases, Clojure has a way of creating an anonymous function.
 >
 > ```clojure
@@ -1160,9 +1155,9 @@ that function to all of our messages.
 > ```
 
 Our function is going to take a message, we'll call it "m" within the function,
-and extract both the ```:name``` and ```:message```, wrapping them in ```:td``` to make
-table cells and putting them both within a ```:tr``` to make the row.  Since the keys to
-the message hash  are keywords, we can use them as functions to get the values.  In Clojure, the function looks like:
+and extract both the `:name` and `:message`, wrapping them in `:td` to make
+table cells and putting them both within a `:tr` to make the row.  Since the keys to
+the message hashmap are keywords, we can use them as functions to get the values.  In Clojure, the function looks like:
 
 ```clojure
 (fn [m] [:tr [:td (:name m)] [:td (:message m)]])
@@ -1170,7 +1165,7 @@ the message hash  are keywords, we can use them as functions to get the values. 
 
 > Making a new collection by applying a function to all of the elements of a collection
 > is such a common thing to do that Clojure has that functionality predefined.  It's a
-> function called ```map```, which can be confusing when you're talking about "mapping"
+> function called `map`, which can be confusing when you're talking about "mapping"
 > (the function) over a collection of maps (hash tables), which we are.
 >
 > The syntax is:
@@ -1179,19 +1174,19 @@ the message hash  are keywords, we can use them as functions to get the values. 
 > (map fn coll)
 > ```
 >
-> ```map``` - signifies that we're going to be invoking the map function.
+> `map` - signifies that we're going to be invoking the map function.
 >
-> ```fn``` - the function we're going to apply to every element.
+> `fn` - the function we're going to apply to every element.
 >
-> ```coll``` - the collection containing the elements.
+> `coll` - the collection containing the elements.
 
-Mapping our anonymous function across our vector of messages looks like:
+Mapping our anonymous function over our vector of messages looks like:
 
 ```clojure
 (map (fn [m] [:tr [:td (:name m)] [:td (:message m)]]) messages)
 ```
 
-Now our ```generate-message-view``` looks likes:
+Now our `generate-message-view` looks like:
 
 ```clojure
 (defn generate-message-view
@@ -1207,7 +1202,7 @@ Now our ```generate-message-view``` looks likes:
       (map (fn [m] [:tr [:td (:name m)] [:td (:message m)]]) messages)]]]))
 ```
 
-Save ```handler.clj``` then refresh the browser.  Our hard-coded messages should
+Save `handler.clj`, then refresh the browser.  Our hard-coded messages should
 now display in the page.
 
 ![hard coded messages](images/hardcoded.jpg "hard coded messages")
@@ -1216,35 +1211,35 @@ now display in the page.
 
 ### Forms
 
-We still don't have a way of adding messages.  This requires html
-forms and adding importing the form functions from hiccup.  The form allows the
-user to send messages in the parameters of an html ```POST```.  We will need to
-extract the message and add it to our collection of messages.  This will be the most
-complicated set of changes in our app.
+We still don't have a way of adding messages.  This requires HTML forms
+and importing the form functions from hiccup.  The form allows the user
+to send messages in the parameters of an HTML `POST`.  We will need
+to extract the message and add it to our collection of messages.  This
+will be the most complicated set of changes in our app.
 
 
-> In html, a ```form``` is used to send input from the browser
-> to the server.  The ```form``` element contains a pair of
+> In HTML, a `form` is used to send input from the browser
+> to the server.  The `form` element contains a pair of
 > attributes.
 >
-> ```action``` - which specifies the route that should handle the input.
+> `action` - which specifies the route that should handle the input.
 >
-> ```method``` - which specifies the type of request.
+> `method` - which specifies the type of request.
 
-Up until now, we've only used ```GET```.  To send messages, we'll need
-to add a ```POST```.
+Up until now, we've only used `GET`.  To send messages, we'll need to
+add a `POST`.
 
-> ```forms``` contain text and ```input``` elements.  The ```input```
-> elements define the type content the ```form``` will send to the
-> server.  ```input``` elements have a number of attributes:
+> `forms` contain text and `input` elements.  The `input`
+> elements define the content the `form` will send to the
+> server.  `input` elements have a number of attributes:
 >
-> ```id``` - a way of identifing the input
+> `id` - a way of identifing the input
 >
-> ```name``` - the name of the inpu
+> `name` - the name of the input
 >
-> ```type``` - the kind of input
+> `type` - the kind of input
 >
-> ```value``` - the default value for the input
+> `value` - the default value for the input
 
 We're going to use hiccup to generate html that looks like,
 
@@ -1256,13 +1251,13 @@ We're going to use hiccup to generate html that looks like,
 </form>
 ```
 
-First we need to import some libraries into our ```handler.clj``` file.  Add:
+First, we need to import some libraries into our `handler.clj` file.  Add:
 
 ```clojure
 [hiccup.form :as form]
 ```
 
-to the ```:require``` section of the ```ns``` declaration.  It should now look like:
+to the `:require` section of the `ns` declaration.  It should now look like:
 
 ```clojure
 (ns chatter.handler
@@ -1273,7 +1268,8 @@ to the ```:require``` section of the ```ns``` declaration.  It should now look l
             [hiccup.form :as form]))
 ```
 
-Now that we have imported the hiccup form function, we can use it to generate the html form.
+Now that we have imported the hiccup form function, we can use it to
+generate the HTML form.
 
 ```clojure
 (form/form-to
@@ -1283,20 +1279,21 @@ Now that we have imported the hiccup form function, we can use it to generate th
  (form/submit-button "Submit"))
 ```
 
-```form/form-to``` is a hiccup function for generating the form
+`form/form-to` is a hiccup function for generating the form.
 
-```[:post "/"]``` - is a vector with the keyword ```:post``` and the string "/".  This tells hiccup that it make the
-method a ```POST``` and the action will be the "/" route.
+`[:post "/"]` - is a vector with the keyword `:post` and the string "/".
+This tells hiccup to make the method a `POST` to the `/` location.
 
-"Name:" - a string that will be the text displayed before the input field.
+`"Name: "` - a string that will be the text displayed before the input field.
 
-```form/text-field``` - is a hiccup function for generating an input field of type "text".  We're passing in the string "name".
+`form/text-field` - is a hiccup function for generating an input field of type "text".  We're passing in the string "name".
 
-"Message:" - a string that will be the text displayed before the input field.
+`"Message: "` - a string that will be the text displayed before the input field.
 
-```form/submit-button``` - a hiccup for for generating the submit button.
+`form/submit-button` - a hiccup function for for generating the submit button.
 
-We want to generate the form button below the title but above the list of messages in the ```generate-message-view``` function.
+We want to generate the form button below the title but above the list
+of messages in the `generate-message-view` function.
 
 Finally, we're going to change our definition of the app
 
@@ -1364,19 +1361,18 @@ page where a user could submit a new message.
 
 ### Wiring the form
 
-We see the form now but submitting it does nothing.  The problem now
-is that we're extracting the params during the post but aren't
-actually doing anything with them.  To fix this, we have to extract
-the parameters from the form, build a message, and store the message
-in our messages vector.  Actually, this might be the hardest part of
-our app.
+We see the form now, but submitting it does nothing.  The problem now is
+that we're extracting the params during the `POST` but aren't actually
+doing anything with them.  To fix this, we have to extract the
+parameters from the form, build a message, and store the message in our
+messages vector.  Actually, this might be the hardest part of our app.
 
-First we need to import a library to extract the information sent by
+First, we need to import a library to extract the information sent by
 the form.  Add this to the ```:require``` section,
 
-```[ring.middleware.params :refer [wrap-params]]```
+`[ring.middleware.params :refer [wrap-params]]`
 
-Next change the ```app``` definition from:
+Next, change the `app` definition from:
 
 ```clojure
 (def app app-routes)
@@ -1388,23 +1384,23 @@ to:
 (def app (wrap-params app-route))
 ```
 
-This enables us to have access to the information sent back in our ```form```.
+This enables us to have access to the information sent back in our `form`.
 
-We want to be able to add new messages to our ```messages``` vector.
+We want to be able to add new messages to our `messages` vector.
 Clojure was designed from the ground up to make it easier to write
-concurrent programs, programs that do more than one thing at a time.
-It does that by having having data structures that do not change.
+concurrent programs, programs that do more than one thing at a time.  It
+does that by having having data structures that do not change.
 Variables can be changed to point to something else, but Clojure
-requires that doing so happen using particular functions so it can
+requires that doing so happens using particular functions, so it can
 ensure the program stays in a safe state.  We're going to use the
-```atom``` mechanism to allow us to update our ```messages```.
+`atom` mechanism to allow us to update our `messages`.
 
 
-> An ```atom``` is like a box that protects information from being changed in
-> an unsafe way.  You simply pass the information into the ```atom```.
+> An `atom` is like a box that protects information from being changed in
+> an unsafe way.  You simply pass the information into the `atom`.
 
-Instead of having the ```chat-messages``` variable point to our vector of messages,
-we're going to have it point to the ```atom``` protecting the vector.
+Instead of having the `chat-messages` variable point to our vector of messages,
+we're going to have it point to the `atom` protecting the vector.
 
 Instead of:
 
@@ -1423,20 +1419,20 @@ We'll use:
             {:name "green" :message "green makes it go faster"}]))
 ```
 
-Now ```chat-messages``` is pointing to the ```atom``` protecting our vector
+Now `chat-messages` is pointing to the `atom` protecting our vector
 of hashes.
 
-Because ```chat-messages``` is pointing to the ```atom```, we can't simply
-```map``` over it in ```generate-message-view```.  Now we have to tell Clojure
-that we want to generate HTML for the content of the atom.  This allows Clojure
-to ensure the messages are always read in a consistent state, even though
-something could be modifiying them.
+Because `chat-messages` is pointing to the `atom`, we can't simply
+`map` over it in `generate-message-view`.  Now, we have to tell
+Clojure that we want to generate HTML for the contents of the atom.  This
+allows Clojure to ensure the messages are always read in a consistent
+state, even though something could be modifiying them.
 
-> Reading what's stored in an ```atom``` is called "dereferencing" and
-> is represented by the ```@``` character.
+> Reading what's stored in an `atom` is called "dereferencing" and
+> is represented by the `@` character.
 
-We will dereference the ```chat-messages``` atom just before it is passed to the
-```generate-message-view``` function.  We can do this by changing our routes from:
+We will dereference the `chat-messages` atom just before it is passed to the
+`generate-message-view` function.  We can do this by changing our routes from:
 
 ```clojure
 (defroutes app-routes
@@ -1454,16 +1450,16 @@ to:
   (route/not-found "Not Found"))
 ```
 
-If you save ```handler.clj``` and refresh the browser, the hard coded examples
+If you save `handler.clj` and refresh the browser, the hard coded examples
 should display as before.  We still won't see any new messages because we still
-need to extract the information from the form and modify ```chat-messages```.
+need to extract the information from the form and modify `chat-messages`.
 
-To add messages to ```chat-messages``` we will need to introduce two more
-functions: ```conj``` and ```swap!```.
+To add messages to `chat-messages`, we will need to introduce two more
+functions: `conj` and `swap!`.
 
 > #### conj
 > There are many ways to work with collections of values in Clojure.  One commonly
-> used function is ```conj```.  The name is short for "conjoin".  This function
+> used function is `conj`.  The name is short for "conjoin".  This function
 > takes a collection and one or more item(s) to add to the collection.  It then
 > returns a _new_ collection without modifying the original collection.
 >
@@ -1476,27 +1472,27 @@ functions: ```conj``` and ```swap!```.
 > ```
 
 > #### swap!
-> To modify an ```atom```, Clojure provides ```swap!```.
+> To modify an `atom`, Clojure provides `swap!`.
 >
 > ```clojure
 > (swap! atom update-function arguments...)
 > ```
 >
-> ```atom``` - the atom to be updated.
+> `atom` - the atom to be updated.
 >
-> ```update-function``` - the function that is applied to the value
+> `update-function` - the function that is applied to the value
 > protected by the atom.  It returns a new value which will replace the
 > original.
 >
-> ```arguments...``` - zero or more arguments to be passed into the ```update-function```.
+> `arguments...` - zero or more arguments to be passed to the `update-function`.
 >
-> The ```swap!``` function will:
+> The `swap!` function will:
 >  1. Dereference the atom
->  2. Pass this dereferenced value to the ```update-function```
+>  2. Pass this dereferenced value to the `update-function`
 >     along with any additional arguments<br/>
->     You can think of it like this: ```(update-function @atom arguments...)```
+>     You can think of it like this: `(update-function @atom arguments...)`
 >  3. Safely replace the inner content of the atom with the
->     value returned from the ```update-function```, and finally...
+>     value returned from the `update-function`, and finally...
 >  4. Return the new content of the atom.
 >
 > ```clojure
@@ -1510,8 +1506,8 @@ functions: ```conj``` and ```swap!```.
 > => 3
 > ```
 
-In our case, we're going "swap" the content of ```chat-messages```
-by "conj'ing" a new message onto the vector of messages.
+In our case, we're going to "swap" the content of ```chat-messages``` by
+"`conj`ing" a new message onto the vector of messages.
 
 We'll also put it in a helper function to make it easier to maintain.
 
@@ -1522,13 +1518,13 @@ We'll also put it in a helper function to make it easier to maintain.
   (swap! messages conj {:name name :message new-message}))
 ```
 
-Now we have to modify our ```app-routes```.  We have to make two
+Now, we have to modify our `app-routes`.  We have to make two
 changes; it needs to extract the form information when somebody
-```POST```s a new message, and it needs to add the new message to our
-```chat-messages``` before returning the page to the user.  Both of
-these changes need to happen in the ```POST``` route.
+`POST`s a new message, and it needs to add the new message to our
+`chat-messages` before returning the page to the user.  Both of
+these changes need to happen in the `POST` route.
 
-The new ```app-routes``` looks like,
+The new `app-routes` looks like
 
 ```clojure
 (defroutes app-routes
@@ -1539,20 +1535,20 @@ The new ```app-routes``` looks like,
                                ))
   (route/not-found "Not Found"))
 ```
-1. ```{params :params}``` is a shorthand notation that tells Clojure to extract
-   all of the data submitted from the HTML form and call that data ```params```.
-2. ```(get params "name")``` and ```(get params "msg"``` extract the values of
+1. `{params :params}` is a shorthand notation that tells Clojure to extract
+   all of the data submitted from the HTML form and call that data `params`.
+2. `(get params "name")` and `(get params "msg")` extract the values of
    the "name" and "msg" fields from the form data.
-3. The ```update-messages!``` function is then called with the ```chat-messages``` atom
+3. The `update-messages!` function is then called with the `chat-messages` atom
    and the values of the "name" and "msg" fields from the form.
-4. After ```update-messages!``` has added the new message to the inner content of
-   ```chat-messages``` it returns the new, dereferenced, vector of messages held by
+4. After `update-messages!` has added the new message to the inner content of
+   `chat-messages` it returns the new, dereferenced, vector of messages held by
    the atom.
-5. ```generate-message-view``` is called with the updated collection of messages and
+5. `generate-message-view` is called with the updated collection of messages and
    builds the HTML response for the user.
 
 Another way of writing this, which may make the intent more clear, is to
-name some of the intermediate values using ```let```.  This will allow us to
+name some of the intermediate values using `let`.  This will allow us to
 temporarily provide names for the results of some of the expressions.
 
 ```clojure
@@ -1567,18 +1563,18 @@ temporarily provide names for the results of some of the expressions.
   (route/not-found "Not Found"))
 ```
 
-1.  Extract the "name" field from the form data in ```params``` and name it ```name-param```.
-2.  Extract the "msg" field from the form data in ```params``` and name it ```msg-param```.
-3.  Execute the ```update-messages!``` function for the chat-messages atom and the values of
-    the previously established ```name-param``` and ```msg-param``` names.
-4.  Assign the name ```new-messages``` to the result of ```update-messages!```.
-5.  Execute ```generate-message-view``` for the new collection of messages now called ```new-messages```.
-6.  Return the HTML produced by ```generate-message-view``` and forget about the names
-    ```name-param```, ```msg-param```, and ```new-messages```.
+1.  Extract the "name" field from the form data in `params` and name it `name-param`.
+2.  Extract the "msg" field from the form data in `params` and name it `msg-param`.
+3.  Execute the `update-messages!` function for the chat-messages atom and the values of
+    the previously established `name-param` and `msg-param` names.
+4.  Assign the name `new-messages` to the result of `update-messages!`.
+5.  Execute `generate-message-view` for the new collection of messages now called `new-messages`.
+6.  Return the HTML produced by `generate-message-view` and forget about the names
+    `name-param`, `msg-param`, and `new-messages`.
 
 > #### let
-> ```let``` expressions are used to temporarily associate names with the results of other
-> expressions, similar to how a function assigns names to it's arguments.  These named
+> `let` expressions are used to temporarily associate names with the results of other
+> expressions, similar to how a function assigns names to its arguments.  These named
 > values can also be re-used without the cost of re-evaluating the expression that
 > generated them.
 >
@@ -1586,11 +1582,11 @@ temporarily provide names for the results of some of the expressions.
 >       name-two expression-two]
 >   (some-function name-one name-two))
 >
-> 1. ```name-one```: a name for the result of evaluating ```expression-one```.
-> 2. ```name-two```: a name for the result of evaluating ```expression-two```.
-> 3. Call ```some-function``` and pass it the values assigned to ```name-one```
->    and ```name-two```.
-> 4. Return the result of the last expression within the ```let```, and
+> 1. `name-one` - a name for the result of evaluating `expression-one`.
+> 2. `name-two` - a name for the result of evaluating `expression-two`.
+> 3. Call `some-function` and pass it the values assigned to `name-one`
+>    and `name-two`.
+> 4. Return the result of the last expression within the `let`, and
 >    forget about the names we had created.
 >
 > ```clojure
@@ -1600,7 +1596,7 @@ temporarily provide names for the results of some of the expressions.
 > => 6
 > ```
 
-If you save ```handler.clj```, we should be able to use the form to
+If you save `handler.clj`, we should be able to use the form to
 add messages to the page.
 
 Since we can add messages through the form, we can remove our hard-coded messages.  Change
@@ -1610,7 +1606,7 @@ the messages to an empty vector.
 (def chat-messages (atom []))
 ```
 
-Now the app is taking our new messages but it's adding new messages to
+Now, the app is taking our new messages, but it's adding new messages to
 the end.  That's going to be hard to read.  We can fix that by
 changing from a vector to a list.
 
@@ -1621,7 +1617,7 @@ changing from a vector to a list.
 
 > Like vectors, lists are sequential collections.  Vectors are better for accessing random
 > elements fast (which we aren't doing).  Lists are better at adding an element to the front,
-> which we want to do.  Since they are both collections, ```conj``` works with either.
+> which we want to do.  Since they are both collections, `conj` works with either.
 
 Our app now looks like:
 
@@ -1673,7 +1669,7 @@ Our app now looks like:
 (def app (wrap-params app-routes))
 ```
 
-Add, commit, merge the changes to master, push master to githup, and delete the branch.
+Add, commit, merge the changes to master, push master to GitHub, and delete the branch.
 
 ### Bootstrap
 
@@ -1682,7 +1678,7 @@ package of software called Twitter Bootstrap.
 
 Create and checkout a new branch.
 
-In the head section of our html, we're going to invoke bootstrap:
+In the head section of our HTML, we're going to include Bootstrap:
 
 ```clojure
    [:head
@@ -1691,23 +1687,23 @@ In the head section of our html, we're going to invoke bootstrap:
     (page/include-js  "//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js")]
 ```
 
-Start the server again and you should see the fonts change.  You'll also see the table get smashed together.
+Start the server again, and you should see the fonts change.  You'll also see the table get smashed together.
 
-Now let's change the table element from ```:table``` to ```:table#messages.table```.
+Now, let's change the table element from `:table` to `:table#messages.table`.
 
 ```clojure
     [:table#messages.table
      (map (fn [m] [:tr [:td (:name m)] [:td (:message m)]]) messages)]
 ```
 
-This tells hiccup that we want the table to have an id of ```messages``` and a class of ```table```.
+This tells hiccup that we want the table to have an id of `messages` and a class of `table`.
 CSS works by looking for combinations of classes and structure and changing the appearance
 when an element matches a pattern.  Bootstrap uses a set of predefined CSS to look for a common
 set of classes.  One of them is table.  Save, then refresh the browser.  It should look better.
-Examine the html that's now generated.  You should see and id and class field inside the table element.
+Examine the HTML that's now generated.  You should see an id and class field inside the table element.
 
 Let's make the table entries stripped by adding an additional class.  Change the table
-element to: ```:table#messages.table.table-striped```.
+element to `:table#messages.table.table-striped`.
 
 ```clojure
     [:table#messages.table.table-striped
@@ -1715,10 +1711,10 @@ element to: ```:table#messages.table.table-striped```.
 ```
 
 
-What do you think would happen if you changed ```table-striped``` to ```table-bordered```?  Try it and refresh your brower!
+What do you think would happen if you changed `table-striped` to `table-bordered`?  Try it and refresh your brower!
 
-Html elements can have multiple classes and CSS uses this to create more complex
-effects.  Try adding table-hover to the table element: ```:table#messages.table.table-bordered.table-hover```.
+HTML elements can have multiple classes and CSS uses this to create more complex
+effects.  Try adding `table-hover` to the table element: `:table#messages.table.table-bordered.table-hover`.
 
 
 ```clojure
@@ -1726,11 +1722,13 @@ effects.  Try adding table-hover to the table element: ```:table#messages.table.
      (map (fn [m] [:tr [:td (:name m)] [:td (:message m)]]) messages)]
 ```
 
-Now when you move the mouse over a row, the entire row becomes highlighted.  Dynamic effects in the browser are implemented
-using a language called Javascript.  We won't talk about Javascript except to say that it exists and the javascript part of
-Bootstrap was what we imported into the page with the ```include-js``` call.
+Now, when you move the mouse over a row, the entire row becomes
+highlighted.  Dynamic effects in the browser are implemented using a
+language called JavaScript.  We won't talk about JavaScript except to
+say that it exists and the JavaScript part of Bootstrap was what we
+imported into the page with the `include-js` call.
 
-Let's create our own css file to center the heading.  Create a file ```chatter.css``` in the ```resources/public``` directory.  Inside, paste:
+Let's create our own CSS file to center the heading.  Create a file `chatter.css` in the `resources/public` directory.  Inside, paste:
 
 
 ```css
@@ -1739,8 +1737,10 @@ h1 {
 }
 ```
 
-Css works using pattern matching.  In this case, we're saying that if the element is an ```h1``` element, center the text.  Save
-the file and add another ```page/include-css``` expression to ```handler.clj``` to pull in ```chatter.css```.
+CSS works using pattern matching.  In this case, we're saying that if
+the element is an `h1` element, center the text.  Save the file and add
+another `page/include-css` expression to `handler.clj` to pull in
+`chatter.css`.
 
 ```clojure
    [:head
@@ -1750,12 +1750,13 @@ the file and add another ```page/include-css``` expression to ```handler.clj``` 
     (page/include-css "/chatter.css")]
 ```
 
-Refresh the page.  We want to see the h1 tag centered.  It won't though.  Open firebug and watch the traffic
-as you refresh the page.  We're getting a 404 when it's trying to download the css.
+Refresh the page.  We want to see the `h1` tag centered.  It won't
+though.  Open Firebug and watch the traffic as you refresh the page.
+We're getting a 404 when it's trying to download the css.
 
-The problem is in our ```defroutes```.  We have a route handling browser GET
+The problem is in our `defroutes`.  We have a route handling browser GET
 or POST requests, but anything else is falling through to our
-```route/not-found``` call.  We need to tell ```defroutes``` where to find our
+`route/not-found` call.  We need to tell `defroutes` where to find our
 resources.  Change the defroutes to:
 
 ```clojure
@@ -1773,23 +1774,23 @@ resources.  Change the defroutes to:
 ### Heroku
 
 Up until now, we've been running the server on our computer,
-"localhost"(*).  This works great while writing or developing the
+`localhost`(*).  This works great while writing or developing the
 program because it makes testing changes fast and easy, but eventually
 we'll want to put it on the internet for others to see and use.
 
-To put it on the internet, we're going to use a company called heroku
+To put it on the internet, we're going to use a company called Heroku
 for hosting(*).  They're going to run our program on a machine visible
-to anybody on the internet.  We'll use git to send them our program
-The advantage of using a company like heroku is that they'll handle
+to anybody on the Internet.  We'll use git to send them our program
+The advantage of using a company like Heroku is that they'll handle
 the work of actually maintaining a server.  One of the disadvantages
-is that heroku can be expensive, but for a little program like ours
+is that Heroku can be expensive, but for a little program like ours
 it's free.
 
-First we need to make a couple of changes to our app so it plays nicely
-with heroku.
+First, we need to make a couple of changes to our app so it plays nicely
+with Heroku.
 
-In ```handler.clj```, we'll add a couple of functions to print log
-messages when heroku starts and stops the program.
+In `handler.clj`, we'll add a couple of functions to print log
+messages when Heroku starts and stops the program.
 
 
 ```clojure
@@ -1801,7 +1802,7 @@ messages when heroku starts and stops the program.
   (println "chatter is shutting down"))
 ```
 
-Then we need to add a main function.  This is what heroku will actually
+Then we need to add a main function.  This is what Heroku will actually
 invoke(*) to start our program.
 
 ```clojure
@@ -1810,10 +1811,10 @@ invoke(*) to start our program.
     (jetty/run-jetty #'app {:port port :join? false})))
 ```
 
-Finally, we need to change our ```project.clj``` so it knows how to prepare our
-application for heroku.
+Finally, we need to change our `project.clj` so it knows how to prepare our
+application for Heroku.
 
-Our new ```project.clj``` should look like:
+Our new `project.clj` should look like:
 
 ```clojure
 (defproject chatter "0.1.0-SNAPSHOT"
@@ -1829,9 +1830,9 @@ Our new ```project.clj``` should look like:
                  [environ "1.0.0"]]
   :plugins [[lein-ring "0.8.13"]
             [lein-environ "1.0.0"]]
-  :ring {:handler chatter.core.handler/app
-         :init chatter.core.handler/init
-         :destroy chatter.core.handler/destroy}
+  :ring {:handler chatter.handler/app
+         :init chatter.handler/init
+         :destroy chatter.handler/destroy}
   :aot :all
   :profiles
   {:dev
@@ -1844,7 +1845,7 @@ Our new ```project.clj``` should look like:
   :uberjar-name "chatter-standalone.jar")
 ```
 
-The ```ns``` of ```handler.clj``` should look like:
+The `ns` of `handler.clj` should look like:
 
 ```clojure
 (ns chatter.core.handler
@@ -1859,67 +1860,64 @@ The ```ns``` of ```handler.clj``` should look like:
             [environ.core :refer [env]]))
 ```
 
-We should still be able to start the app using, "lein ring server," but now we can also
-start it with, "lein run -m chatter.core.handler"  When we start it this way, it'll default
-to port 5000 and you should see that in the browser.  Port 3000 won't work anymore, but you'll
-see the app if you switch to 5000.
+We should still be able to start the app using `lein ring server` but
+now we can also start it with `lein run -m chatter.handler`.  When we
+start it this way, it'll default to port 5000, and you should see that
+in the browser.  Port 3000 won't work anymore, but you'll see the app if
+you switch to 5000.
 
-If we create a jar with, "lein uberjar", we can aso start the app with,
-"java $JVM_OPTS -cp target/chatter-standalone.jar clojure.main -m chatter.core.handler"
+If we create a jar with `lein uberjar`, we can aso start the app with 
+`java $JVM_OPTS -cp target/chatter-standalone.jar clojure.main -m chatter.handler`
 
-These new methods of starting the app are closer to what heroku will use to start the app.
+These new methods of starting the app are closer to what Heroku will use to start the app.
 
-We also need a Procfile in the top directory containing the line,
-"web: java $JVM_OPTS -cp target/chatter-standalone.jar clojure.main -m chatter.core.handler"
+We also need a Procfile in the top directory containing the line
+`web: java $JVM_OPTS -cp target/chatter-standalone.jar clojure.main -m chatter.handler`
 
 We'll deploy to heroku with the following commands:
-+   heroku create
-+   git push heroku master
-+   heroku ps:scale web=1
-+   heroku open
++   `heroku create`
++   `git push heroku master`
++   `heroku ps:scale web=1`
++   `heroku open`
 
-The final command will open the browser and point it at your app on heroku.
+The final command will open the browser and point it at your app on Heroku.
 
-Try the traceroute command again against the address heroku assigned your app:
+Try the traceroute command again against the address Heroku assigned your app:
 
+    $: traceroute obscure-brushlands-9918.herokuapp.com
+    traceroute to obscure-brushlands-9918.herokuapp.com (50.16.239.160), 30 hops max, 60 byte packets
+    1  192.168.1.1 (192.168.1.1)  15.820 ms  15.797 ms  15.773 ms
+    2  96.120.49.33 (96.120.49.33)  23.895 ms  25.196 ms  25.192 ms
+    3  te-0-2-0-6-sur01.webster.mn.minn.comcast.net (68.85.167.145)  25.179 ms  25.168 ms  25.362 ms
+    4  te-0-7-0-13-ar01.crosstown.mn.minn.comcast.net (68.87.174.189)  30.743 ms  31.979 ms te-0-7-0-12-ar01.crosstown.mn.minn.comcast.net (69.139.219.129)  31.979 ms
+    5  pos-0-0-0-0-ar01.roseville.mn.minn.comcast.net (68.87.174.194)  31.967 ms * *
+    6  he-1-12-0-0-cr01.350ecermak.il.ibone.comcast.net (68.86.94.77)  39.269 ms  25.568 ms  26.422 ms
+    7  be-10206-cr01.newyork.ny.ibone.comcast.net (68.86.86.225)  45.276 ms  63.727 ms  66.090 ms
+    8  he-0-11-0-0-pe03.111eighthave.ny.ibone.comcast.net (68.86.83.98)  58.386 ms  58.374 ms  58.358 ms
+    9  as16509-3-c.111eighthave.ny.ibone.comcast.net (50.242.148.118)  56.143 ms  58.280 ms  65.988 ms
+    10  54.240.229.76 (54.240.229.76)  65.977 ms 54.240.229.82 (54.240.229.82)  65.982 ms *
+    11  54.240.228.190 (54.240.228.190)  65.874 ms 54.240.228.202 (54.240.228.202)  65.888 ms 54.240.228.196 (54.240.228.196)  65.969 ms
+    12  54.240.229.223 (54.240.229.223)  42.112 ms 54.240.229.200 (54.240.229.200)  45.620 ms 54.240.229.221 (54.240.229.221)  47.673 ms
+    13  54.240.228.173 (54.240.228.173)  47.630 ms 54.240.228.177 (54.240.228.177)  52.382 ms 54.240.228.173 (54.240.228.173)  45.498 ms
+    14  72.21.220.100 (72.21.220.100)  52.589 ms 72.21.220.116 (72.21.220.116)  52.527 ms 54.240.228.139 (54.240.228.139)  50.825 ms
+    15  72.21.220.135 (72.21.220.135)  56.875 ms 72.21.220.167 (72.21.220.167)  59.011 ms 72.21.220.151 (72.21.220.151)  59.014 ms
+    16  72.21.220.108 (72.21.220.108)  48.813 ms 205.251.245.242 (205.251.245.242)  49.425 ms  48.614 ms
+    17  * * *
+    18  * * *
+    19  * * *
+    20  216.182.224.85 (216.182.224.85)  55.704 ms 216.182.224.223 (216.182.224.223)  66.895 ms 216.182.224.227 (216.182.224.227)  54.629 ms
+    21  * * *
+    22  * * *
+    23  * * *
+    24  * * *
+    25  * * *
+    26  * * *
+    27  * * *
+    28  * * *
+    29  * * *
+    30  * * *
 
-<div class= "console"><pre>
-$: traceroute obscure-brushlands-9918.herokuapp.com
-traceroute to obscure-brushlands-9918.herokuapp.com (50.16.239.160), 30 hops max, 60 byte packets
- 1  192.168.1.1 (192.168.1.1)  15.820 ms  15.797 ms  15.773 ms
- 2  96.120.49.33 (96.120.49.33)  23.895 ms  25.196 ms  25.192 ms
- 3  te-0-2-0-6-sur01.webster.mn.minn.comcast.net (68.85.167.145)  25.179 ms  25.168 ms  25.362 ms
- 4  te-0-7-0-13-ar01.crosstown.mn.minn.comcast.net (68.87.174.189)  30.743 ms  31.979 ms te-0-7-0-12-ar01.crosstown.mn.minn.comcast.net (69.139.219.129)  31.979 ms
- 5  pos-0-0-0-0-ar01.roseville.mn.minn.comcast.net (68.87.174.194)  31.967 ms * *
- 6  he-1-12-0-0-cr01.350ecermak.il.ibone.comcast.net (68.86.94.77)  39.269 ms  25.568 ms  26.422 ms
- 7  be-10206-cr01.newyork.ny.ibone.comcast.net (68.86.86.225)  45.276 ms  63.727 ms  66.090 ms
- 8  he-0-11-0-0-pe03.111eighthave.ny.ibone.comcast.net (68.86.83.98)  58.386 ms  58.374 ms  58.358 ms
- 9  as16509-3-c.111eighthave.ny.ibone.comcast.net (50.242.148.118)  56.143 ms  58.280 ms  65.988 ms
-10  54.240.229.76 (54.240.229.76)  65.977 ms 54.240.229.82 (54.240.229.82)  65.982 ms *
-11  54.240.228.190 (54.240.228.190)  65.874 ms 54.240.228.202 (54.240.228.202)  65.888 ms 54.240.228.196 (54.240.228.196)  65.969 ms
-12  54.240.229.223 (54.240.229.223)  42.112 ms 54.240.229.200 (54.240.229.200)  45.620 ms 54.240.229.221 (54.240.229.221)  47.673 ms
-13  54.240.228.173 (54.240.228.173)  47.630 ms 54.240.228.177 (54.240.228.177)  52.382 ms 54.240.228.173 (54.240.228.173)  45.498 ms
-14  72.21.220.100 (72.21.220.100)  52.589 ms 72.21.220.116 (72.21.220.116)  52.527 ms 54.240.228.139 (54.240.228.139)  50.825 ms
-15  72.21.220.135 (72.21.220.135)  56.875 ms 72.21.220.167 (72.21.220.167)  59.011 ms 72.21.220.151 (72.21.220.151)  59.014 ms
-16  72.21.220.108 (72.21.220.108)  48.813 ms 205.251.245.242 (205.251.245.242)  49.425 ms  48.614 ms
-17  * * *
-18  * * *
-19  * * *
-20  216.182.224.85 (216.182.224.85)  55.704 ms 216.182.224.223 (216.182.224.223)  66.895 ms 216.182.224.227 (216.182.224.227)  54.629 ms
-21  * * *
-22  * * *
-23  * * *
-24  * * *
-25  * * *
-26  * * *
-27  * * *
-28  * * *
-29  * * *
-30  * * *
-</pre>
-</div>
+Try going to each other's app.
 
-Try going to each others app.
-
-To delete the app from heroku, select the app in the dash board, click settings, delete app is on the bottom.  Then "git remote remove heroku".
+To delete the app from Heroku, select the app in the dash board, click settings, delete app is on the bottom.  Then, "git remote remove heroku".
 
