@@ -1382,7 +1382,7 @@ Next, change the `app` definition from:
 to:
 
 ```clojure
-(def app (wrap-params app-route))
+(def app (wrap-params app-routes))
 ```
 
 This enables us to have access to the information sent back in our `form`.
