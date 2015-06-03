@@ -73,7 +73,7 @@ Confirm you have all the required software/apps installed prior to starting your
 
 [required tools]: link above
 
-We will show examples of commands in termnial. Our prompt is the dollar sign; everything _after_ the dollar sign is the command you enter. You do not need to type "$:" in your terminal. We may we enter multiple commands in the same snippet - the dollar sign indicates a new command to enter. You should enter each command individually.
+We will show examples of commands in termnial. Our prompt is the dollar sign; everything _after_ the dollar sign is the command you enter. You do not need to type "$:" in your terminal. We may we enter multiple commands in the same snippet -- the dollar sign indicates a new command to enter. You should enter each command individually.
 
 The terminal you use may have different prompts ($:), only enter the text after the promt.    
 
@@ -89,7 +89,7 @@ Open your terminal and enter the commands below to confirm you have the correct 
     heroku-toolbelt/3.25.0 (x86_64-linux-gnu) ruby/2.1.5
     You have no installed plugins.
 
-Only enter the first line in Terminal; the other lines are the results of your command.
+Only enter the first line in Terminal; the following lines are the results of your command and indicate the versions of software you have installed on your computer.
 
 If your commands and results look like the example above, you are ready to move on and start working on your Chatter app.
 
