@@ -5,7 +5,8 @@ Page 2: Big Picture
 
 Clojure is a modern Lisp, which is a programming language, with a focus on functional programming. There are lots of programming languages, and Clojure is just one of them. The image below shows similar programming languages grouped by color. Clojure is in the bottom half in the center; it is a dialect of the Common-Lisp language on the far right.
 
-<<<insert URL back here>>>
+<img src="http://griffsgraphs.files.wordpress.com/2012/07/programming-languages_label.png"/>
+
 
 #### Clojure is great because:
 
