@@ -1,3 +1,4 @@
+>>>PAGE 1<<<
 
 # chatter
 
@@ -74,6 +75,9 @@ work the same.
     You have no installed plugins.
 
 With the tools installed, we can begin working on our web app.
+
+
+>>>PAGE 2<<<
 
 ### Clojure, the Big Picture
 
@@ -274,6 +278,9 @@ learning more about html.  I suggest starting with their
 [HTML Introduction](http://www.w3schools.com/html/html_intro.asp).
 
 Another useful resource is [Mozilla Developer Network](http://developer.mozilla.org/).
+
+
+>>>PAGE 3<<<
 
 ### Creating a Clojure project
 
@@ -621,6 +628,9 @@ This methodology allows us to isolate changes in their own branch.  If
 we change our minds or discover we've made a mistake, it's easy to
 back up to an earlier version using git.
 
+
+>>>PAGE 4<<<
+
 ### Readme
 
 Let's start with something small and fix the readme.
@@ -849,6 +859,10 @@ That's all the git we'll need for this tutorial.  GitHub maintains a list of
 resources where you can learn more about git and GitHub.
 
 [Good Resources for Learning Git and GitHub](https://help.github.com/articles/good-resources-for-learning-git-and-github).
+
+
+>>>PAGE 5<<<
+
 
 ### hiccup
 
@@ -1772,6 +1786,10 @@ resources.  Change the defroutes to:
   (route/resources "/")
   (route/not-found "Not Found"))
 ```
+
+>>>PAGE 6<<<
+
+
 ### Heroku
 
 Up until now, we've been running the server on our computer,
@@ -1867,7 +1885,7 @@ start it this way, it'll default to port 5000, and you should see that
 in the browser.  Port 3000 won't work anymore, but you'll see the app if
 you switch to 5000.
 
-If we create a jar with `lein uberjar`, we can aso start the app with 
+If we create a jar with `lein uberjar`, we can aso start the app with
 `java $JVM_OPTS -cp target/chatter-standalone.jar clojure.main -m chatter.handler`
 
 These new methods of starting the app are closer to what Heroku will use to start the app.
