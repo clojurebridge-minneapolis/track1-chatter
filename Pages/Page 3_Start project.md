@@ -1,4 +1,3 @@
-Page 3: STARTING PROJECT
 
 ### Creating a Clojure project
 
@@ -269,5 +268,5 @@ Now we're going to start changing the templated code to make it our web app. We'
 This methodology allows us to isolate changes in their own branch.  If we change our minds or discover we've made a mistake, it's easy to revert back to an earlier version using git.
 
 
-Next we'll create a new branch to make changes on, change the code, then commit and merge the changes and push to GitHub.
-[Chapter 4: branches, merges, commits]: Page_4_Change_code
+In [Chapter 4] we will create a new branch to make changes on, change the code, then commit and merge the changes and push to GitHub.
+[Chapter 4]: Page_4_Change_code
