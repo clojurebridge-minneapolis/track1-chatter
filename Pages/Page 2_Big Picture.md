@@ -1,42 +1,34 @@
+Page 2: Big Picture
+
+
 ### Clojure, the Big Picture
 
-Clojure is a modern Lisp with a focus on functional programming.
+Clojure is a modern Lisp, which is a programming language, with a focus on functional programming. There are lots of programming languages, and Clojure is just one of them. The image below shows similar programming languages grouped by color. Clojure is in the bottom half in the center; it is a dialect of the Common-Lisp language on the far right.
 
 <img src="http://griffsgraphs.files.wordpress.com/2012/07/programming-languages_label.png"/>
 
-There are lots of programming languages, and Clojure is just one of
-them.  Clojure is great because:
+
+#### Clojure is great because:
 
 * The core language is small and easy to learn.
-* The design makes it easier to write correct programs.
-* Clojure makes it easier to write concurrent programs, programs that
-do more than one thing at a time.
+* The design makes it easy to write correct programs.
+* Clojure makes it easier to write concurrent programs -- programs that do more than one thing at a time.
 * Clojure programs are fast.
 * Clojure programs can build on Java libraries.
 
-Most programmers have to use multiple languages to get their jobs
-done.  Web applications often use HTML, CSS, and JavaScript.  We'll
-touch on each of those as we build our web app.
+Most programmers have to use multiple languages to get their jobs done.  Web applications often use HTML, CSS, and JavaScript.  We'll touch on each of those as we build our web app.
 
-### The Web
+### The Web: a basic overview
 
 The Internet is a bunch computers all over the world communicating with
 each other using a variety of computer programs.  Some of those programs
 are servers that listen for requests and respond with data.
 
-Your browser is program that sends requests over HTTP (Hypertext
-Transfer Protocol).  Entering, [https://github.com](https://github.com)
-into your browser's address bar tells your browser that you want to see
-that page.
+Your web browser is a program that sends requests over HTTP (Hypertext Transfer Protocol). Entering, [https://github.com](https://github.com) into your browser's address bar tells your browser that you want to see that page.
 
-[https://github.com](https://github.com) is actually a human-readable
-alias for the numerical address of GitHub's servers.  Since your
-computer isn't directly connected to GitHub, it asks the computers it
-is connected to to forward the request.
+[https://github.com](https://github.com) is actually a human-readable alias for the numerical address of GitHub's servers.  Since your computer isn't directly connected to GitHub, your computer (through your web browser) asks the computers connected to GitHub to forward the request. This request may be passed through various computers to retrieve the data (webpage).
 
-On Linux or a Mac, `traceroute` will show you the number of hops a
-request takes to get to GitHub.  (On Windows, the command is called
-`tracert`.)
+On Linux or a Mac, the command `traceroute` shows you the number of hops request takes to get to GitHub.  (On Windows, the command is called `tracert`.)
 
 On my machine, working from home:
 
@@ -73,31 +65,24 @@ On my machine, working from home:
         29  * * *
         30  * * *
 
-+ Line 1 is my computer
-+ Line 2 is my router
-+ On lines 3-30, the request is moving through Comcast's network.
++ Line 1 is my computer server address.
++ Line 2 is my router server address.
++ Lines 3-30, the request is moving through Comcast's network of servers to get the information.
 
-When you enter [https://github.com](httpss://github.com) in the address
-bar, your browser makes a GET request to the GitHub server.  There are
-several types of HTTP requests, but GET is the one for simply asking the
-server to send back some information.  The server sends back an HTML
-page.  In a process called rendering, the Web browser turns this HTML
-into the page you see, but if you want to see the HTML itself, right
-click on the page and select `View Page Source`.
+When you enter [https://github.com](httpss://github.com) in the address bar, your browser makes a GET request to the GitHub server. There are several types of HTTP requests, but GET is the one that asks the server to send data from a specified resource.  The server sends back an HTML page and the Web browser turns the HTML into the web page you see through a process called rendering. You can see the HTML by right-clicking on the page and selecting `View Page Source`.
+
 
 ### HTML Proper
 
 
-> HTML stands for "HyperText Markup Language"
+HTML stands for "HyperText Markup Language".
 
-Hypertext means documents can contain links to other pages or images.
-The structure of the document was encoded using a markup language mainly
-consisting of opening and closing elements (alternatively, tags).
+Hypertext means documents can contain links to other pages or images. The structure of the HTML document is encoded using a markup language consisting of opening and closing elements (also called tags). Each segment of text is formatted according to the type of tag (`<body>, <title>, <h2>,` etc). Each segment of text needs an opening tag, `<body>`, and a closing tag, `</body>`. The `/` signifies the end of the formatting for that segment.
 
-Save the following as sample.html:
+#### Let's see it in action
+Open a text editing program and enter the following text: 
 
-```HTML
-<!DOCTYPE html>
+`<!DOCTYPE html>
 <html>
   <head>
     <title>Sample HTML Page</title>
@@ -105,50 +90,43 @@ Save the following as sample.html:
   <body>
     This is a sample html page.  This is more text.
   </body>
-</html>
-```
+</html>`
 
-Open the file in the browser.  On Windows or a Mac, double-clicking
-the file should open it in the default browser, and you should see
-something like, _insert screenshot_
+Save the file as 'sample.html'. Then open the file in the web browser. On Windows or a Mac, double-click the file to open it in the default browser, or right-click and select `Open With`. In your browser you should see something like this,
 
-Notice the address bar.  Instead of making an HTTP request to a server
-over the Internet, the browser just opened a local file and displayed it
-as HTML.  If you right-click and `View Page Source`, you should see
-something very similiar to the file you saved.
+* <<<_insert screenshot_>>>
 
-The first line of the source, the DOCTYPE, announced that the
-document was html.  The document proper is enclosed between the
-opening and closing `html` tags.
+Notice the address bar. Instead of making an HTTP request to a server over the Internet, the browser  opened a local file and displayed the HTML. Remember, the web browser renders the HTML to make it appear as you see it in the browser. Right-click the page and select `View Page Source` to see the HTML elements of the file you saved.
 
-Inside the HTML document, we have a `head` and `body`.
+The first line of the source, the DOCTYPE, announces the document is HTML.  The text is enclosed between the _opening_ `<html>` and _closing_ `</html>` tags, or elements.
 
-The `head` contains the `title`, "Sample HTML Page".  Notice that the
-title doesn't actually show up when you open the page in the browser.
-The title is used in the tab name and when you bookmark the page.
+##### Titles, Headers, & Body Text
+Inside the HTML document, we have a `head` and `body`. These are both _elements_ or _tags_. The `head` contains the `title`; in our example it's "Sample HTML Page". The title is the name of the web page. You will see this text as the tab name and when you bookmark the page in your browser. It is not actually a part of the text on the page.
 
-If we wanted to add a title on the page that's displayed, we need to
-add it to the body.  Let's use "Our HTML".  HTML provides a number of
-heading tags to indicate titles, ranging from the smallest `<h6>`
-to the largest `<h1>`.  Let's start with `h2`.  Change the file so
-the body looks like:
+To add a title on the page itself, add it within the `body` of the HTML using a header tag. HTML uses various heading tags to indicate the size of the title or heading. The largest is `<h1>` and the smallest header is `<h6>`.
 
-```HTML
+Let's add some headers to our example. In your text editing file, add `<h2> Our HTML </h2>` in the `body` of the HTML. This will display "Our HTML" as a title. Your text file will look like this:
+
+`
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Sample HTML Page</title>
+  </head>
   <body>
-    <h2>Our HTML</h2>
-    This is a sample HTML page. This is more text.
+  <h2>Our HTML</h2>
+    This is a sample html page.  This is more text.
   </body>
-````
+</html>
+`
 
-Save the file and refresh the browser.  Experiment with different size
-heading tags.
 
-HTML supports tables which we're going to use later to display
-structured data.  Try adding this table to our sample HTML within the
-body:
+Save the file and refresh the browser. Experiment with different size heading tags from `<h1>` to `<h6>`. Remember to open and close the HTML tags, meaning you must surround the header text with the an opening and closing tag.
 
-```HTML
-<table>
+##### Tables
+HTML supports tables as well. Add a table to your sample HTML by adding the following within the `<body>` tags of the text file:
+
+`<table>
   <tr>
     <td>Hydrogen</td>
     <td>1</td>
@@ -164,38 +142,29 @@ body:
     <td>10</td>
     <td>Ne</td>
   </tr>
-</table>
-```
+</table>`
 
-_insert screenshot_
+* _insert screenshot_
 
 `table` encloses the entire table.
 
 `tr` wraps a table row.
 
-`td` wraps table data, a cell within a row.
+`td` wraps table data, creating a cell within a row.
 
-When you save and refresh the page, you should see the table in the
-first paragraph.  You should also see that it looks pretty bad.  The
-HTML we've been using describes the structure of the document and leaves
-the display entirely up to the browser.  Another language, called CSS,
-is used to provide hints to the browser, so it can display the page in a
-more pleasing way.  We'll touch on CSS later.
+When you save and refresh the page, you see the table. You might notice it also looks pretty bad. The HTML we've been using describes the basic structure of the document and leaves the display entirely up to the browser. Another language, called CSS, is used so the browser can display the page in a more pleasing way.  We'll touch on CSS later. 
 
-The HTML file we've got is called static HTML.  The HTML is always just
-what's in the file.  Static HTML works great for some kinds of pages,
-but our page will change depending on the messages people post to it.
-For that, instead of having a file with HTML, we'll have a program
-listening for requests that generates the HTML.  As people make requests
-and post messages, it will generate HTML that reflects the posts.
+* _(((LINK TO LATER)))_
 
-There's a lot more to HTML, but this is (almost) just enough for our
-chat app.
+The HTML file we have is _static HTML_. The HTML we see in the web browser is simply the code we have written in the text file. Static HTML works great for some kinds of pages, but our page will change depending on the messages people post to it.
+So instead of having a file with HTML, we will have a program listening for requests that generate the HTML. As people make requests and post messages, it will generate HTML that reflects the posts.
+
+There's a lot more to HTML, but this gives us enough knowledge for our Chat app.
+
+####More HTML Resources
 
 [w3schools.com](http://www.w3schools.com) is a great source for
-learning more about html.  I suggest starting with their
+learning more about html. Start with the
 [HTML Introduction](http://www.w3schools.com/html/html_intro.asp).
 
-Another useful resource is [Mozilla Developer Network](http://developer.mozilla.org/).
-
-
+[Mozilla Developer Network](http://developer.mozilla.org/) is another useful resource.
