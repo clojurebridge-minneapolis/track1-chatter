@@ -1,4 +1,3 @@
-This is page 1: it will contain an intro and a TOC for the rest of the content.
 
 # ClojureBridge Track 1 
 
@@ -10,7 +9,10 @@ Each chapter below will work through different concepts of coding and provide Cl
 ### Table Of Contents For The Workshop
 * [Chapter 1: ClojureBridge Track 1] (Page 1_Intro\TOC.md)
 * [Chapter 2: Big Picture] (Page 2_Big\Picture.md)
-* [Chapter 3: Starting the Project] (Page 3_Start\project)
+* [Chapter 3: Starting the Project] (Page 3_Start\project.md)
+* [Chapter 4: Branches, Merges, Commits] (Page 4_Change\code.md)
+* [Chapter 5: More Code Changes] (Page 5_More\code\changes.md)
+* [Chapter 6: Push to Live] (Page 6_Push\to\live.md)
 
 
 ## The Chatter App Goals & Tools
