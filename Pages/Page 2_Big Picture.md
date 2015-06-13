@@ -1,5 +1,3 @@
-Page 2: Big Picture
-
 
 ### Clojure, the Big Picture
 
@@ -160,6 +158,10 @@ The HTML file we have is _static HTML_. The HTML we see in the web browser is si
 So instead of having a file with HTML, we will have a program listening for requests that generate the HTML. As people make requests and post messages, it will generate HTML that reflects the posts.
 
 There's a lot more to HTML, but this gives us enough knowledge for our Chat app.
+
+In the next section, [Chapter 3: Starting the Project], we'll start coding our Chatter app.
+[Chapter 3: Starting the Project]: Page_3_Starting_the_Project 
+
 
 ####More HTML Resources
 
