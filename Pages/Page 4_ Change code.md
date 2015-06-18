@@ -1,32 +1,26 @@
 
-### Readme
-
-Let's start with something small and fix the readme.
+In this section, we will alter the code. We will start with something small and fix the `readme.md.` Before we do that, we want to branch the code to ensure we can track the changes we make. Branching the code is a version control method; we keep the original files on the master branch and create a separate branch where we will make the changes. When we are confident our changes are correct, we will merge the new branch to the existing master brach. The updated files on the new branch essentially overwrite the files on the master branch. 
 
 #### Branch the code
 
-Branching tells git that we want to start working on some changes and
-we're going to give them a name.
+Branching tells git that we are making changes to the current set of files and that we want to have a specific name for this version. To check what branch you are currently on, enter:
 
     $: git status
     On branch master
     Your branch is up-to-date with 'origin/master'.
     nothing to commit, working directory clean
 
-To create a branch, use the "git branch" command and give it the name
-for the new branch.
+This tells us we are currently on the master branch. This is where the original code lives, we want to create a new branch where we can make changes. To create a new branch, use the "git branch" command and name the new branch. Let's call our new branch "fix-readme". This is a reminder to ourselves what kind of changes we are making in this new branch.
 
     $: git branch fix-readme
 
-Without the branch name, `git branch` lists what branches exist.
+If you enter `git branch` without the specific branch name, the terminal will list all branches that exist in this directory. 
 
     $: git branch
     fix-readme
     * master
 
-Notice there's now two branches, `master` and `fix-readme`.  Master has
-an asterix by it because we're still on master.  We need to switch to
-`fix-readme`.
+Notice there are now two branches, `master` and `fix-readme`. The asterix (*) indicates which branch you are on. In the command above, you see we are on the master branch. We want to switch to the `fix-readme` branch. We do this by "checking out" the branch we want to be on. Then we will confirm we are on the new branch.
 
     $: git checkout fix-readme
     Switched to branch 'fix-readme'
@@ -41,19 +35,15 @@ an asterix by it because we're still on master.  We need to switch to
     On branch fix-readme
     nothing to commit, working directory clean
 
-Now we're on the `fix-readme` branch.
+We've confirmed we are now on the `fix-readme` branch.
 
-It's important to check out the branch.  Git won't do it automatically,
-and you can find yourself making commits into the `master` branch.  This
-usually isn't disastrous, but it's often very messy to clean up if
-things go wrong.
+It's important to check out the branch when making changes. Git does not do it automatically, so you can end up commiting changes to the `master` branch. This usually isn't disastrous, but it's often very messy to clean up if things go wrong and it's difficult to keep track of versions.
 
 #### Changing README.md
 
-Open the `README.md` file and replace the two FIXMEs.  Save the file.
+Open the `README.md` file in your editor and replace the two "FIXMEs" with different text. Save the file.
 
-Now, if you ask git for the status, it will show that `README.md` has
-changed.
+Now, if you ask git for the status, it will show that `README.md` has changed.
 
     $: git status
     On branch fix-readme
@@ -89,14 +79,9 @@ We can ask git to show us exactly what changed.
     +Copyright © 2014 clojurebridgemn.org
 
 
-`git diff` is telling us that the `README.md` file changed.  I removed
-the line that said "FIXME" and added a line saying "This is a web app
-that will display posted messages."  I also changed the FIXME in the
-copyright to my email address.  You should see the changes you made.
+`git diff` is telling us the `README.md` file changed. In the example above, we removed the line that said "FIXME" and added a line saying "This is a web app that will display posted messages." We also changed the FIXME in the copyright to an email address. You should see the specific changes you made in your command line.
 
-Since we changed the description in the `README.md`, we might as well
-change the description in `project.clj` file.  Make the change and save
-that file too.  Now the git status should be:
+Since we changed the description in the `README.md`, we might as well change the description in `project.clj` file. Make the change and save that file too. Now the git status should be:
 
 
     $: git status
@@ -110,12 +95,15 @@ that file too.  Now the git status should be:
 
     no changes added to commit (use "git add" and/or "git commit -a")
 
-#### Adding and Committing the changes
+#### Adding And Committing The Changes
 
-Let's add and commit the changes.
+Now that our the changes in the editor are saved, let's add and commit the changes to our new branch. _Adding_ files to the branch puts the updated files on the branch. _Committing_ the updated files to the branch saves creates a specific version of the branch - it puts a timestamp and version description of the current state of the branch. You must add, then commit files to the branch.
+
+First, _add_ the specific file(s) with "`git add` + file name" to the branch you are on:
 
     $: git add README.md project.clj
 
+Confirm the file was added by checking the status:
 
     $: git status
     On branch fix-readme
@@ -125,19 +113,22 @@ Let's add and commit the changes.
 	modified:   README.md
 	modified:   project.clj
 
+Two files have been added (modified) and the changes can be _committed_ to the branch. When you enter the `git commit` command, make sure to enter a description of the changes you are committing; this will help you identify versions and changes. Add a quick note after the file names `-m "comment on changes"`.
 
     $ git commit README.md project.clj -m "fixing README.md description"
     [fix-readme 57aff88] fixing README.md description
      2 files changed, 3 insertions(+), 3 deletions(-)
 
-Now git status reports no uncommitted changes, but we're still on the
-fix-me branch.
 
+Check the branch status again: 
+    
     $: git status
     On branch fix-readme
     nothing to commit, working directory clean
 
-Let's the check the log.
+Git status reports no uncommitted changes because we successfully committed the updated files to the `fix-readme` branch. 
+
+You can also the check the log to see what commits have been made, when they were made, and the brief comment on the commit.
 
     $: git log
     commit 57aff889c81698394faf8568b63f14130d32599a
@@ -152,13 +143,13 @@ Let's the check the log.
 
         initial commit
 
-Two commits, the last commit from our originating branch and our
-new commit.
+You see two commits: the last commit from our original branch (initial commit) and our new commit (fixing README.md description).
 
-#### Merging the changes
+#### Merging The Changes
 
-Let's merge our changes into the `master` branch.  First, let's checkout
-`master` and check its log.
+Once we are satisfied with the updated files and they are sucessfully committed on the `fix-readme` branch, we'll merge those changes on to the `master` branch. This means we are going to overwrite the existing files (or add new files) on the master branch.
+
+First, go to the `master` branch and check its log. 
 
     $: git checkout master
     Switched to branch 'master'
@@ -171,9 +162,7 @@ Let's merge our changes into the `master` branch.  First, let's checkout
 
         initial commit
 
-Note that `master` is lagging behind.  It doesn't have the commit with
-the README changes.  We can fix that by merging our `fix-me` branch into
-the `master` branch.
+Note that `master` is lagging behind the `fix-readme` branch. It doesn't have the commit with the README changes. We will fix that by merging our `fix-me` branch into the `master` branch.
 
     $: git merge fix-readme
     Updating 44a560f..57aff88
@@ -182,8 +171,7 @@ the `master` branch.
      project.clj | 2 +-
      2 files changed, 3 insertions(+), 3 deletions(-)
 
-The merge brought in the changes.  If we check the log, we'll see two
-commits now.
+The merge brought in the changes. If we check the log, we'll see two commits now. The initial commit and our "readme.md" changes.
 
     $: git log
     commit 57aff889c81698394faf8568b63f14130d32599a
@@ -200,14 +188,13 @@ commits now.
 
 #### Deleting the fix-readme branch
 
-Now that we've pulled the changes from the fix-readme branch into
-master, we no longer need the `fix-readme` branch, so let's delete it.
+Now that we've pulled the changes from the `fix-readme` branch into `master`, we no longer need the `fix-readme` branch, so let's delete it.
 
     $: git branch -d fix-readme
 
 #### Pushing to GitHub
 
-The final step will be to push our changes to GitHub.
+The final step will be to push our changes to GitHub. This allows other people to view our code changes. Enter the following (you will use your own username and password when prompted):
 
     $: git push origin master
     Username for 'https://github.com': crkoehnen
@@ -220,10 +207,13 @@ The final step will be to push our changes to GitHub.
     To https://github.com/crkoehnen/chatter.git
        44a560f..57aff88  master -> master
 
-Now go back to the repository page in GitHub and refresh the page.
-You should see the text and the commit count change.
+Refresh GitHub your broswer and you will see the text and the commit count change in your repository page. Your changes are now available for collaborators to review!
 
-That's all the git we'll need for this tutorial.  GitHub maintains a list of
-resources where you can learn more about git and GitHub.
+
+That's all the command line git we will need for this tutorial. GitHub maintains a list of resources where you can learn more about git and GitHub.
+
+In [Chapter 5], we'll make more to the code.
+
+[Chapter 5]: Page_5_More_code_changes
 
 [Good Resources for Learning Git and GitHub](https://help.github.com/articles/good-resources-for-learning-git-and-github).
