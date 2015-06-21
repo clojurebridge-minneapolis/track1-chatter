@@ -15,6 +15,7 @@
          :init chatter.handler/init
          :destroy chatter.handler/destroy}
   :aot :all
+  :main chatter.handler
   :profiles
   {:dev
    {:dependencies [[javax.servlet/servlet-api "2.5"]
