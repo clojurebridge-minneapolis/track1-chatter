@@ -3,8 +3,11 @@
             [compojure.route :as route]
             [ring.middleware.defaults :refer [wrap-defaults site-defaults]]
             [ring.middleware.params :refer [wrap-params]]
+            [ring.adapter.jetty :as jetty]
             [hiccup.page :as page]
-            [hiccup.form :as form]))
+            [hiccup.form :as form]
+            [ring.util.anti-forgery :as anti-forgery]
+            [environ.core :refer [env]]))
 
 (def chat-messages (atom '()))
 
@@ -42,3 +45,13 @@
   (route/not-found "Not Found"))
 
 (def app (wrap-params app-routes))
+
+(defn init []
+  (println "chatter is starting"))
+
+(defn destroy []
+  (println "chatter is shutting down"))
+
+(defn -main [& [port]]
+  (let [port (Integer. (or port (env :port) 5000))]
+    (jetty/run-jetty #'app {:port port :join? false})))
