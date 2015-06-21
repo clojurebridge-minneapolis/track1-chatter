@@ -1891,7 +1891,12 @@ If we create a jar with `lein uberjar`, we can aso start the app with
 These new methods of starting the app are closer to what Heroku will use to start the app.
 
 We also need a Procfile in the top directory containing the line
-`web: java $JVM_OPTS -cp target/chatter-standalone.jar clojure.main -m chatter.handler`
+`web: java $JVM_OPTS -cp target/chatter-standalone.jar clojure.main -m
+chatter.handler`
+
+Stop the server and restart with the command:
+
+```lein with-profile trampoline run```
 
 We'll deploy to heroku with the following commands:
 +   `heroku create`
