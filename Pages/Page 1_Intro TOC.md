@@ -64,9 +64,9 @@ You will need [Leiningen][] 2.0.0 or above installed.
 #### Server
 Confirm your server is running properly. To start a web server for the application, enter the following command in the terminal:
 
-    lein ring server
+    lein --version
 
-This will start the server that allows you to view your app in the web browser. 
+This will confirm what version of lein and what version of java you have on your machine. 
 
 #### Entering Comands
 
