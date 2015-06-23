@@ -102,6 +102,12 @@ These new methods of starting the app are closer to what Heroku will use to star
 We also need a Procfile in the top directory containing the line
 `web: java $JVM_OPTS -cp target/chatter-standalone.jar clojure.main -m chatter.handler`
 
+Stop the server and restart with the command:
+
+```lein with-profile trampoline run```
+
+
+
 We'll deploy to heroku with the following commands:
 +   `heroku create`
 +   `git push heroku master`
