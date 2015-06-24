@@ -207,13 +207,13 @@ The final step will be to push our changes to GitHub. This allows other people t
     To https://github.com/crkoehnen/chatter.git
        44a560f..57aff88  master -> master
 
-Refresh GitHub your broswer and you will see the text and the commit count change in your repository page. Your changes are now available for collaborators to review!
+Refresh GitHub in your broswer and you will see the text and the commit count change in your repository page. Your changes are now available for collaborators to review!
 
 
 That's all the command line git we will need for this tutorial. GitHub maintains a list of resources where you can learn more about git and GitHub.
 
 In [Chapter 5], we'll make more to the code.
 
-[Chapter 5]: Page_5_More_code_changes
+[Chapter 5]: Pages/Page 5_More_code_changes
 
 [Good Resources for Learning Git and GitHub](https://help.github.com/articles/good-resources-for-learning-git-and-github).
