@@ -864,3 +864,6 @@ resources.  Change the defroutes to:
   (route/resources "/")
   (route/not-found "Not Found"))
 ```
+
+
+In [Chapter 6](Page%206_Push%20to%20live.md) , we will complete the project by pushing your Chatter app live so you can share with your friends!
