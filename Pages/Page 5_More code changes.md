@@ -2,7 +2,7 @@
 
 Now let's change the app's main page from "Hello, World" to something a little more chatty.
 
-First, let's create and checkout a new branch called, `view-messages`. If you need a refresher on [creating and checking out branches](Page%205_More%20code%20changes.md), review Chapter 4. Once you are on the new `view-messages` branch, we'll move on to updating the code.
+First, let's create and checkout a new branch called, `view-messages`. If you need a refresher on [creating and checking out branches](Page%204_%20Change%20code.md#branch-the-code), review Chapter 4. Once you are on the new `view-messages` branch, we'll move on to updating the code.
 
 ### Adding Hiccup
 
