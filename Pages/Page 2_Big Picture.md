@@ -1,4 +1,6 @@
 
+# Chapter 2: Big Picture
+
 ### Clojure, the Big Picture
 
 Clojure is a modern Lisp, which is a programming language, with a focus on functional programming. There are lots of programming languages, and Clojure is just one of them. The image below shows similar programming languages grouped by color. Clojure is in the bottom half in the center; it is a dialect of the Common-Lisp language on the far right.
@@ -80,7 +82,8 @@ Hypertext means documents can contain links to other pages or images. The struct
 #### Let's see it in action
 Open a text editing program and enter the following text: 
 
-`<!DOCTYPE html>
+```HTML
+<!DOCTYPE html>
 <html>
   <head>
     <title>Sample HTML Page</title>
@@ -88,7 +91,8 @@ Open a text editing program and enter the following text:
   <body>
     This is a sample html page.  This is more text.
   </body>
-</html>`
+</html>
+```
 
 Save the file as 'sample.html'. Then open the file in the web browser. On Windows or a Mac, double-click the file to open it in the default browser, or right-click and select `Open With`. In your browser you should see something like this,
 
@@ -105,7 +109,7 @@ To add a title on the page itself, add it within the `body` of the HTML using a 
 
 Let's add some headers to our example. In your text editing file, add `<h2> Our HTML </h2>` in the `body` of the HTML. This will display "Our HTML" as a title. Your text file will look like this:
 
-`
+```
 <!DOCTYPE html>
 <html>
   <head>
@@ -116,7 +120,7 @@ Let's add some headers to our example. In your text editing file, add `<h2> Our 
     This is a sample html page.  This is more text.
   </body>
 </html>
-`
+```
 
 
 Save the file and refresh the browser. Experiment with different size heading tags from `<h1>` to `<h6>`. Remember to open and close the HTML tags, meaning you must surround the header text with the an opening and closing tag.
@@ -124,7 +128,9 @@ Save the file and refresh the browser. Experiment with different size heading ta
 ##### Tables
 HTML supports tables as well. Add a table to your sample HTML by adding the following within the `<body>` tags of the text file:
 
-`<table>
+
+```HTML
+<table>
   <tr>
     <td>Hydrogen</td>
     <td>1</td>
@@ -140,9 +146,10 @@ HTML supports tables as well. Add a table to your sample HTML by adding the foll
     <td>10</td>
     <td>Ne</td>
   </tr>
-</table>`
+</table>
+```
 
-* _insert screenshot_
+* <<<_insert screenshot_>>>
 
 `table` encloses the entire table.
 
@@ -152,15 +159,13 @@ HTML supports tables as well. Add a table to your sample HTML by adding the foll
 
 When you save and refresh the page, you see the table. You might notice it also looks pretty bad. The HTML we've been using describes the basic structure of the document and leaves the display entirely up to the browser. Another language, called CSS, is used so the browser can display the page in a more pleasing way.  We'll touch on CSS later. 
 
-* _(((LINK TO LATER)))_
-
 The HTML file we have is _static HTML_. The HTML we see in the web browser is simply the code we have written in the text file. Static HTML works great for some kinds of pages, but our page will change depending on the messages people post to it.
 So instead of having a file with HTML, we will have a program listening for requests that generate the HTML. As people make requests and post messages, it will generate HTML that reflects the posts.
 
 There's a lot more to HTML, but this gives us enough knowledge for our Chat app.
 
-In the next section, [Chapter 3: Starting the Project], we'll start coding our Chatter app.
-[Chapter 3: Starting the Project]: Page_3_Starting_the_Project 
+In the next section, [Chapter 3: Starting the Project](Page%203_Start%20project.md), we'll start coding our Chatter app.
+
 
 
 ####More HTML Resources
