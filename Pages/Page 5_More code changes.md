@@ -142,7 +142,7 @@ Our app is not displaying messages, nor do we have a way of adding messages. Let
 
 [Create and check out a branch to work on].
 
-[Create and check out a branch to work on]: Page_4_Change_Code#Adding_And_Committing_The_Changes
+[Create and check out a branch to work on](Page%204_%20Change%20code.md#adding-and-committing-the-changes)
 
 Let's change the app so it displays messages. We'll represent the messages as a vector of maps. Each map will have a `:name` and `:message`key and the corresponding value, in quotes.  For example, the code below will represent blue's first post.
 
