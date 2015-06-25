@@ -1,18 +1,18 @@
 
-### hiccup
 
-Now let's change the app's main page from "Hello, World" to something
-a little more chatty.
+Now let's change the app's main page from "Hello, World" to something a little more chatty.
 
-First, let's create and checkout a new branch called, `view-messages`."
+First, let's create and checkout a new branch called, `view-messages`. If you need a refresher on [creating and checking out branches], review Chapter 4. Once you are on the new `view-messages` branch, we'll move on to updating the code.
 
-We need to write code that will generate HTML.  To do this, we're going to use a
-library called `hiccup`.  Adding a new library requires two steps:
+[creating and checking out branches]: Page_4_Change_Code#Branch_the_code
 
-1) Add the library to the dependency section of the `project.clj` file.
-   This tell lein that your program needs another program.
+### Adding Hiccup
 
-   Adding hiccup makes ours look like:
+We need to write code that will generate HTML. To do this, we will use a library called `hiccup`. We don't have this library yet, so we're going to add it. Adding a new library requires two steps:
+
+1) Add the library to the dependency section of the `project.clj` file. This tells lein your program needs another program.
+
+Add hiccup by updating the `project.clj` file to look like this:
 
 ```clojure
   :dependencies [[org.clojure/clojure "1.6.0"]
@@ -21,9 +21,7 @@ library called `hiccup`.  Adding a new library requires two steps:
                  [hiccup "1.0.5"]]
 ```
 
-2) Import the library into the namespace you need by adding the import
-   to the `ns` declaration.  We're going to be using it in
-   `handler.clj`.  Our ns declaration will look like:
+2) Import the library into the namespace you will use it in by adding the import to the `ns` declaration. Our ns declaration will be part of the `handler.clj` file:
 
 ```clojure
 (ns chatter.handler
@@ -47,79 +45,60 @@ Let's use hiccup to generate the html by changing `app-routes`:
   (route/not-found "Not Found"))
 ```
 
-Start the server:
+Once the code is updated, let's try it out. In the command line, start the server:
 
     $: lein ring server
 
-You'll see that `http://localhost:3000` now proudly displays "Our Chat
-App".  And if you `View Page Source`, you'll see that now it's
-proper HTML complete with `head`, `title`, and `body`.
+Now `http://localhost:3000` displays "Our Chat App".  Right-click and select `View Page Source` to see  it's now proper HTML complete with `head`, `title`, and `body`.
 
-The hiccup function(*) `page/html5` generates an HTML page.  It expects
-Clojure vectors with symbols representing corresponding HTML tags.
-Hiccup will automatically add the closing tag when it reaches the end
-of the vector.
+The hiccup function(*) `page/html5` generates an HTML page. It expects Clojure vectors with symbols representing corresponding HTML tags. Hiccup will automatically add the closing tag when it reaches the end of the vector.
 
-_include screenshot_
+* _<<< include screenshot >>>_
 
-Compare the hiccup to HTML in view-source to the HTML we wrote by hand
-earlier.
+Compare the hiccup to HTML in `View Page Source` to the HTML we wrote by hand earlier.
 
-> Vectors are a Clojure data structure used to contain sequences of
-> things, including other vectors.  Vectors are often written using
-> square brackets.  `[1 2 3]` is a vector containing the numbers
-> 1, 2, and 3.  Hiccup uses vectors of keywords to represent sections
-> of HTML.
+#### How Does Hiccup Work?
 
-> Keywords are names that begin with a colon.  `:title`, `:x`,
-> and `:favorite-color` are all keywords.  Clojure often uses
-> keywords where other languages use strings.  If you were to use
-> Clojure to query a database, Clojure would probably use keywords to
-> represent the column names.  Hiccup uses keywords to represent the
-> names of HTML elements.  Where HTML uses `<body>`, hiccup would
-> expect `:body`.  Where HTML uses `<title>`, hiccup uses
-> `:title`.  Because the keywords are enclosed in a vector, the
-> closing of the HTML tag is unnecessary.  The closing of the
-> surrounding vector signals where the HTML section ends.
+>_Vectors_ are a Clojure data structure used to contain sequences of things, including other vectors. Vectors are often written using square brackets. For example, `[1 2 3]` is a vector containing the numbers 1, 2, and 3. Hiccup uses vectors of keywords to represent sections of HTML.
 
-A problem with our new `app-routes` is that it's doing two different
-things.  Its main role is to take the incoming request and decide
-what to do.  Now it's doing that, but it's also generating a full HTML
-page.  As we add more and more pages, this will become too complicated
-to manage.  We'll get ahead of the game by splitting out the task of
-generating the HTML into a helper function.
-
-> Clojure defines a function using this syntax:
 >
-> ```clojure
-> (defn name
->   doc-string?
->   params-vector
->   expression)
-> ```
->
-> 1. `defn` - introduces the defn expression.
-> 2. `name` - the name you want to give the function.
-> 3. `doc-string?` - an optional description of the function.
-> 4. `params-vector` - a vector of symbols naming the functions arguments.
-> 5. `expression` - the body of the function.
->
-> `hello-world`, a traditional first function, might be programmed
-> in Clojure like:
->
-> ```clojure
-> (defn hello-world
->   "ye olde 'Hello, World'"
->   []
->   "Hello, World")
-> ```
->
-> `hello-world`  takes no arguments and returns the string "Hello, World".
->
-> `
-> user> (hello-world)
-> "Hello, World"
-> `
+>_Keywords_ are names that begin with a colon.  `:title`, `:x`, and `:favorite-color` are all keywords. Clojure often uses keywords where other languages use strings. If you were to use Clojure to query a database, Clojure would probably use keywords to represent the column names.  Hiccup uses keywords to represent the names of HTML elements.  
+
+> Where HTML uses `<body>`, hiccup would expect `:body`. Where HTML uses `<title>`, hiccup uses
+> `:title`. Because the keywords are enclosed in a vector, the closing of the HTML tag is unnecessary.  The closing of the surrounding vector signals where the HTML section ends.
+
+A problem with our new `app-routes` is that it has two different functions right now. Its main role is to take the incoming request and decide what to do.  Right now it's doing that, but it is also generating a full HTML page. As we add more pages, this will become too complicated to manage. We'll get ahead of the game by splitting out the task of generating the HTML into a helper function.
+
+Clojure defines a function using this syntax:
+
+ ```clojure
+ (defn name
+   doc-string?
+   params-vector
+   expression)
+ ```
+
+ 1. `defn` - introduces the defn expression.
+ 2. `name` - what you call the function.
+ 3. `doc-string?` - an optional description of the function.
+ 4. `params-vector` - a vector of symbols naming the functions arguments.
+ 5. `expression` - the body of the function.
+
+ `hello-world`, a traditional first function, might be programmed in Clojure like:
+
+ ```clojure
+ (defn hello-world
+   "ye olde 'Hello, World'"
+   []
+   "Hello, World")
+ ```
+
+ `hello-world` takes no arguments and returns the string "Hello, World".
+
+ `
+ user> (hello-world)
+ "Hello, World"
+ `
 
 Our new code should look like:
 
@@ -132,21 +111,14 @@ Our new code should look like:
     [:title "chatter"]]
    [:body
     [:h1 "Our Chat App"]]))
-
 (defroutes app-routes
   (GET "/" [] (generate-message-view))
   (route/not-found "Not Found"))
 ```
 
-`generate-message-view` is a function that takes no arguments.  It
-calls a hiccup function `page/html5` to generate html from a
-vector representing the `head` sections and a vector representing the
-`body` elements of the html.
+`generate-message-view` is a function that takes no arguments. It calls a hiccup function `page/html5` to generate html from a vector representing the `head` sections and a vector representing the `body` elements of the html.
 
-Save `handler.clj`, and let's refresh the browser to make sure our page
-still works.  From the outside, we shouldn't see a change.  The page
-should still display "Our Chat App" and the html should be identical.
-Now, let's double check our git status:
+Save `handler.clj`, and refresh the browser to make sure our page still works. From the outside, we shouldn't see a change. The page should still display "Our Chat App" and the html should be identical. Now, let's double check our git status:
 
 
     $: git status
@@ -160,70 +132,67 @@ Now, let's double check our git status:
 
     no changes added to commit (use "git add" and/or "git commit -a")
 
-That looks right so let's add, commit, merge the changes back to
-master, and then push to GitHub.  Then, delete the `view-messages` branch.
-You should see the commit numbers go up on GitHub.
+That looks right so [add, commit, merge the changes back to master, and then push to GitHub].  Then, delete the `view-messages` branch. You should see the commit numbers go up on GitHub.
 
-<note: git tag, section 3>
+[add, commit, merge the changes back to master, and then push to GitHub]: Page_4_Change_Code#Adding_And_Committing_The_Changes
 
 ### Adding Messages
 
-We still aren't displaying messages, nor do we have a way of
-adding them.  Now, we'll make that happen.
+Our app is not displaying messages, nor do we have a way of adding messages. Let's make that happen now.
 
-Create and check out a branch to work on.
+[Create and check out a branch to work on].
 
-Let's change the app to display messages.  We'll represent the
-messages as a vector of maps.  Each map will have a `:name` and `:message`
-key and the corresponding value, in quotes.  For example:
+[Create and check out a branch to work on]: Page_4_Change_Code#Adding_And_Committing_The_Changes
+
+Let's change the app so it displays messages. We'll represent the messages as a vector of maps. Each map will have a `:name` and `:message`key and the corresponding value, in quotes.  For example, the code below will represent blue's first post.
 
 ```clojure
 {:name "blue" :message "blue's first post"}
 ```
 
-will represent blue's first post.  This is a map with two keys.  `:name`
-is "blue", because blue posted it, `:message` is the content of the post
-and its value is "blue's first post".
+This is a map with two keys. 
+<ol>
+<li> `:name` is "blue", because blue posted it</li>
+<li>`:message` is the content of the post
+and its value is "blue's first post".</li>
+</ol>
 
-> Programs often need to associate keys with values and the usual data
-> structure for doing that are hash tables.  Clojure calls them maps and
-> they look like:
->
-> ```clojure
-> (def cities
-> {"Tokyo" 37900000
->  "Delhi" 26580000
->  "Seoul" 26100000})
-> ```
-> `cities` is a hash table whose keys are strings (the names of
-> cities) and the values are the populations of each city.
->
-> To get a value from a map, pass the map and key into the
-> `get` function.
->
-> ```clojure
-> (get cities "Tokyo")
-> ```
-> returns 37900000.
->
-> When the keys are keywords, you can also use the keyword as a
-> function that takes the map and returns the values.
->
-> ```clojure
-> (:name {:name "blue" :message "blue's first post"})
-> ```
-> returns "blue".
->
+Programs often need to associate keys with values and the usual data structure for doing that are hash tables. Clojure calls them maps and they look like this:
+ 
+ `clojure`
+ 
+`(def cities`
+
+` {"Tokyo" 37900000`
+
+`"Delhi" 26580000`
+  
+`"Seoul" 26100000})`
+ 
+
+Here `cities` is a hash table whose _keys_ are strings (in this case the names of cities) and the _values_ are the populations of each city.
+
+To get a value from a map, pass the map and key into the `get` function. For example,
+
+```clojure
+(get cities "Tokyo")
+```
+returns 37900000. When the keys are keywords, you can also use the keyword as a function that takes the map and returns the values.
+
+```clojure
+(:name {:name "blue" :message "blue's first post"})
+```
+returns "blue".
+
 > ```clojure
 > (:message {:name "blue" :message "blue's first post"})
 > ```
 > returns "blue's first post".
 >
-> Maps are everywhere in Clojure and are used for many things where
-> other languages might use objects.
 
-Let's call the vector simply `chat-messages` and hard code(*) some
-samples to get started.  Add a chat-messages variable to `handler.clj`.
+Maps are everywhere in Clojure and are used for many things where other languages might use objects.
+
+Let's call the vector simply `chat-messages` and hard code(*) some samples to get started. Add a chat-messages variable to `handler.clj`.
 
 After the ns expresion, add:
 
@@ -233,9 +202,7 @@ After the ns expresion, add:
                     {:name "green" :message "green makes it go faster"}])
 ```
 
-Next, we'll modify the HTML to display the messages.  We will also add a
-parameter to the `generate-message-view` function so that we can give
-it the messages we want displayed.
+Next, we'll modify the HTML to display the messages.  We will also add a parameter to the `generate-message-view` function so that we can give it a messages we want displayed.
 
 ```clojure
 (defn generate-message-view
@@ -247,30 +214,23 @@ it the messages we want displayed.
    [:body
     [:h1 "Our Chat App"]
     [:p messages]]))
-
 (defroutes app-routes
   (GET "/" [] (generate-message-view chat-messages))
   (route/not-found "Not Found"))
 ```
 
-Save `handler.clj` then go back to the browser and refresh the page.
+Save `handler.clj` and refresh the browser. 
 
 This blows up spectacularly.
 
 ![blowups happen, illegal argument exception](images/illegal-argument-exception.jpg "Illegal Argument Exception")
 
-This is a stack trace, which gives an idea what the program was
-doing when it hit the problem.  Ignore all the files that aren't ones
-you wrote for the project.  In my case, the first file of interest is
+This is a stack trace - it gives us an idea what the program was doing when it hit the problem. Ignore all the files that aren't ones you wrote for the project. In my case, the first file of interest is
 `handler.clj`, line 14, the `generate-message-view` function.
 
-The exception message on the top, "... is not a valid element name",
-is a clue to what's wrong.  Elements are what fragments of html are
-called.  Hiccup is responsible for generating html from Clojure
-symbols.  The problem is that we've got a map with symbols in it and
-hiccup thinks they're html.  They're not, so it blows up.
+The exception message on the top, `"... is not a valid element name"`, is a clue to what's wrong.  Elements are what fragments of html are called.  Hiccup is responsible for generating html from Clojure symbols. The problem is that we've got a map with symbols in it and hiccup thinks they're html.  They're not, so it creates an error.
 
-We can finesse the issue by converting our maps to strings.
+We can fix the issue by converting our maps to strings.
 
 ```clojure
 (defn generate-message-view
@@ -284,46 +244,37 @@ We can finesse the issue by converting our maps to strings.
     [:p (str messages)]]))
 ```
 
-Save `handler.clj`, then refresh the browser.
+Save `handler.clj`, and refresh the browser.
 
-This fixes the exception but is ugly.
+This fixes the exception but it's ugly.
 
 ![ugly hack](images/ugly.jpg "converting messages to a string")
 
-Let's take the messages and put them in a table using HTML's `table`,
-`tr`, and `td` elements.  We're going to write a function that takes a
-message and creates an HTML row.  Then, inside a `table`, we're going to
-apply that function to all of our messages.
+Let's take the messages and put them in a table using HTML's `table`, `tr`, and `td` elements.  We're going to write a function that takes a
+message and creates an HTML row. Then, inside a `table`, we're going to apply that function to all of our messages.
 
 
-> Clojure uses `defn` to create a function, but those functions are named.
-> Sometimes, we want a specialized function that isn't reusable.
-> For those cases, Clojure has a way of creating an anonymous function.
->
-> ```clojure
-> (fn params-vector expression)
-> ```
+Clojure uses `defn` to create a function, but those functions are named. Sometimes, we want a specialized function that isn't reusable. For those cases, Clojure has a way of creating an anonymous function.
 
-Our function is going to take a message, we'll call it "m" within the function,
-and extract both the `:name` and `:message`, wrapping them in `:td` to make
-table cells and putting them both within a `:tr` to make the row.  Since the keys to
+```clojure
+(fn params-vector expression)
+```
+
+Our function is going to take a message, we'll call it "m" within the function, and extract both the `:name` and `:message`, wrapping them in `:td` to make table cells and putting them both within a `:tr` to make the row.  Since the keys to
 the message hashmap are keywords, we can use them as functions to get the values.  In Clojure, the function looks like:
 
 ```clojure
 (fn [m] [:tr [:td (:name m)] [:td (:message m)]])
 ```
 
-> Making a new collection by applying a function to all of the elements of a collection
-> is such a common thing to do that Clojure has that functionality predefined.  It's a
-> function called `map`, which can be confusing when you're talking about "mapping"
-> (the function) over a collection of maps (hash tables), which we are.
->
-> The syntax is:
->
-> ```clojure
-> (map fn coll)
-> ```
->
+Making a new collection by applying a function to all of the elements of an existing collection is such a common thing that Clojure has it functionality predefined. It's a function called `map`. This is different than "mapping" (the function) over a collection of maps (hash tables), which is what we are doing.
+
+The syntax is:
+
+ ```clojure
+ (map fn coll)
+ ```
+
 > `map` - signifies that we're going to be invoking the map function.
 >
 > `fn` - the function we're going to apply to every element.
@@ -352,12 +303,10 @@ Now our `generate-message-view` looks like:
       (map (fn [m] [:tr [:td (:name m)] [:td (:message m)]]) messages)]]]))
 ```
 
-Save `handler.clj`, then refresh the browser.  Our hard-coded messages should
-now display in the page.
+Save `handler.clj`, then refresh the browser.  Our hard-coded messages should now display in the page.
 
 ![hard coded messages](images/hardcoded.jpg "hard coded messages")
 
-<note: section4>
 
 ### Forms
 

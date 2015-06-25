@@ -1,44 +1,40 @@
-# chatter
 
-This is a web app that will display posted messages.
+# ClojureBridge Track 1 
 
-## Prerequisites
+## Overview
+This cirriculum will introduce you to Clojure by creating a web app called Chatter. We will teach you to use the command line, make code changes in LightTable, and push those changes to GitHub so you can share your app with the world. 
 
-You will need [Leiningen][] 2.0.0 or above installed.
+Each chapter below will work through different concepts of coding and provide Clojure-specific instructions to help you create your app. Review this page, then work your way through each chapter in the table of contents. 
 
-[leiningen]: https://github.com/technomancy/leiningen
+### Table Of Contents For The Workshop
+* Chapter 1: ClojureBridge Track 1
+* [Chapter 2: Big Picture](Page%202_Big%20Picture.md)
+* [Chapter 3: Starting the Project](Page%203_Start%20project.md)
+* [Chapter 4: Branches, Merges, Commits](Page%204_Change%20code.md)
+* [Chapter 5: More Code Changes](Page%205_More%20code%20changes.md)
+* [Chapter 6: Push to Live](Page%206_Push%20to%20live.md)
 
-## Running
 
-To start a web server for the application, run:
+## The Chatter App Goals & Tools
 
-    lein ring server
+### Specific Goal of Workshop
 
-## Copyright and License
+Create a web app using Clojure code.
 
-Copyright © 2015 Chris Koehnen
+We will introduce you to Clojure by creating and deploying a web app where you and your friends can post messages to each other.
 
-Licensed under the [MIT](http://opensource.org/licenses/MIT) [LICENSE](LICENSE)
+<<<_insert image of app_>>>
 
-## The Chatter App Tutorial
+### Additional Benefits & Learning Opportunities
 
-### Goal
+* Understand HTTP and web basics
+* Basic Clojure syntax
+* REPL (Read Eval Print Loop)
+* Leiningen for project automation
+* Git for version control (branches, merges, commits)
+* Heroku deployment
 
-We're going to introduce Clojure by creating and deploying a web app
-where you and your friends can post messages to each other.
-
-_insert image of app_
-
-### Meta-Goal
-
-* Understanding HTTP and the web.
-* Basic Clojure syntax.
-* REPL for fun and profit.
-* Leiningen for project automation.
-* Git for version control.
-* Heroku deployment.
-
-### Requirements
+### Required Tools
 
 * Java 1.7+
 * Leiningen 2.5+
@@ -46,23 +42,45 @@ _insert image of app_
 * Firefox with Firebug
 * The Heroku Toolbelt
 
-Everything should be set up the night before during our install-fest.
-Please ensure you have everything working _before_ you show up for
-ClojureBridge on Saturday.
-
-First, we're going to verify that everything is set up correctly.
-We'll do this by entering some commands in the terminal.
-
-When we demonstrate terminal commands, we'll show a snippet from our
-terminal.  Our prompt is the dollar sign; everything after the dollar
-sign is the command we typed.  The result of the command is printed on
-the following lines.  Sometimes we'll have a sequence of commands in
-the same snippet — look for the dollar signs!  The terminal you're
-using will probably have different prompts but the commands should
-work the same.
+_These should have all been installed at the Friday night Install Fest_
 
 
-    $: lein -version
+## Readme
+This is the standard structure of most coding projects. You will have a Readme file that will provide a basic overview of the project and the programs you need to open the project. 
+
+### App
+
+In this curriculum we will create a web app, the Chatter app, that displays posted messages. 
+
+### Prerequisites
+
+You will need [Leiningen][] 2.0.0 or above installed. 
+
+
+[leiningen]: https://github.com/technomancy/leiningen
+
+### Running The Server & Entering Commands in the terminal
+
+#### Server
+Confirm your server is running properly. To start a web server for the application, enter the following command in the terminal:
+
+    lein --version
+
+This will confirm what version of lein and what version of java you have on your machine. 
+
+#### Entering Comands
+
+Confirm you have all the required software/apps installed prior to starting your project. The [required tools][] were installed during _Install Fest_ on Friday night.
+
+[required tools]: link above
+
+We will show examples of commands in termnial (also called the command line). Our prompt is the dollar sign; everything _after_ the dollar sign is the command you enter. You do not need to type "$:" in your terminal. We may we enter multiple commands in the same snippet -- the dollar sign indicates a new command to enter. You should enter each command individually.
+
+The terminal, or command line, you use may have different prompts ($:), only enter the text after the prompt.    
+
+Open your terminal and enter the commands below to confirm you have the correct tools installed. 
+
+	$: lein -version
     Leiningen 2.5.1 on Java 1.8.0_40-internal OpenJDK 64-Bit Server VM
 
     $: git --version
@@ -72,5 +90,21 @@ work the same.
     heroku-toolbelt/3.25.0 (x86_64-linux-gnu) ruby/2.1.5
     You have no installed plugins.
 
-With the tools installed, we can begin working on our web app.
+Only enter the first line in the command line; the following lines are the results of your command and indicate the versions of software you have installed on your computer.
 
+If your commands and results look like the example above, you are ready to move on and start working on your Chatter app.
+
+
+
+## Moving Forward
+Once you confirm your server is working properly, move to the next page where were will briefly go over what Clojure is, what the Web is and how we interact with it, and how HTML works.
+
+Next page, [Chapter 2: Big Picture]
+[Chapter 2: Big Picture]: Page_2_Big_Picture
+
+
+### Copyright and License
+
+Copyright © 2015 Chris Koehnen
+
+Licensed under the [MIT LICENSE](http://opensource.org/licenses/MIT)
