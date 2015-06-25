@@ -2,9 +2,7 @@
 
 Now let's change the app's main page from "Hello, World" to something a little more chatty.
 
-First, let's create and checkout a new branch called, `view-messages`. If you need a refresher on [creating and checking out branches], review Chapter 4. Once you are on the new `view-messages` branch, we'll move on to updating the code.
-
-[creating and checking out branches]: Page_4_Change_Code#Branch_the_code
+First, let's create and checkout a new branch called, `view-messages`. If you need a refresher on [creating and checking out branches](Page%205_More%20code%20changes.md), review Chapter 4. Once you are on the new `view-messages` branch, we'll move on to updating the code.
 
 ### Adding Hiccup
 
@@ -132,15 +130,13 @@ Save `handler.clj`, and refresh the browser to make sure our page still works. F
 
     no changes added to commit (use "git add" and/or "git commit -a")
 
-That looks right so [add, commit, merge the changes back to master, and then push to GitHub].  Then, delete the `view-messages` branch. You should see the commit numbers go up on GitHub.
-
-[add, commit, merge the changes back to master, and then push to GitHub]: Page_4_Change_Code#Adding_And_Committing_The_Changes
+That looks right so [add, commit, merge the changes back to master, and then push to GitHub](Pages/Page%204_%20Change%20code.md#adding-and-committing-the-changes).  Then, delete the `view-messages` branch. You should see the commit numbers go up on GitHub.
 
 ### Adding Messages
 
 Our app is not displaying messages, nor do we have a way of adding messages. Let's make that happen now.
 
-[Create and check out a branch to work on](Page%204_%20Change%20code.md#adding-and-committing-the-changes).
+[Create and check out a branch to work on](Pages/Page%204_%20Change%20code.md#branch-the-code).
 
 Let's change the app so it displays messages. We'll represent the messages as a vector of maps. Each map will have a `:name` and `:message`key and the corresponding value, in quotes.  For example, the code below will represent blue's first post.
 
