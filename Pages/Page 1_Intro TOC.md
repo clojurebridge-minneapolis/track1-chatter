@@ -7,12 +7,12 @@ This cirriculum will introduce you to Clojure by creating a web app called Chatt
 Each chapter below will work through different concepts of coding and provide Clojure-specific instructions to help you create your app. Review this page, then work your way through each chapter in the table of contents. 
 
 ### Table Of Contents For The Workshop
-* [Chapter 1: ClojureBridge Track 1] (Page 1_Intro\TOC.md)
-* [Chapter 2: Big Picture] (Page 2_Big\Picture.md)
-* [Chapter 3: Starting the Project] (Page 3_Start\project.md)
-* [Chapter 4: Branches, Merges, Commits] (Page 4_Change\code.md)
-* [Chapter 5: More Code Changes] (Page 5_More\code\changes.md)
-* [Chapter 6: Push to Live] (Page 6_Push\to\live.md)
+* Chapter 1: ClojureBridge Track 1
+* [Chapter 2: Big Picture](Page%202_Big%20Picture.md)
+* [Chapter 3: Starting the Project](Page%203_Start%20project.md)
+* [Chapter 4: Branches, Merges, Commits](Page%204_Change%20code.md)
+* [Chapter 5: More Code Changes](Page%205_More%20code%20changes.md)
+* [Chapter 6: Push to Live](Page%206_Push%20to%20live.md)
 
 
 ## The Chatter App Goals & Tools
