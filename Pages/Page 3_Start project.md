@@ -102,7 +102,7 @@ This means when the server gets any kind of request other than GET, it should re
 
 In your browser, right-click on the page and select `Inspect Element With Firebug.`
 
-* <<<<<<<_INSERT  SCREENSHOT_>>>>>>>>>
+* <<<_insert screenshot_>>>
 
 The `HTML` tab shows what the HTML document looks like. The default is an empty head and a body with the string "Hello World". This is different from what we saw when we used `View Page Source`. The
 browser requested html but only got a string back, and it fleshes out a legal page from this information.
@@ -268,5 +268,5 @@ Now we're going to start changing the templated code to make it our web app. We'
 This methodology allows us to isolate changes in their own branch.  If we change our minds or discover we've made a mistake, it's easy to revert back to an earlier version using git.
 
 
-In [Chapter 4] we will create a new branch to make changes on, change the code, then commit and merge the changes and push to GitHub.
-[Chapter 4]: Page_4_Change_code
+In [Chapter 4](Page%204_%20Change%20code.md) we will create a new branch to make changes on, change the code, then commit and merge the changes and push to GitHub.
+
