@@ -1,19 +1,10 @@
 
-# ClojureBridge Track 1 
+# Chapter 1: ClojureBridge Track 1 
 
 ## Overview
 This cirriculum will introduce you to Clojure by creating a web app called Chatter. We will teach you to use the command line, make code changes in LightTable, and push those changes to GitHub so you can share your app with the world. 
 
 Each chapter below will work through different concepts of coding and provide Clojure-specific instructions to help you create your app. Review this page, then work your way through each chapter in the table of contents. 
-
-### Table Of Contents For The Workshop
-* Chapter 1: ClojureBridge Track 1
-* [Chapter 2: Big Picture](Page%202_Big%20Picture.md)
-* [Chapter 3: Starting the Project](Page%203_Start%20project.md)
-* [Chapter 4: Branches, Merges, Commits](Page%204_%20Change%20code.md)
-* [Chapter 5: More Code Changes](Page%205_More%20code%20changes.md)
-* [Chapter 6: Push to Live](Page%206_Push%20to%20live.md)
-
 
 ## The Chatter App Goals & Tools
 
@@ -99,8 +90,7 @@ If your commands and results look like the example above, you are ready to move 
 ## Moving Forward
 Once you confirm your server is working properly, move to the next page where were will briefly go over what Clojure is, what the Web is and how we interact with it, and how HTML works.
 
-Next page, [Chapter 2: Big Picture]
-[Chapter 2: Big Picture]: Page_2_Big_Picture
+Next page, [Chapter 2: Big Picture](Page%202_Big%20Picture.md)
 
 
 ### Copyright and License
