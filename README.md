@@ -1,6 +1,6 @@
 #ClojureBridge Track 1
 
-This the the readme.md file. 
+This the readme.md file. 
 
 
 ### Table Of Contents For The Workshop
