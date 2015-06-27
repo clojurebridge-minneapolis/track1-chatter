@@ -131,7 +131,7 @@ The format is: ```clojure (def name doc-string? init?)```
 3. `doc-string?`: an optional description on what the variable is and how it is meant to be used.
 4. `init?`: an optional value the variable will be set to. If unset, the variable is unbound.
 
-The _name_ of the variable is `app` and it's being assigned the result of ```clojure (wrap-defaults app-routes site-defaults)```
+The _name_ of the variable is `app` and it's being assigned the result of ```(wrap-defaults app-routes site-defaults)```
 
 * `wrap-defaults` is imported from the ring library, and it combines our routes and the defaults. When we start the server, it's going to look for the routes associated with the `app` variable and use those to decide how to handle HTTP requests.
 * `app-routes` is what we're calling our set of routes
