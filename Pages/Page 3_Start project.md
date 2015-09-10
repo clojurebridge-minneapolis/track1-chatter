@@ -1,3 +1,4 @@
+# Chapter 3: Starting The Project
 
 ### Creating a Clojure project
 
@@ -68,7 +69,7 @@ Let's take a closer look at what's in the chatter directory. In LightTable, it l
 
 ### A closer look at the src directory
 
-In LightTable, open the file `src/chatter/handler.clj`.
+In the editor, open the file `src/chatter/handler.clj`.
 
 The file that ends with ".clj" indicates this is a Clojure file. Clojure programs are made up of _expressions_. Expressions are either a single name, number, string, or a list of expressions beginning with a paren (or parenthesis). These expressions make your app appear and function in a web browser.
 
@@ -102,7 +103,7 @@ This means when the server gets any kind of request other than GET, it should re
 
 In your browser, right-click on the page and select `Inspect Element With Firebug.`
 
-* <<<<<<<_INSERT  SCREENSHOT_>>>>>>>>>
+* <<<_insert screenshot_>>>
 
 The `HTML` tab shows what the HTML document looks like. The default is an empty head and a body with the string "Hello World". This is different from what we saw when we used `View Page Source`. The
 browser requested html but only got a string back, and it fleshes out a legal page from this information.
@@ -116,7 +117,7 @@ In your browser address bar, type
 (route/not-found "Not Found")
 ```
 
-In LightTable, the third and final expression of the the `handler.clj` file says,
+In the editor, the third and final expression of the the `handler.clj` file says,
 
 ```clojure (def app ...```
 
@@ -141,17 +142,7 @@ Stop the server by going back to the terminal and holding the "Ctrl+C".
 
 Since we haven't made any changes yet, this is a good time to put the code under version control.  Version control allows developers to keep track of their changes over time. It makes it easy to experiment and coordinate work with others.
 
-In the command line, make sure you are inside the Chatter directory by entering:
-
-<pre><code>$: cd
-</code></pre>
-
-You should see :
-
-* ^ CONFIRM THIS IS CORRECT, ADD FORMATTING, and SCREENSHOT/RESULT after $: cd
-
-
-Once you are in the correct directory, enter the command:
+In the Chatter directory, enter the command:
 
     $: git init
     Initialized empty Git repository in /home/crk/chatter/.git/
@@ -200,7 +191,7 @@ Now when we ask git for the status:
 	new file:   src/chatter/handler.clj
 	new file:   test/chatter/handler_test.clj
 
-All of our stuff is ready to be commited. That requires a commit message. After "-m" enter a short message that will help you identify the changes in this commit.
+All of our stuff is ready to be committed. That requires a commit message. After "-m" enter a short message that will help you identify the changes in this commit.
 
     $: git commit . -m "initial commit"
     [master (root-commit) 44a560f] initial commit
@@ -229,11 +220,9 @@ There haven't been any changes since our last commit, so there's nothing to see.
 
 We see there's been one commit, the commit hash (which uniquely identifies every commit), the author's name, the date, and the commit comment.
 
-By keeping track of changes, git makes it easy to go back to an earlier point -- you are creating different versions of the file. By itself, it won't do much if our hard drive suddenly dies. But git allows you to have repositories on other computers, so if your computer dies, your code lives on. GitHub
-is a company hosting source code; it's free if you don't mind that other people can see your code. As a safety measure, and for version control, we will put our code on GitHub.
+By keeping track of changes, git makes it easy to go back to an earlier point -- you are creating different versions of the file. By itself, it won't do much if our hard drive suddenly dies. But git allows you to have repositories on other computers, so if your computer dies, your code lives on. GitHub is a company hosting source code; it's free if you don't mind that other people can see your code. As a safety measure, and for version control, we will put our code on GitHub.
 
-Log into [https://github.com](https://github.com) and click, "create repository" (the "+" sign on the top menu). Name it "Chatter". That will open a page for your new repository. We want to push an existing
-repository, enter the following:
+Log into [https://github.com](https://github.com) and click, "create repository" (the "+" sign on the top menu). Name it "Chatter". That will open a page for your new repository. We want to push an existing repository, enter the following:
 
 NOTE: be sure to use the url that GitHub gives you, not the one listed.
 
@@ -252,7 +241,6 @@ NOTE: be sure to use the url that GitHub gives you, not the one listed.
 
 Back on GitHub, click on the "Chatter" link and you'll go to the main page for the repository. Note there is a single commit and the text is identical to what's in our `README.md` file.
 
-<note: tagged section2>
 
 ### Workflow
 
@@ -268,5 +256,5 @@ Now we're going to start changing the templated code to make it our web app. We'
 This methodology allows us to isolate changes in their own branch.  If we change our minds or discover we've made a mistake, it's easy to revert back to an earlier version using git.
 
 
-In [Chapter 4] we will create a new branch to make changes on, change the code, then commit and merge the changes and push to GitHub.
-[Chapter 4]: Page_4_Change_code
+In [Chapter 4](Page%204_%20Change%20code.md) we will create a new branch to make changes on, change the code, then commit and merge the changes and push to GitHub.
+

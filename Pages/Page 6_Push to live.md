@@ -1,4 +1,4 @@
-
+# Chapter 6: Push To Live
 ### Heroku
 
 Up until now, we've been running the server on our computer,
@@ -155,3 +155,5 @@ Try going to each other's app.
 
 To delete the app from Heroku, select the app in the dash board, click settings, delete app is on the bottom.  Then, "git remote remove heroku".
 
+
+Congrats! You've created an app using Clojure!

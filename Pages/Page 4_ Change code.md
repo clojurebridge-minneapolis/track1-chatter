@@ -1,3 +1,4 @@
+# Chapter 4: Branches, Merges, Commits
 
 In this section, we will alter the code. We will start with something small and fix the `readme.md.` Before we do that, we want to branch the code to ensure we can track the changes we make. Branching the code is a version control method; we keep the original files on the master branch and create a separate branch where we will make the changes. When we are confident our changes are correct, we will merge the new branch to the existing master brach. The updated files on the new branch essentially overwrite the files on the master branch. 
 
@@ -212,8 +213,6 @@ Refresh GitHub in your broswer and you will see the text and the commit count ch
 
 That's all the command line git we will need for this tutorial. GitHub maintains a list of resources where you can learn more about git and GitHub.
 
-In [Chapter 5], we'll make more to the code.
-
-[Chapter 5]: Pages/Page 5_More_code_changes
+In [Chapter 5](Page%205_More%20code%20changes.md), we'll make more to the code.
 
 [Good Resources for Learning Git and GitHub](https://help.github.com/articles/good-resources-for-learning-git-and-github).
