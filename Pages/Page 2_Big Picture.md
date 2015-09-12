@@ -24,7 +24,7 @@ The Internet is a bunch computers all over the world communicating with
 each other using a variety of computer programs.  Some of those programs
 are servers that listen for requests and respond with data.
 
-Your web browser is a program that sends requests over HTTP (Hypertext Transfer Protocol). Entering, [https://github.com](https://github.com) into your browser's address bar tells your browser that you want to see that page.
+Your web browser is a program that sends requests over HTTP (HyperText Transfer Protocol). Entering, [https://github.com](https://github.com) into your browser's address bar tells your browser that you want to see that page.
 
 [https://github.com](https://github.com) is actually a human-readable alias for the numerical address of GitHub's servers.  Since your computer isn't directly connected to GitHub, your computer (through your web browser) asks the computers connected to GitHub to forward the request. This request may be passed through various computers to retrieve the data (web page).
 
@@ -77,7 +77,7 @@ When you enter [https://github.com](httpss://github.com) in the address bar, you
 
 HTML stands for "HyperText Markup Language".
 
-Hypertext means documents can contain links to other pages or images. The structure of the HTML document is encoded using a markup language consisting of opening and closing elements (also called tags). Each segment of text is formatted according to the type of tag (`<body>, <title>, <h2>,` etc). Each segment of text needs an opening tag, `<body>`, and a closing tag, `</body>`. The `/` signifies the end of the formatting for that segment.
+Hypertext means documents can contain links to other pages or images. The structure of the HTML document is encoded using a markup language consisting of opening and closing elements (also called tags). Each segment of text is formatted according to the type of tag (`<body>`, `<title>`, `<h2>`, etc). Each segment of text needs an opening tag, `<body>`, and a closing tag, `</body>`. The `/` signifies the end of the formatting for that segment.
 
 #### Let's see it in action
 Open a text editing program and enter the following text: 
@@ -110,7 +110,7 @@ To add a title on the page itself, add it within the `body` of the HTML using a 
 
 Let's add some headers to our example. In your text editing file, add `<h2> Our HTML </h2>` in the `body` of the HTML. This will display "Our HTML" as a title. Your text file will look like this:
 
-```
+```html
 <!DOCTYPE html>
 <html>
   <head>
