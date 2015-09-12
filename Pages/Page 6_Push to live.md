@@ -21,7 +21,7 @@ In `handler.clj`, we will add a couple of functions to print log messages when H
   (println "chatter is shutting down"))
 ```
 
-Then we need to add a main function. This is what Heroku will actually invoke(*) to start our program.
+Then we need to add a main function. This is what Heroku will actually invoke(*) to start our program.  Add this to the end of `handler.clj`.
 
 ```clojure
 (defn -main [& [port]]
@@ -51,6 +51,7 @@ Our new `project.clj` should look like:
          :init chatter.handler/init
          :destroy chatter.handler/destroy}
   :aot :all
+  :main chatter.handler
   :profiles
   {:dev
    {:dependencies [[javax.servlet/servlet-api "2.5"]
