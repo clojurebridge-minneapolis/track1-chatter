@@ -26,7 +26,7 @@ are servers that listen for requests and respond with data.
 
 Your web browser is a program that sends requests over HTTP (Hypertext Transfer Protocol). Entering, [https://github.com](https://github.com) into your browser's address bar tells your browser that you want to see that page.
 
-[https://github.com](https://github.com) is actually a human-readable alias for the numerical address of GitHub's servers.  Since your computer isn't directly connected to GitHub, your computer (through your web browser) asks the computers connected to GitHub to forward the request. This request may be passed through various computers to retrieve the data (webpage).
+[https://github.com](https://github.com) is actually a human-readable alias for the numerical address of GitHub's servers.  Since your computer isn't directly connected to GitHub, your computer (through your web browser) asks the computers connected to GitHub to forward the request. This request may be passed through various computers to retrieve the data (web page).
 
 On Linux or a Mac, the command `traceroute` shows you the number of hops request takes to get to GitHub.  (On Windows, the command is called `tracert`.)
 

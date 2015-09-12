@@ -76,7 +76,7 @@ The file that ends with ".clj" indicates this is a Clojure file. Clojure program
 
 In the `src/chatter/handler.clj` file, the first expression `(ns "chatter.handler"...)` tells Clojure what we want to call the namespace (ns) being defined in this file. In this case we want to call it "chatter.handler". 
 
-The subexpression, the expression below, begins with `(:require...`. This is importing the ring and compojure libraries. Those are low-level Clojure libraries for building web apps.
+The sub-expression, the expression below, begins with `(:require...`. This is importing the ring and compojure libraries. Those are low-level Clojure libraries for building web apps.
 
 The second expression is `(defroutes app-routes...`. _Defroutes_ is specific to Clojure web apps.  It creates a set of routes and gives them the name `app-routes`.  The expressions after symbol `app-routes` are the route definitions. There are two here.
 
