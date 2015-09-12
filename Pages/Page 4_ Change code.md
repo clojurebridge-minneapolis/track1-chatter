@@ -2,7 +2,7 @@
 
 In this section, we will alter the code. We will start with something small and fix the `readme.md.` Before we do that, we want to branch the code to ensure we can track the changes we make. Branching the code is a version control method; we keep the original files on the master branch and create a separate branch where we will make the changes. When we are confident our changes are correct, we will merge the new branch to the existing master branch. The updated files on the new branch essentially overwrite the files on the master branch.
 
-#### Branch the code
+#### <a name="branch-the-code">Branch the code</a>
 
 Branching tells git that we are making changes to the current set of files and that we want to have a specific name for this version. To check what branch you are currently on, enter:
 
