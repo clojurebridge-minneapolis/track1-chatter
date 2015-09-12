@@ -14,7 +14,7 @@ Create a web app using Clojure code.
 
 We will introduce you to Clojure by creating and deploying a web app where you and your friends can post messages to each other.
 
-<<<_insert image of app_>>>
+![](https://github.com/annieengmark/track1-chatter/blob/master/images/finished%20app.png "finished app")
 
 ### Additional Benefits & Learning Opportunities
 
