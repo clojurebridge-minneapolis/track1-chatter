@@ -66,7 +66,7 @@ Our new `project.clj` should look like:
 The `ns` of `handler.clj` should look like:
 
 ```clojure
-(ns chatter.core.handler
+(ns chatter.handler
   (:require [compojure.core :refer :all]
             [compojure.route :as route]
             [ring.middleware.defaults :refer [wrap-defaults site-defaults]]
