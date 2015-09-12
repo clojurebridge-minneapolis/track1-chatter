@@ -1,24 +1,15 @@
-# Chapter 6: Push To Live
+
 ### Heroku
 
-Up until now, we've been running the server on our computer,
-`localhost`(*).  This works great while writing or developing the
-program because it makes testing changes fast and easy, but eventually
-we'll want to put it on the internet for others to see and use.
+Up to this point, we've been running the server on our computer, `localhost`(*). This works great while writing or developing the program because it makes testing changes fast and easy. Eventually we'll want to put it on the internet for others to see and use.
 
-To put it on the internet, we're going to use a company called Heroku
-for hosting(*).  They're going to run our program on a machine visible
-to anybody on the Internet.  We'll use git to send them our program
-The advantage of using a company like Heroku is that they'll handle
-the work of actually maintaining a server.  One of the disadvantages
-is that Heroku can be expensive, but for a little program like ours
-it's free.
+To put it on the internet, we're going to use a company called Heroku for hosting(*). They're going to run our program on a machine visible to anybody on the Internet.  We will use use git to send them our program.
 
-First, we need to make a couple of changes to our app so it plays nicely
-with Heroku.
+The advantage of using a company like Heroku is that they handle the work of actually maintaining a server. One of the  disadvantages is that Heroku can be expensive, but for a little program like ours it's free.
 
-In `handler.clj`, we'll add a couple of functions to print log
-messages when Heroku starts and stops the program.
+First, we need to make a couple of changes to our app so it can interact with Heroku.
+
+In `handler.clj`, we will add a couple of functions to print log messages when Heroku starts and stops the program.
 
 
 ```clojure
@@ -30,8 +21,7 @@ messages when Heroku starts and stops the program.
   (println "chatter is shutting down"))
 ```
 
-Then we need to add a main function.  This is what Heroku will actually
-invoke(*) to start our program.
+Then we need to add a main function. This is what Heroku will actually invoke(*) to start our program.
 
 ```clojure
 (defn -main [& [port]]
@@ -39,8 +29,7 @@ invoke(*) to start our program.
     (jetty/run-jetty #'app {:port port :join? false})))
 ```
 
-Finally, we need to change our `project.clj` so it knows how to prepare our
-application for Heroku.
+Finally, we need to change our `project.clj` so it knows how to prepare our application for Heroku.
 
 Our new `project.clj` should look like:
 
@@ -88,19 +77,13 @@ The `ns` of `handler.clj` should look like:
             [environ.core :refer [env]]))
 ```
 
-We should still be able to start the app using `lein ring server` but
-now we can also start it with `lein run -m chatter.handler`.  When we
-start it this way, it'll default to port 5000, and you should see that
-in the browser.  Port 3000 won't work anymore, but you'll see the app if
-you switch to 5000.
+We will still be able to start the app using `lein ring server` but now we can also start by entering `lein run -m chatter.handler` in the command line. When we start it this way, it defaults to port 5000, and you should see that in the browser. Port 3000 does not work anymore, but you see the app if you switch to 5000.
 
-If we create a jar with `lein uberjar`, we can aso start the app with
-`java $JVM_OPTS -cp target/chatter-standalone.jar clojure.main -m chatter.handler`
+If we create a jar with `lein uberjar`, we can also start the app with `java $JVM_OPTS -cp target/chatter-standalone.jar clojure.main -m chatter.handler`
 
 These new methods of starting the app are closer to what Heroku will use to start the app.
 
-We also need a Procfile in the top directory containing the line
-`web: java $JVM_OPTS -cp target/chatter-standalone.jar clojure.main -m chatter.handler`
+We also need a Procfile in the top directory containing the line `web: java $JVM_OPTS -cp target/chatter-standalone.jar clojure.main -m chatter.handler`
 
 Stop the server and restart with the command:
 
@@ -153,7 +136,5 @@ Try the traceroute command again against the address Heroku assigned your app:
 
 Try going to each other's app.
 
-To delete the app from Heroku, select the app in the dash board, click settings, delete app is on the bottom.  Then, "git remote remove heroku".
+To delete the app from Heroku, select the app in the dash board, click settings, delete app is on the bottom.  Then,`git remote remove heroku` in the command line.
 
-
-Congrats! You've created an app using Clojure!
