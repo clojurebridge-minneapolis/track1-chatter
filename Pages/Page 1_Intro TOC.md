@@ -59,7 +59,7 @@ Confirm your server is running properly. To start a web server for the applicati
 
 This will confirm what version of lein and what version of java you have on your machine. 
 
-#### Entering Comands
+#### Entering Commands
 
 Confirm you have all the required software/apps installed prior to starting your project. The [required tools](#required_tools) were installed during _Install Fest_ on Friday night.
 
