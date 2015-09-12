@@ -86,13 +86,13 @@ These new methods of starting the app are closer to what Heroku will use to star
 
 We also need a Procfile in the top directory containing the line `web: java $JVM_OPTS -cp target/chatter-standalone.jar clojure.main -m chatter.handler`
 
-Stop the server and restart with the command:
+Stop the server using control-c, then restart with the command:
 
 ```lein with-profile trampoline run```
 
+If the local web page still works; add and commit your changes, then merge your branch back into master.  Push the master branch to github.
 
-
-We'll deploy to heroku with the following commands:
+Now we'll deploy to heroku with the following commands:
 +   `heroku create`
 +   `git push heroku master`
 +   `heroku ps:scale web=1`
