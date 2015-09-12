@@ -188,7 +188,7 @@ Maps are everywhere in Clojure and are used for many things where other language
 
 Let's call the vector simply `chat-messages` and hard code(*) some samples to get started. Add a chat-messages variable to `handler.clj`.
 
-After the ns expresion, add:
+After the ns expression, add:
 
 ```clojure
 (def chat-messages [{:name "blue" :message "hello, world"}
@@ -319,7 +319,7 @@ Up until now, we've only used `GET` to show the messages. To send messages, we'l
 
 > `forms` contain text and `input` elements. The `input` elements define the content the `form` will send to the server. `input` elements have a number of attributes:
 >
-> `id` - a way of identifing the input
+> `id` - a way of identifying the input
 >
 >`name` - the name of the input
 >
@@ -443,7 +443,7 @@ Save ```handler.clj``` and refresh the browser. We should now have a form on the
 ### Wiring the form
 
 We see the form now, but submitting it does nothing. The problem now is that we're extracting the params during the `POST` but aren't actually doing anything with them.  To fix this, we have to extract the parameters from the form, build a message, and store the message in our
-messages vector. Tis might be the hardest part of our app.
+messages vector. This might be the hardest part of our app.
 
 First, we need to import a library to extract the information sent by the form. Add the following to the ```:require``` section,
 
@@ -490,7 +490,7 @@ We'll use:
 Now `chat-messages` is pointing to the `atom` protecting our vector of hashes.
 
 Because `chat-messages` is pointing to the `atom`, we can't simply `map` over it in `generate-message-view`.  Now, we have to tell Clojure that we want to generate HTML for the contents of the atom. This allows Clojure to ensure the messages are always read in a consistent
-state, even though something could be modifiying them.
+state, even though something could be modifying them.
 
 > Reading what's stored in an `atom` is called "dereferencing" and is represented by the `@` character.
 
@@ -732,7 +732,7 @@ Let's make the table entries stripped by adding an additional class. Change the 
 ```
 
 
-What do you think will happen if you change `table-striped` to `table-bordered`? Try it and refresh your brower to find out!
+What do you think will happen if you change `table-striped` to `table-bordered`? Try it and refresh your browser to find out!
 
 HTML elements can have multiple classes and CSS uses this to create more complex effects. Try adding `table-hover` to the table element: `:table#messages.table.table-bordered.table-hover`.
 

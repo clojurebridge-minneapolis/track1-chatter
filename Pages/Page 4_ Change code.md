@@ -1,6 +1,6 @@
 # Chapter 4: Branches, Merges, Commits
 
-In this section, we will alter the code. We will start with something small and fix the `readme.md.` Before we do that, we want to branch the code to ensure we can track the changes we make. Branching the code is a version control method; we keep the original files on the master branch and create a separate branch where we will make the changes. When we are confident our changes are correct, we will merge the new branch to the existing master brach. The updated files on the new branch essentially overwrite the files on the master branch. 
+In this section, we will alter the code. We will start with something small and fix the `readme.md.` Before we do that, we want to branch the code to ensure we can track the changes we make. Branching the code is a version control method; we keep the original files on the master branch and create a separate branch where we will make the changes. When we are confident our changes are correct, we will merge the new branch to the existing master branch. The updated files on the new branch essentially overwrite the files on the master branch.
 
 #### Branch the code
 
@@ -21,7 +21,7 @@ If you enter `git branch` without the specific branch name, the terminal will li
     fix-readme
     * master
 
-Notice there are now two branches, `master` and `fix-readme`. The asterix (*) indicates which branch you are on. In the command above, you see we are on the master branch. We want to switch to the `fix-readme` branch. We do this by "checking out" the branch we want to be on. Then we will confirm we are on the new branch.
+Notice there are now two branches, `master` and `fix-readme`. The asterisk (*) indicates which branch you are on. In the command above, you see we are on the master branch. We want to switch to the `fix-readme` branch. We do this by "checking out" the branch we want to be on. Then we will confirm we are on the new branch.
 
     $: git checkout fix-readme
     Switched to branch 'fix-readme'
@@ -38,7 +38,7 @@ Notice there are now two branches, `master` and `fix-readme`. The asterix (*) in
 
 We've confirmed we are now on the `fix-readme` branch.
 
-It's important to check out the branch when making changes. Git does not do it automatically, so you can end up commiting changes to the `master` branch. This usually isn't disastrous, but it's often very messy to clean up if things go wrong and it's difficult to keep track of versions.
+It's important to check out the branch when making changes. Git does not do it automatically, so you can end up committing changes to the `master` branch. This usually isn't disastrous, but it's often very messy to clean up if things go wrong and it's difficult to keep track of versions.
 
 #### Changing README.md
 
@@ -148,7 +148,7 @@ You see two commits: the last commit from our original branch (initial commit) a
 
 #### Merging The Changes
 
-Once we are satisfied with the updated files and they are sucessfully committed on the `fix-readme` branch, we'll merge those changes on to the `master` branch. This means we are going to overwrite the existing files (or add new files) on the master branch.
+Once we are satisfied with the updated files and they are successfully committed on the `fix-readme` branch, we'll merge those changes on to the `master` branch. This means we are going to overwrite the existing files (or add new files) on the master branch.
 
 First, go to the `master` branch and check its log. 
 
@@ -208,7 +208,7 @@ The final step will be to push our changes to GitHub. This allows other people t
     To https://github.com/crkoehnen/chatter.git
        44a560f..57aff88  master -> master
 
-Refresh GitHub in your broswer and you will see the text and the commit count change in your repository page. Your changes are now available for collaborators to review!
+Refresh GitHub in your browser and you will see the text and the commit count change in your repository page. Your changes are now available for collaborators to review!
 
 
 That's all the command line git we will need for this tutorial. GitHub maintains a list of resources where you can learn more about git and GitHub.
