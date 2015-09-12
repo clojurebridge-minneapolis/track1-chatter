@@ -306,31 +306,22 @@ Save `handler.clj`, then refresh the browser.  Our hard-coded messages should no
 
 ### Forms
 
-We still don't have a way of adding messages.  This requires HTML forms
-and importing the form functions from hiccup.  The form allows the user
-to send messages in the parameters of an HTML `POST`.  We will need
-to extract the message and add it to our collection of messages.  This
-will be the most complicated set of changes in our app.
+We still don't have a way of adding new messages. This requires HTML forms and importing the form functions from hiccup. The form allows the user to send messages in the parameters of an HTML `POST`. We will need to extract the message and add it to our collection of messages. This will be the most complicated set of changes in our app.
 
 
-> In HTML, a `form` is used to send input from the browser
-> to the server.  The `form` element contains a pair of
-> attributes.
+> In HTML, a `form` is used to send input from the browser to the server. The `form` element contains a pair of attributes.
 >
 > `action` - which specifies the route that should handle the input.
 >
 > `method` - which specifies the type of request.
 
-Up until now, we've only used `GET`.  To send messages, we'll need to
-add a `POST`.
+Up until now, we've only used `GET` to show the messages. To send messages, we'll need to add a `POST`.
 
-> `forms` contain text and `input` elements.  The `input`
-> elements define the content the `form` will send to the
-> server.  `input` elements have a number of attributes:
+> `forms` contain text and `input` elements. The `input` elements define the content the `form` will send to the server. `input` elements have a number of attributes:
 >
 > `id` - a way of identifing the input
 >
-> `name` - the name of the input
+>`name` - the name of the input
 >
 > `type` - the kind of input
 >
@@ -363,8 +354,7 @@ to the `:require` section of the `ns` declaration.  It should now look like:
             [hiccup.form :as form]))
 ```
 
-Now that we have imported the hiccup form function, we can use it to
-generate the HTML form.
+Now that we have imported the hiccup form function, we can use it to generate the HTML form.
 
 ```clojure
 (form/form-to
@@ -376,19 +366,17 @@ generate the HTML form.
 
 `form/form-to` is a hiccup function for generating the form.
 
-`[:post "/"]` - is a vector with the keyword `:post` and the string "/".
-This tells hiccup to make the method a `POST` to the `/` location.
+`[:post "/"]` is a vector with the keyword `:post` and the string "/". This tells hiccup to make the method a `POST` to the `/` location.
 
-`"Name: "` - a string that will be the text displayed before the input field.
+`"Name: "` is a string that will be the text displayed before the input field. 
 
-`form/text-field` - is a hiccup function for generating an input field of type "text".  We're passing in the string "name".
+`form/text-field` is a hiccup function for generating an input field of type "text". We're passing in the string "name".
 
-`"Message: "` - a string that will be the text displayed before the input field.
+`"Message: "` is a string that will be the text displayed before the input field.
 
-`form/submit-button` - a hiccup function for for generating the submit button.
+`form/submit-button` is a hiccup function for generating the submit button.
 
-We want to generate the form button below the title but above the list
-of messages in the `generate-message-view` function.
+We want to generate the form button below the title but above the list of messages in the `generate-message-view` function.
 
 Finally, we're going to change our definition of the app
 
@@ -447,23 +435,17 @@ Now our code looks like:
 (def app app-routes)
 ```
 
-Save ```handler.clj``` and refresh the browser.  We should now have a form on the
-page where a user could submit a new message.
+Save ```handler.clj``` and refresh the browser. We should now have a form on the page where a user could submit a new message.
 
 ![unwired form](https://github.com/clojurebridge-minneapolis/track1-chatter/blob/master/images/unwired-form.jpg "unwired form")
 
-<note: section5>
 
 ### Wiring the form
 
-We see the form now, but submitting it does nothing.  The problem now is
-that we're extracting the params during the `POST` but aren't actually
-doing anything with them.  To fix this, we have to extract the
-parameters from the form, build a message, and store the message in our
-messages vector.  Actually, this might be the hardest part of our app.
+We see the form now, but submitting it does nothing. The problem now is that we're extracting the params during the `POST` but aren't actually doing anything with them.  To fix this, we have to extract the parameters from the form, build a message, and store the message in our
+messages vector. Tis might be the hardest part of our app.
 
-First, we need to import a library to extract the information sent by
-the form.  Add this to the ```:require``` section,
+First, we need to import a library to extract the information sent by the form. Add the following to the ```:require``` section,
 
 `[ring.middleware.params :refer [wrap-params]]`
 
@@ -481,21 +463,12 @@ to:
 
 This enables us to have access to the information sent back in our `form`.
 
-We want to be able to add new messages to our `messages` vector.
-Clojure was designed from the ground up to make it easier to write
-concurrent programs, programs that do more than one thing at a time.  It
-does that by having having data structures that do not change.
-Variables can be changed to point to something else, but Clojure
-requires that doing so happens using particular functions, so it can
-ensure the program stays in a safe state.  We're going to use the
-`atom` mechanism to allow us to update our `messages`.
+We want to be able to add new messages to our `messages` vector. Clojure was designed from the ground up to make it easier to write concurrent programs. Concurrent programs are programs that do more than one thing at a time. It does that by having data structures that do not change. Variables can be changed to point to something else, but Clojure requires that doing so happens using particular functions, so it can ensure the program stays in a safe state. We're going to use the `atom` mechanism to allow us to update our `messages`.
 
 
-> An `atom` is like a box that protects information from being changed in
-> an unsafe way.  You simply pass the information into the `atom`.
+> An `atom` is like a box that protects information from being changed in an unsafe way. You simply pass the information into the `atom`.
 
-Instead of having the `chat-messages` variable point to our vector of messages,
-we're going to have it point to the `atom` protecting the vector.
+Instead of having the `chat-messages` variable point to our vector of messages, we're going to have it point to the `atom` protecting the vector.
 
 Instead of:
 
@@ -514,20 +487,14 @@ We'll use:
             {:name "green" :message "green makes it go faster"}]))
 ```
 
-Now `chat-messages` is pointing to the `atom` protecting our vector
-of hashes.
+Now `chat-messages` is pointing to the `atom` protecting our vector of hashes.
 
-Because `chat-messages` is pointing to the `atom`, we can't simply
-`map` over it in `generate-message-view`.  Now, we have to tell
-Clojure that we want to generate HTML for the contents of the atom.  This
-allows Clojure to ensure the messages are always read in a consistent
+Because `chat-messages` is pointing to the `atom`, we can't simply `map` over it in `generate-message-view`.  Now, we have to tell Clojure that we want to generate HTML for the contents of the atom. This allows Clojure to ensure the messages are always read in a consistent
 state, even though something could be modifiying them.
 
-> Reading what's stored in an `atom` is called "dereferencing" and
-> is represented by the `@` character.
+> Reading what's stored in an `atom` is called "dereferencing" and is represented by the `@` character.
 
-We will dereference the `chat-messages` atom just before it is passed to the
-`generate-message-view` function.  We can do this by changing our routes from:
+We will dereference the `chat-messages` atom just before it is passed to the `generate-message-view` function. We can do this by changing our routes from:
 
 ```clojure
 (defroutes app-routes
@@ -545,18 +512,12 @@ to:
   (route/not-found "Not Found"))
 ```
 
-If you save `handler.clj` and refresh the browser, the hard coded examples
-should display as before.  We still won't see any new messages because we still
-need to extract the information from the form and modify `chat-messages`.
+If you save `handler.clj` and refresh the browser, the hard coded examples should display as before. We still won't see any new messages because we still need to extract the information from the form and modify `chat-messages`.
 
-To add messages to `chat-messages`, we will need to introduce two more
-functions: `conj` and `swap!`.
+To add messages to `chat-messages`, we will need to introduce two more functions: `conj` and `swap!`.
 
 > #### conj
-> There are many ways to work with collections of values in Clojure.  One commonly
-> used function is `conj`.  The name is short for "conjoin".  This function
-> takes a collection and one or more item(s) to add to the collection.  It then
-> returns a _new_ collection without modifying the original collection.
+> There are many ways to work with collections of values in Clojure.  One commonly used function is `conj`. The name is short for "conjoin". This function takes a collection and one or more item(s) to add to the collection. It then returns a _new_ collection without modifying the original collection.
 >
 > ```clojure
 > (conj [:one :two] :three)
@@ -574,20 +535,14 @@ functions: `conj` and `swap!`.
 > ```
 >
 > `atom` - the atom to be updated.
->
-> `update-function` - the function that is applied to the value
-> protected by the atom.  It returns a new value which will replace the
-> original.
+> `update-function` - the function that is applied to the value protected by the atom. It returns a new value which will replace the original.
 >
 > `arguments...` - zero or more arguments to be passed to the `update-function`.
 >
 > The `swap!` function will:
 >  1. Dereference the atom
->  2. Pass this dereferenced value to the `update-function`
->     along with any additional arguments<br/>
->     You can think of it like this: `(update-function @atom arguments...)`
->  3. Safely replace the inner content of the atom with the
->     value returned from the `update-function`, and finally...
+>  2. Pass this dereferenced value to the `update-function` along with any additional arguments. You can think of it like this: `(update-function @atom arguments...)`
+>  3. Safely replace the inner content of the atom with the value returned from the `update-function`, and finally...
 >  4. Return the new content of the atom.
 >
 > ```clojure
@@ -613,11 +568,7 @@ We'll also put it in a helper function to make it easier to maintain.
   (swap! messages conj {:name name :message new-message}))
 ```
 
-Now, we have to modify our `app-routes`.  We have to make two
-changes; it needs to extract the form information when somebody
-`POST`s a new message, and it needs to add the new message to our
-`chat-messages` before returning the page to the user.  Both of
-these changes need to happen in the `POST` route.
+Now, we have to modify our `app-routes`. We have to make two changes; it needs to extract the form information when somebody `POST`s a new message, and it needs to add the new message to our `chat-messages` before returning the page to the user. Both of these changes need to happen in the `POST` route.
 
 The new `app-routes` looks like
 
@@ -626,25 +577,17 @@ The new `app-routes` looks like
   (GET "/" [] (generate-message-view @chat-messages))
   (POST "/" {params :params} (generate-message-view
                                (update-messages! chat-messages
-                                 (get params "name") (get params "msg"))
+(get params "name") (get params "msg"))
                                ))
   (route/not-found "Not Found"))
 ```
-1. `{params :params}` is a shorthand notation that tells Clojure to extract
-   all of the data submitted from the HTML form and call that data `params`.
-2. `(get params "name")` and `(get params "msg")` extract the values of
-   the "name" and "msg" fields from the form data.
-3. The `update-messages!` function is then called with the `chat-messages` atom
-   and the values of the "name" and "msg" fields from the form.
-4. After `update-messages!` has added the new message to the inner content of
-   `chat-messages` it returns the new, dereferenced, vector of messages held by
-   the atom.
-5. `generate-message-view` is called with the updated collection of messages and
-   builds the HTML response for the user.
+1. `{params :params}` is a shorthand notation that tells Clojure to extract all of the data submitted from the HTML form and call that data `params`.
+2. `(get params "name")` and `(get params "msg")` extract the values of the "name" and "msg" fields from the form data.
+3. The `update-messages!` function is then called with the `chat-messages` atom and the values of the "name" and "msg" fields from the form.
+4. After `update-messages!` has added the new message to the inner content of `chat-messages` it returns the new, dereferenced, vector of messages held by the atom.
+5. `generate-message-view` is called with the updated collection of messages and builds the HTML response for the user.
 
-Another way of writing this, which may make the intent more clear, is to
-name some of the intermediate values using `let`.  This will allow us to
-temporarily provide names for the results of some of the expressions.
+Another way of writing this, which may make the intent more clear, is to name some of the intermediate values using `let`. This will allow us to temporarily provide names for the results of some of the expressions.
 
 ```clojure
 (defroutes app-routes
@@ -660,18 +603,13 @@ temporarily provide names for the results of some of the expressions.
 
 1.  Extract the "name" field from the form data in `params` and name it `name-param`.
 2.  Extract the "msg" field from the form data in `params` and name it `msg-param`.
-3.  Execute the `update-messages!` function for the chat-messages atom and the values of
-    the previously established `name-param` and `msg-param` names.
+3.  Execute the `update-messages!` function for the chat-messages atom and the values of the previously established `name-param` and `msg-param` names.
 4.  Assign the name `new-messages` to the result of `update-messages!`.
 5.  Execute `generate-message-view` for the new collection of messages now called `new-messages`.
-6.  Return the HTML produced by `generate-message-view` and forget about the names
-    `name-param`, `msg-param`, and `new-messages`.
+6.  Return the HTML produced by `generate-message-view` and forget about the names `name-param`, `msg-param`, and `new-messages`.
 
 > #### let
-> `let` expressions are used to temporarily associate names with the results of other
-> expressions, similar to how a function assigns names to its arguments.  These named
-> values can also be re-used without the cost of re-evaluating the expression that
-> generated them.
+> `let` expressions are used to temporarily associate names with the results of other expressions, similar to how a function assigns names to its arguments. These named values can also be re-used without the cost of re-evaluating the expression that generated them.
 >
 > (let [name-one expression-one]
 >       name-two expression-two]
@@ -679,10 +617,8 @@ temporarily provide names for the results of some of the expressions.
 >
 > 1. `name-one` - a name for the result of evaluating `expression-one`.
 > 2. `name-two` - a name for the result of evaluating `expression-two`.
-> 3. Call `some-function` and pass it the values assigned to `name-one`
->    and `name-two`.
-> 4. Return the result of the last expression within the `let`, and
->    forget about the names we had created.
+> 3. Call `some-function` and pass it the values assigned to `name-one` and `name-two`.
+> 4. Return the result of the last expression within the `let`, and forget about the names we had created.
 >
 > ```clojure
 > (let [two   2
@@ -691,28 +627,22 @@ temporarily provide names for the results of some of the expressions.
 > => 6
 > ```
 
-If you save `handler.clj`, we should be able to use the form to
-add messages to the page.
+Save the `handler.clj` file, we will be able to use the form to add messages to the page.
 
-Since we can add messages through the form, we can remove our hard-coded messages.  Change
-the messages to an empty vector.
+Since we can add messages through the form, we can remove our hard-coded messages. Change the messages to an empty vector.
 
 ```clojure
 (def chat-messages (atom []))
 ```
 
-Now, the app is taking our new messages, but it's adding new messages to
-the end.  That's going to be hard to read.  We can fix that by
-changing from a vector to a list.
+Now, the app is taking our new messages, but it's adding new messages to the end. That's going to be hard to read.  We can fix that by changing from a vector to a list.
 
 
 ```clojure
 (def chat-messages (atom '()))
 ```
 
-> Like vectors, lists are sequential collections.  Vectors are better for accessing random
-> elements fast (which we aren't doing).  Lists are better at adding an element to the front,
-> which we want to do.  Since they are both collections, `conj` works with either.
+> Like vectors, lists are sequential collections.  Vectors are better for accessing random elements fast (which we aren't doing). Lists are better at adding an element to the front, which we want to do. Since they are both collections, `conj` works with either.
 
 Our app now looks like:
 
@@ -764,14 +694,13 @@ Our app now looks like:
 (def app (wrap-params app-routes))
 ```
 
-Add, commit, merge the changes to master, push master to GitHub, and delete the branch.
+[Add, commit, merge the changes to master, push master to GitHub](Page%204_%20Change%20code.md#branch-the-code), and delete the branch.
 
 ### Bootstrap
 
-The app is working but is ugly.  We can improve it by using CSS and JavaScript from a
-package of software called Twitter Bootstrap.
+The app is working but is ugly. We can improve it by using CSS and JavaScript from a package of software called Twitter Bootstrap.
 
-Create and checkout a new branch.
+[Create and checkout a new branch.](Page%204_%20Change%20code.md#branch-the-code)
 
 In the head section of our HTML, we're going to include Bootstrap:
 
@@ -782,7 +711,7 @@ In the head section of our HTML, we're going to include Bootstrap:
     (page/include-js  "//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js")]
 ```
 
-Start the server again, and you should see the fonts change.  You'll also see the table get smashed together.
+[Start the server again](Page%203_Start%20project.md#creating-a-clojure-project), and you will see the fonts change. You'll also notice the table get smashed together.
 
 Now, let's change the table element from `:table` to `:table#messages.table`.
 
@@ -791,14 +720,11 @@ Now, let's change the table element from `:table` to `:table#messages.table`.
      (map (fn [m] [:tr [:td (:name m)] [:td (:message m)]]) messages)]
 ```
 
-This tells hiccup that we want the table to have an id of `messages` and a class of `table`.
-CSS works by looking for combinations of classes and structure and changing the appearance
-when an element matches a pattern.  Bootstrap uses a set of predefined CSS to look for a common
-set of classes.  One of them is table.  Save, then refresh the browser.  It should look better.
-Examine the HTML that's now generated.  You should see an id and class field inside the table element.
+This tells hiccup that we want the table to have an id of `messages` and a class of `table`. CSS works by looking for combinations of classes and structure and changing the appearance when an element matches a pattern. Bootstrap uses a set of predefined CSS to look for a common set of classes. One of them is table. 
 
-Let's make the table entries stripped by adding an additional class.  Change the table
-element to `:table#messages.table.table-striped`.
+Save the file, then refresh the browser. It now looks better. Examine the HTML that's generated. You see an id and class field inside the table element.
+
+Let's make the table entries stripped by adding an additional class. Change the table element to `:table#messages.table.table-striped`.
 
 ```clojure
     [:table#messages.table.table-striped
@@ -806,10 +732,9 @@ element to `:table#messages.table.table-striped`.
 ```
 
 
-What do you think would happen if you changed `table-striped` to `table-bordered`?  Try it and refresh your brower!
+What do you think will happen if you change `table-striped` to `table-bordered`? Try it and refresh your brower to find out!
 
-HTML elements can have multiple classes and CSS uses this to create more complex
-effects.  Try adding `table-hover` to the table element: `:table#messages.table.table-bordered.table-hover`.
+HTML elements can have multiple classes and CSS uses this to create more complex effects. Try adding `table-hover` to the table element: `:table#messages.table.table-bordered.table-hover`.
 
 
 ```clojure
@@ -817,13 +742,9 @@ effects.  Try adding `table-hover` to the table element: `:table#messages.table.
      (map (fn [m] [:tr [:td (:name m)] [:td (:message m)]]) messages)]
 ```
 
-Now, when you move the mouse over a row, the entire row becomes
-highlighted.  Dynamic effects in the browser are implemented using a
-language called JavaScript.  We won't talk about JavaScript except to
-say that it exists and the JavaScript part of Bootstrap was what we
-imported into the page with the `include-js` call.
+Now, when you move the mouse over a row, the entire row becomes highlighted. Dynamic effects in the browser are implemented using a language called JavaScript. We won't talk about JavaScript except to say that it exists and the JavaScript part of Bootstrap was imported into the page with the `include-js` call.
 
-Let's create our own CSS file to center the heading.  Create a file `chatter.css` in the `resources/public` directory.  Inside, paste:
+Let's create our own CSS file to center the heading.  Create a file `chatter.css` in the `resources/public` directory. Inside, paste:
 
 
 ```css
@@ -832,10 +753,7 @@ h1 {
 }
 ```
 
-CSS works using pattern matching.  In this case, we're saying that if
-the element is an `h1` element, center the text.  Save the file and add
-another `page/include-css` expression to `handler.clj` to pull in
-`chatter.css`.
+CSS works using pattern matching. In this case, we're saying that if the element is an `h1` element, center the text. Save the file and add another `page/include-css` expression to `handler.clj` to pull in `chatter.css`.
 
 ```clojure
    [:head
@@ -845,14 +763,9 @@ another `page/include-css` expression to `handler.clj` to pull in
     (page/include-css "/chatter.css")]
 ```
 
-Refresh the page.  We want to see the `h1` tag centered.  It won't
-though.  Open Firebug and watch the traffic as you refresh the page.
-We're getting a 404 when it's trying to download the css.
+Refresh the page. We want to see the `h1` tag centered, but you'll see it's not. Open Firebug and watch the traffic as you refresh the page. We're getting a 404 when it's trying to download the css.
 
-The problem is in our `defroutes`.  We have a route handling browser GET
-or POST requests, but anything else is falling through to our
-`route/not-found` call.  We need to tell `defroutes` where to find our
-resources.  Change the defroutes to:
+The problem is in our `defroutes`. We have a route handling browser GET or POST requests, but anything else is falling through to our `route/not-found` call. We need to tell `defroutes` where to find our resources.  Change the defroutes to:
 
 ```clojure
 (defroutes app-routes
@@ -868,4 +781,4 @@ resources.  Change the defroutes to:
 ```
 
 
-In [Chapter 6](Page%206_Push%20to%20live.md) , we will complete the project by pushing your Chatter app live so you can share with your friends!
+In [Chapter 6](Page%206_Push%20to%20live.md), we will complete the project by pushing your Chatter app live so you can share with your friends!
