@@ -5,7 +5,7 @@
 We're going to start by asking Leiningen to start a web application for us.
 
 ```
-  $ : lein new compojure chatter
+  $: lein new compojure chatter
 ```
 
 
@@ -74,11 +74,11 @@ In the editor, open the file `src/chatter/handler.clj`.
 The file that ends with ".clj" indicates this is a Clojure file. Clojure programs are made up of _expressions_. Expressions are either a single name, number, string, or a list of expressions beginning with a paren (or parenthesis). These expressions make your app appear and function in a web browser.
 
 
-In the `src/chatter/handler.clj` file, the first expression `` clojure (ns "chatter.handler"...)`` tells Clojure what we want to call the namespace (ns) being defined in this file. In this case we want to call it "chatter.handler". 
+In the `src/chatter/handler.clj` file, the first expression `(ns "chatter.handler"...)` tells Clojure what we want to call the namespace (ns) being defined in this file. In this case we want to call it "chatter.handler". 
 
-The subexpression, the expression below, begins with ```clojure (:require...```. This is importing the ring and compojure libraries. Those are low-level Clojure libraries for building web apps.
+The subexpression, the expression below, begins with `(:require...`. This is importing the ring and compojure libraries. Those are low-level Clojure libraries for building web apps.
 
-The second expression is ```clojure (defroutes app-routes...```. _Defroutes_ is specific to Clojure web apps.  It creates a set of routes and gives them the name `app-routes`.  The expressions after symbol `app-routes` are the route definitions. There are two here.
+The second expression is `(defroutes app-routes...`. _Defroutes_ is specific to Clojure web apps.  It creates a set of routes and gives them the name `app-routes`.  The expressions after symbol `app-routes` are the route definitions. There are two here.
 
 The first is:
 
@@ -119,7 +119,9 @@ In your browser address bar, type
 
 In the editor, the third and final expression of the the `handler.clj` file says,
 
-```clojure (def app ...```
+```clojure
+(def app ...
+```
 
 ```def``` is how you declare a variable in Clojure.
 The format is: ```clojure (def name doc-string? init?)```
@@ -129,7 +131,7 @@ The format is: ```clojure (def name doc-string? init?)```
 3. `doc-string?`: an optional description on what the variable is and how it is meant to be used.
 4. `init?`: an optional value the variable will be set to. If unset, the variable is unbound.
 
-The _name_ of the variable is `app` and it's being assigned the result of ```clojure (wrap-defaults app-routes site-defaults)```
+The _name_ of the variable is `app` and it's being assigned the result of ```(wrap-defaults app-routes site-defaults)```
 
 * `wrap-defaults` is imported from the ring library, and it combines our routes and the defaults. When we start the server, it's going to look for the routes associated with the `app` variable and use those to decide how to handle HTTP requests.
 * `app-routes` is what we're calling our set of routes

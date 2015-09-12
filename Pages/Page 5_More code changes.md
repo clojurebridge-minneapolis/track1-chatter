@@ -217,7 +217,9 @@ Save `handler.clj` and refresh the browser.
 
 This blows up spectacularly.
 
-![blowups happen, illegal argument exception](images/illegal-argument-exception.jpg "Illegal Argument Exception")
+![](https://github.com/clojurebridge-minneapolis/track1-chatter/blob/master/images/illegal-argument-exception.jpg "illegal-argument-exception")
+
+[]()
 
 This is a stack trace - it gives us an idea what the program was doing when it hit the problem. Ignore all the files that aren't ones you wrote for the project. In my case, the first file of interest is
 `handler.clj`, line 14, the `generate-message-view` function.
@@ -242,7 +244,7 @@ Save `handler.clj`, and refresh the browser.
 
 This fixes the exception but it's ugly.
 
-![ugly hack](images/ugly.jpg "converting messages to a string")
+![ugly hack](https://github.com/clojurebridge-minneapolis/track1-chatter/blob/master/images/ugly.jpg "ugly hack")
 
 Let's take the messages and put them in a table using HTML's `table`, `tr`, and `td` elements.  We're going to write a function that takes a
 message and creates an HTML row. Then, inside a `table`, we're going to apply that function to all of our messages.
@@ -299,7 +301,7 @@ Now our `generate-message-view` looks like:
 
 Save `handler.clj`, then refresh the browser.  Our hard-coded messages should now display in the page.
 
-![hard coded messages](images/hardcoded.jpg "hard coded messages")
+![hard coded messages](https://github.com/clojurebridge-minneapolis/track1-chatter/blob/master/images/hardcoded.jpg "hard coded messages")
 
 
 ### Forms
@@ -448,7 +450,7 @@ Now our code looks like:
 Save ```handler.clj``` and refresh the browser.  We should now have a form on the
 page where a user could submit a new message.
 
-![unwired form](images/unwired-form.jpg "unwired form")
+![unwired form](https://github.com/clojurebridge-minneapolis/track1-chatter/blob/master/images/unwired-form.jpg "unwired form")
 
 <note: section5>
 
