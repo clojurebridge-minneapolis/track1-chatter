@@ -12,7 +12,7 @@ Clojure is a modern Lisp, which is a programming language, with a focus on funct
 
 * The core language is small and easy to learn.
 * The design makes it easy to write correct programs.
-* Clojure makes it easier to write concurrent programs -- programs that do more than one thing at a time.
+* Clojure makes it easier to write concurrent programs &mdash; programs that do more than one thing at a time.
 * Clojure programs are fast.
 * Clojure programs can build on Java libraries.
 

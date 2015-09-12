@@ -65,7 +65,7 @@ Let's take a closer look at what's in the chatter directory. In LightTable, it l
 
 `src` is where the source code lives.
 
-`test` is where the tests are stored. (A best-practice method is to test the directory before starting the project -- we will skip this step in this tutorial.)
+`test` is where the tests are stored. (A best-practice method is to test the directory before starting the project &mdash; we will skip this step in this tutorial.)
 
 ### A closer look at the src directory
 
@@ -108,7 +108,7 @@ In your browser, right-click on the page and select `Inspect Element With Firebu
 The `HTML` tab shows what the HTML document looks like. The default is an empty head and a body with the string "Hello World". This is different from what we saw when we used `View Page Source`. The
 browser requested html but only got a string back, and it fleshes out a legal page from this information.
 
-Click on the `Net` tab and refresh the page. You see the request is actually a GET request and the response contained a status code of 200 -- that indicates the request was successful.
+Click on the `Net` tab and refresh the page. You see the request is actually a GET request and the response contained a status code of 200 &mdash; that indicates the request was successful.
 
 In your browser address bar, type
 `http://localhost:3000/non-existent-page`. Now you see the GET request is in red and has a status of 404, which indicates that the server couldn't find the page. This was handled by the line,
@@ -222,7 +222,7 @@ There haven't been any changes since our last commit, so there's nothing to see.
 
 We see there's been one commit, the commit hash (which uniquely identifies every commit), the author's name, the date, and the commit comment.
 
-By keeping track of changes, git makes it easy to go back to an earlier point -- you are creating different versions of the file. By itself, it won't do much if our hard drive suddenly dies. But git allows you to have repositories on other computers, so if your computer dies, your code lives on. GitHub is a company hosting source code; it's free if you don't mind that other people can see your code. As a safety measure, and for version control, we will put our code on GitHub.
+By keeping track of changes, git makes it easy to go back to an earlier point &mdash; you are creating different versions of the file. By itself, it won't do much if our hard drive suddenly dies. But git allows you to have repositories on other computers, so if your computer dies, your code lives on. GitHub is a company hosting source code; it's free if you don't mind that other people can see your code. As a safety measure, and for version control, we will put our code on GitHub.
 
 Log into [https://github.com](https://github.com) and click, "create repository" (the "+" sign on the top menu). Name it "Chatter". That will open a page for your new repository. We want to push an existing repository, enter the following:
 
