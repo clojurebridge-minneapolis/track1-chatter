@@ -63,7 +63,7 @@ This will confirm what version of lein and what version of java you have on your
 
 Confirm you have all the required software/apps installed prior to starting your project. The [required tools](#required_tools) were installed during _Install Fest_ on Friday night.
 
-We will show examples of commands in terminal (also called the command line). Our prompt is the dollar sign; everything _after_ the dollar sign is the command you enter. You do not need to type `$:` in your terminal. We may we enter multiple commands in the same snippet -- the dollar sign indicates a new command to enter. You should enter each command individually.
+We will show examples of commands in terminal (also called the command line). Our prompt is the dollar sign; everything _after_ the dollar sign is the command you enter. You do not need to type `$:` in your terminal. We may we enter multiple commands in the same snippet &mdash; the dollar sign indicates a new command to enter. You should enter each command individually.
 
 The terminal, or command line, you use may have different prompts (`$:`), only enter the text after the prompt.
 

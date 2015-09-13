@@ -9,7 +9,7 @@ We're going to start by asking Leiningen to start a web application for us.
 ```
 
 
-Lein is a tool for managing Clojure projects.
+`lein` is a tool for managing Clojure projects.
 
 The command above requests permission to create a new compojure project called "Chatter". This command results in the creation of a directory`chatter` which appears as a folder in your computer's directory (Finder on Mac, Windows Explorer on Windows)
 
@@ -25,7 +25,7 @@ Start the server with this command
   $: lein ring server
 ```
 
-Lein will download a bunch of stuff from the Internet the first time it runs. After this finishes, your default browser opens a page that says, "Hello World".
+`lein` will download a bunch of stuff from the Internet the first time it runs. After this finishes, your default browser opens a page that says, "Hello World".
 
 Notice the address bar.
 
@@ -65,7 +65,7 @@ Let's take a closer look at what's in the chatter directory. In LightTable, it l
 
 `src` is where the source code lives.
 
-`test` is where the tests are stored. (A best-practice method is to test the directory before starting the project -- we will skip this step in this tutorial.)
+`test` is where the tests are stored. (A best-practice method is to test the directory before starting the project &mdash; we will skip this step in this tutorial.)
 
 ### A closer look at the src directory
 
@@ -74,11 +74,11 @@ In the editor, open the file `src/chatter/handler.clj`.
 The file that ends with ".clj" indicates this is a Clojure file. Clojure programs are made up of _expressions_. Expressions are either a single name, number, string, or a list of expressions beginning with a paren (or parenthesis). These expressions make your app appear and function in a web browser.
 
 
-In the `src/chatter/handler.clj` file, the first expression `(ns "chatter.handler"...)` tells Clojure what we want to call the namespace (ns) being defined in this file. In this case we want to call it "chatter.handler". 
+In the `src/chatter/handler.clj` file, the first expression `(ns chatter.handler ...` tells Clojure what we want to call the namespace (ns) being defined in this file. In this case we want to call it "chatter.handler". 
 
-The sub-expression, the expression below, begins with `(:require...`. This is importing the ring and compojure libraries. Those are low-level Clojure libraries for building web apps.
+The sub-expression, the expression below, begins with `(:require ...`. This is importing the ring and compojure libraries. Those are low-level Clojure libraries for building web apps.
 
-The second expression is `(defroutes app-routes...`. _Defroutes_ is specific to Clojure web apps.  It creates a set of routes and gives them the name `app-routes`.  The expressions after symbol `app-routes` are the route definitions. There are two here.
+The second expression is `(defroutes app-routes ...`. _defroutes_ is specific to Clojure web apps.  It creates a set of routes and gives them the name `app-routes`.  The expressions after symbol `app-routes` are the route definitions. There are two here.
 
 The first is:
 
@@ -90,7 +90,7 @@ There are four parts to this expression:
 
 1. `GET`: this is the type of HTTP request we want to handle. GETs are requests for information or data.
 2. `"/"`: this is the name of the web page.  `/` means the top level.
-3. `"[]"`: this is an empty parameter vector.  When you do a search or fill out a form, the parameters narrow the result.
+3. `[]`: this is an empty parameter vector.  When you do a search or fill out a form, the parameters narrow the result.
 4. `"Hello World"`: the result that gets sent back to the requesting browser.
 
 After the GET request is the second route definition `app-route`, which is:
@@ -108,7 +108,7 @@ In your browser, right-click on the page and select `Inspect Element With Firebu
 The `HTML` tab shows what the HTML document looks like. The default is an empty head and a body with the string "Hello World". This is different from what we saw when we used `View Page Source`. The
 browser requested html but only got a string back, and it fleshes out a legal page from this information.
 
-Click on the `Net` tab and refresh the page. You see the request is actually a GET request and the response contained a status code of 200 -- that indicates the request was successful.
+Click on the `Net` tab and refresh the page. You see the request is actually a GET request and the response contained a status code of 200 &mdash; that indicates the request was successful.
 
 In your browser address bar, type
 `http://localhost:3000/non-existent-page`. Now you see the GET request is in red and has a status of 404, which indicates that the server couldn't find the page. This was handled by the line,
@@ -117,14 +117,14 @@ In your browser address bar, type
 (route/not-found "Not Found")
 ```
 
-In the editor, the third and final expression of the the `handler.clj` file says,
+In the editor, the third and final expression of the `handler.clj` file says,
 
 ```clojure
 (def app ...
 ```
 
-```def``` is how you declare a variable in Clojure.
-The format is: ```clojure (def name doc-string? init?)```
+`def` is how you declare a variable in Clojure.
+The format is: `(def name doc-string? init?)`
 
 1. `def`: introduces the def expression.
 2. `name`: the name you want to give the variable.
@@ -193,7 +193,7 @@ Now when we ask git for the status:
 	new file:   src/chatter/handler.clj
 	new file:   test/chatter/handler_test.clj
 
-All of our stuff is ready to be committed. That requires a commit message. After "-m" enter a short message that will help you identify the changes in this commit.
+All of our stuff is ready to be committed. That requires a commit message. After `-m` enter a short message that will help you identify the changes in this commit.
 
     $: git commit . -m "initial commit"
     [master (root-commit) 44a560f] initial commit
@@ -222,7 +222,7 @@ There haven't been any changes since our last commit, so there's nothing to see.
 
 We see there's been one commit, the commit hash (which uniquely identifies every commit), the author's name, the date, and the commit comment.
 
-By keeping track of changes, git makes it easy to go back to an earlier point -- you are creating different versions of the file. By itself, it won't do much if our hard drive suddenly dies. But git allows you to have repositories on other computers, so if your computer dies, your code lives on. GitHub is a company hosting source code; it's free if you don't mind that other people can see your code. As a safety measure, and for version control, we will put our code on GitHub.
+By keeping track of changes, git makes it easy to go back to an earlier point &mdash; you are creating different versions of the file. By itself, it won't do much if our hard drive suddenly dies. But git allows you to have repositories on other computers, so if your computer dies, your code lives on. GitHub is a company hosting source code; it's free if you don't mind that other people can see your code. As a safety measure, and for version control, we will put our code on GitHub.
 
 Log into [https://github.com](https://github.com) and click, "create repository" (the "+" sign on the top menu). Name it "Chatter". That will open a page for your new repository. We want to push an existing repository, enter the following:
 
