@@ -116,7 +116,7 @@ Confirm the file was added by checking the status:
 
 Two files have been added (modified) and the changes can be _committed_ to the branch. When you enter the `git commit` command, make sure to enter a description of the changes you are committing; this will help you identify versions and changes. Add a quick note after the file names `-m "comment on changes"`.
 
-    $ git commit README.md project.clj -m "fixing README.md description"
+    $ git commit -m "fixing README.md description"
     [fix-readme 57aff88] fixing README.md description
      2 files changed, 3 insertions(+), 3 deletions(-)
 
